@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Our suggestions</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/hotelView.css">
+</head>
+<body>
+<div class="page">
+    <div th:insert="~{header::copy}"></div>
+    <table class="table">
+        <tr th:each="elem:${hotels}">
+            <br>
+            <th><a th:href="@{/hotels/{id}(id=${elem.getId()})}" th:text="${elem.getTitle()}"> title </a>
+                <p th:text="${elem.getDescription()}"> description </p>
+        </tr>
+    </table>
+    <form method="get" action="/hotels/new">
+        <button type="submit">Create new suggestion</button>
+    </form>
+    <footer th:insert="~{footer::copy}"></footer>
+</div>
+</body>
+</html>

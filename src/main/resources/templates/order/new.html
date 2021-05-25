@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+        <link rel="stylesheet" type="text/css" href="/resources/css/reg.css"/>
+    <meta charset="UTF-8">
+    <title>New User</title>
+</head>
+<body>
+<form th:method="POST" th:object="${userOrder}">
+
+        <label for="name"> Enter Appartment Class </label>
+        <input type="text" th:field="*{klassOfApartment}" id="name" required/>
+
+        <br/>
+        <label for="LoginName"> Number of seats </label>
+        <input type="text" th:field="*{numberOfSeats}" id="loginName" required/>
+        <br/>
+
+        <label for="pass"> Check-in date </label>
+        <input type="text" th:field="*{getLocalDateStart()}" id="pass" required/>
+
+        <label for="passConfirm"> Check-out date </label>
+        <input type="text" th:field="*{getLocalDateFinish()}" id="passConfirm" required/>
+
+        <br/>
+        <input type="submit" value="Create user">
+</form>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New hotel</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/hotelView.css">
+</head>
+<body>
+<div class="page">
+    <div th:insert="~{header::copy}"></div>
+    <form th:method="POST" th:object="${hotel}">
+        <table class="table" align="center">
+            <tr>
+                <th><label for="title">Title</label></th>
+                <th><label for="description">Description </label></th>
+                <th><label for="klass">Klass of Appartment </label></th>
+                <th><label for="numofseats">Max guests</label></th>
+                <th><label for="price">Price</label></th>
+            </tr>
+            <tbody>
+            <td><input required id="title" th:field="*{title}" type="text"/></td>
+            <td><textarea id="description" required th:field="*{description}" type="text"/></td>
+            <td><input id="klass" required th:field="*{klassApartment}" type="text"/></td>
+            <td><input id="numofseats" required th:field="*{numberOfSeats}" type="text"/></td>
+            <td><input id="price" required th:field="*{price}" type="text"/></td>
+            <td><button type="submit" value="Create hotel">Create hotel</button></td>
+            </tbody>
+
+        </table>
+    </form>
+    <footer th:insert="~{footer::copy}"></footer>
+</div>
+</body>
+</html>

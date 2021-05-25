@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <link rel="stylesheet" type="text/css" href="/resources/css/login.css">
+  <title>Страница авторизации </title>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div class="container">
+  <img src="https://dwstroy.ru/lessons/les3373/demo/img/men.png">
+<div th:if="${param.error}">
+  Invalid username and password.
+</div>
+<div th:if="${param.logout}" style="color: red; font-family:Arial,serif">
+  You have been logged out
+</div>
+<form th:action="@{/login}" method="post">
+  <div class="dws-input">
+    <input type="text" name="username" placeholder="Введите логин">
+  </div>
+  <div class="dws-input">
+    <input type="password" name="password" placeholder="Введите пароль">
+  </div>
+  <input class="dws-submit" type="submit" name="submit" value="ВОЙТИ"><br />
+  <a href="#">Восстановить пароль</a>
+  <a href="/users/new">Registration</a>
+</form>
+</div>
+</body>
+</html>

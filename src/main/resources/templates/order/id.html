@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Description</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/hotelView.css">
+</head>
+<body>
+<div class="page">
+    <div th:insert="header::copy"></div>
+    <form th:method="Post" th:action="@{/invoice/new}" th:object="${order}">
+        <table class="table">
+            <tr>
+                <th>User</th>
+                <th>Check-in</th>
+                <th>check-out</th>
+                <th>KlassApartment</th>
+                <th>NumSeats</th>
+            </tr>
+
+            <tbody>
+            <tr>
+                <td th:text="${order.getUser().getUsername()}">VALUE</td>
+                <td th:text="${order.getLocalDateStart()}">VALUE</td>
+                <td th:text="${order.getLocalDateFinish()}">VALUE</td>
+                <td th:text="${order.getKlassOfApartment()}">VALUE</td>
+                <td th:text="${order.getNumberOfSeats()}">VALUE</td>
+            </tr>
+            </tbody>
+        </table>
+    <div sec:authorize="hasRole('ADMIN')">
+
+        <input type="submit" value="get similar offers"/>
+
+        <br/>
+        <table class="table">
+            <tr>
+                <th>Title</th>
+                <th>KlassApartment</th>
+                <th>NumSeats</th>
+                <th>Price</th>
+            </tr>
+
+            <tbody th:each="element: ${offers}">
+            <tr >
+                <td th:text="${element.getTitle()}">VALUE</td>
+                <td th:text="${element.getKlassApartment()}">VALUE</td>
+                <td th:text="${element.getNumberOfSeats()}">VALUE</td>
+                <td th:text="${element.price}">VALUE</td>
+                <td>
+                <input type="hidden" name="orderId" th:value="${order.getId()}"/>
+                    <button type="submit" th:value="${element.getId()}" name="offerId">Send Invoice</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    </div>
+    <footer th:insert="footer::copy">footer</footer>
+</div>
+</body>
+</html>

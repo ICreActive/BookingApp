@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/resources/css/reg.css"/>
+        <link rel="stylesheet" type="text/css" href="/resources/css/hotelView.css"/>
+    <meta charset="UTF-8">
+    <title>New User</title>
+</head>
+<body>
+<div class="page">
+    <div th:insert="~{header::copy}"></div>
+    <div class="container">
+        <form th:method="POST" th:object="${userNew}">
+
+
+            <label for="name"> Enter name </label>
+            <input type="text" th:field="*{username}" id="name" pattern="[A-Za-z0-9]+" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error
+            </div>
+            <div style="color: red" th:if="${usernameError}" th:text="${usernameError}">Error</div>
+            <br/>
+
+            <label for="email"> Enter email </label>
+            <input type="text" th:field="*{email}" id="email" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+            <br/>
+
+            <label for="pass"> Enter password </label>
+            <input type="text" th:field="*{password}" id="pass" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
+            </div>
+            </br>
+
+            <label for="passConfirm"> Confirm password </label>
+            <input type="text" th:field="*{passwordConfirm}" id="passConfirm" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
+            </div>
+            <div style="color: red" th:if="${passwordError}" th:text="${passwordError}">Error</div>
+            <br/>
+                <button type="submit" class="registerbtn">Register</button>
+        </form>
+    </div>
+
+
+    <footer th:insert="~{footer::copy}"></footer>
+
+</div>
+</body>
+</html>
