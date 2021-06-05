@@ -20,12 +20,14 @@
             <tbody>
             <td><input required id="title" th:field="*{title}" type="text"/></td>
             <td><textarea id="description" required th:field="*{description}" type="text"/></td>
-            <td><input id="klass" required th:field="*{klassApartment}" type="text"/></td>
+            <td><select id="klass" required th:field="*{klassApartment}" >
+                <option  th:each="klass:${klassAp}" th:text="${klass.getName()}" th:value="${klass}"></option>
+            </select>
+            </td>
             <td><input id="numofseats" required th:field="*{numberOfSeats}" type="text"/></td>
             <td><input id="price" required th:field="*{price}" type="text"/></td>
             <td><button type="submit" value="Create hotel">Create hotel</button></td>
             </tbody>
-
         </table>
     </form>
     <footer th:insert="~{footer::copy}"></footer>

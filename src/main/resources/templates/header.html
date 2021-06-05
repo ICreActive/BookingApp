@@ -9,15 +9,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <section class="hero">
     <header>
       <div class="wrapper">
-        <a href="#"><img src="" class="logo" alt="" title=""/></a>
-        <a href="#" class="hamburger"></a>
         <nav>
           <ul>
+            <li><a href="/">Home</a></li>
             <div sec:authorize="hasRole('ADMIN')">
               <li><a href="/users/administrator">Администраторская</a></li>
             </div>
+
             <li><a href="/hotels/catalog">Catalog</a></li>
-            <li><a href="#">Sell</a></li>
             <li><a href="/info/about">About</a></li>
             <li><a href="/info/contacts">Contact</a></li>
             <li>

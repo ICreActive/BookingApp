@@ -12,7 +12,7 @@ public class Hotel {
     private long id;
     private String title;
     private String description;
-    private String klassApartment;
+    private KlassAppartament klassApartment;
     private int numberOfSeats;
     private int price;
     private LocalDate dateStart;
@@ -25,7 +25,7 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(String title, String description, String klassApartment, int numberOfSeats) {
+    public Hotel(String title, String description, KlassAppartament klassApartment, int numberOfSeats) {
         this.title = title;
         this.description = description;
         this.klassApartment = klassApartment;
@@ -64,11 +64,11 @@ public class Hotel {
         return price;
     }
 
-    public String getKlassApartment() {
+    public KlassAppartament getKlassApartment() {
         return klassApartment;
     }
 
-    public void setKlassApartment(String klassApartment) {
+    public void setKlassApartment(KlassAppartament klassApartment) {
         this.klassApartment = klassApartment;
     }
 

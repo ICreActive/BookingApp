@@ -5,7 +5,9 @@ import com.shkubel.project.models.Invoice;
 import com.shkubel.project.models.Seller;
 import com.shkubel.project.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface InvoiceRepository extends JpaRepository<Invoice,Long> {
 
     Invoice findAllByHotel(Hotel hotel);

@@ -1,6 +1,7 @@
 package com.shkubel.project.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -17,7 +18,9 @@ public class OrderUser {
     private long id;
 
     private int numberOfSeats;
-    private String klassOfApartment;
+
+    @Value("Unknown")
+    private KlassAppartament klassOfApartment;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate localDateStart;
@@ -31,7 +34,7 @@ public class OrderUser {
     public OrderUser() {
     }
 
-    public OrderUser(long id, int numberOfSeats, String klassOfApartment, LocalDate localDateStart, LocalDate localDateFinish) {
+    public OrderUser(long id, int numberOfSeats, KlassAppartament klassOfApartment, LocalDate localDateStart, LocalDate localDateFinish) {
         this.id = id;
         this.numberOfSeats = numberOfSeats;
         this.klassOfApartment = klassOfApartment;
@@ -55,11 +58,11 @@ public class OrderUser {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public String getKlassOfApartment() {
+    public KlassAppartament getKlassOfApartment() {
         return klassOfApartment;
     }
 
-    public void setKlassOfApartment(String klassOfApartment) {
+    public void setKlassOfApartment(KlassAppartament klassOfApartment) {
         this.klassOfApartment = klassOfApartment;
     }
 

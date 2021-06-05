@@ -15,12 +15,12 @@
 
 </head>
 <body>
-
+<script th:if="${message}" >
+	alert("Order not saved, check it and try again")
+</script>
 	<section class="hero">
 		<header>
 			<div class="wrapper">
-				<a href="#"><img src="" class="logo" alt="" title=""/></a>
-				<a href="#" class="hamburger"></a>
 				<nav>
 					<ul>
 						<div sec:authorize="hasRole('ADMIN')">
@@ -81,7 +81,10 @@
 						<input type="date" class="float" th:field="*{localDateFinish}" id="check_out_date" name="check_out_date" placeholder="Check Out Date"  autocomplete="off">
 					</div>
 					<div class="search_fields">
-						<input type="text" class="float" th:field="*{klassOfApartment}" id="min_price" name="min_price" placeholder="Apartment klass"  autocomplete="off">
+						<select type="text" class="float" th:field="*{klassOfApartment}" id="min_price" name="min_price" placeholder="Apartment klass"  autocomplete="off">
+							<option value="" selected disabled hidden>Choose here</option>
+							<option th:each="klass:${klassAp}" th:text="${klass.getName()}" th:value="${klass}"></option>
+						</select>
 
 						<hr class="field_sep float"/>
 

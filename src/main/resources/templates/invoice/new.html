@@ -73,11 +73,11 @@
                             <a target="_blank" th:text="${hotel.title}">
                             </a>
                         </h3>
-                            <div th:text="${hotel.description + ', ' + hotel.numberOfSeats +' guests'} ">
+                            <div th:text="${hotel.description + ', ' + hotel.numberOfSeats +' guests'} "> </div>
                         </td>
                         <td class="unit" th:text="${hotel.price}">$0.00</td>
-                        <td class="qty">100</td>
-                        <div th:with="result=${hotel.price * 100}">
+                        <td class="qty" th:text="${period}">0</td>
+                        <div th:with="result=${hotel.price * period}">
                             <td class="total" th:text="'$'+${result}">$0.00</td>
                         </div>
                     </tr>
@@ -86,17 +86,17 @@
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="2">SUBTOTAL</td>
-                        <td th:text="'$'+${hotel.price * 100}">$00.00</td>
+                        <td th:text="'$'+${hotel.price * period}">$00.00</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="2">TAX 20%</td>
-                        <td th:text="'$'+${hotel.price * 100 * 0.2}">$00.00</td>
+                        <td th:text="'$'+${hotel.price * period * 0.2}">$00.00</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="2">GRAND TOTAL</td>
-                        <td th:text="'$'+${hotel.price * 100 * 1.2}">$00.00</td>
+                        <td th:text="'$'+${hotel.price * period * 1.2}">$00.00</td>
                     </tr>
                     </tfoot>
                 </table>

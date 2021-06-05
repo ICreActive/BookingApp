@@ -37,9 +37,7 @@ public class OrderService {
         return false;
     }
 
-    public boolean ValidationDate (LocalDate checkin, LocalDate checkout) {
-        return !checkin.isAfter(checkout) || !checkin.equals(checkout);
-    }
+
 
     public List<OrderUser> findOrderByUserId(long userId) {
         return em.createQuery("SELECT u FROM OrderUser u WHERE u.user.id = :userId", OrderUser.class)

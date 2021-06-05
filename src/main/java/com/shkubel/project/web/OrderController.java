@@ -4,6 +4,7 @@ import com.shkubel.project.models.OrderUser;
 import com.shkubel.project.models.User;
 import com.shkubel.project.repo.OrderRepository;
 import com.shkubel.project.service.OrderService;
+import com.shkubel.project.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,12 @@ public class OrderController {
     OrderRepository orderRepository;
     @Autowired
     OrderService orderService;
+    @Autowired
+    ValidationUtil validationUtil;
 
    @PostMapping("/")
     public String OrderSave(@AuthenticationPrincipal User user, @ModelAttribute("userOrder") OrderUser order, BindingResult bindingResult, Model model) throws Exception {
-       if (orderService.ValidationDate(order.getLocalDateStart(),order.getLocalDateFinish())) {
+       if (validationUtil.ValidationDate(order.getLocalDateStart(),order.getLocalDateFinish())) {
            order.setUser(user);
            orderRepository.save(order);
            return "static/index";

@@ -8,6 +8,8 @@ import com.shkubel.project.repo.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Period;
 import java.util.List;
 
 
@@ -34,20 +36,12 @@ public class BookingService {
         return hotelRepository.findAll();
     }
 
-    public void saveHotel(Hotel hotel) {
-        hotelRepository.save(hotel);
-    }
-
     public Hotel findHotelById(long id) {
         return hotelRepository.findById(id);
     }
 
     public Seller findSellerById(long id) {
         return sellerRepository.findSellerById(id);
-    }
-
-    public List<Seller> findAllSeller() {
-        return sellerRepository.findAll();
     }
 
 //save
@@ -62,7 +56,10 @@ public class BookingService {
 
     //logic
 
-
+    public int bookingPeriod (OrderUser orderUser) {
+        Period days = Period.between(orderUser.getLocalDateFinish(), orderUser.getLocalDateStart());
+        return days.getDays();
+    }
 
 }
 

@@ -1,30 +1,3 @@
-/*
-
-    Template Author : pixelhint.com
-    Author Email    : contact@pixelhint.com
-    Template Name   : ICreactive
-    
-    
-    *****************************************
-    
-    
-    - Fonts
-    - General CSS
-    - Header
-    - Hero
-    - Search
-    - Listings
-    - Footer
-    - Responsive CSS
-    
-
-*/
-
-
-
-
-
-
 
 /*  Fonts  */
 @font-face {
@@ -130,21 +103,6 @@ header .logo{
     float: left;
 }
 
-header a.hamburger{
-    text-decoration: none;
-    display: none;
-    float: right;
-    margin-top: 41px;
-    width: 24px;
-    height: 19px;
-    background: url('../img/hamburger_icon.png') no-repeat;
-}
-
-header a.hamburger.opned{
-    width: 19px;
-    background: url('../img/close_menu_icon.png') no-repeat;
-}
-
 
 header nav{
     float: right;
@@ -193,14 +151,6 @@ header nav .login_btn:hover{
 }
 
 
-
-
-
-
-
-
-
-
 /*  Hero Section  */
 
 .hero{
@@ -240,14 +190,6 @@ header nav .login_btn:hover{
     margin: -15px 0 0 25px;
     left: 1px;
 }
-
-
-
-
-
-
-
-
 
 
 /*  Search Section  */
@@ -403,7 +345,7 @@ header nav .login_btn:hover{
 .search .advanced_search #min_price,
 .search .advanced_search #max_price,
 .search .advanced_search #keywords{    
-    color: #ffffff;
+    color: #55a8f8;
     font-family: "lato-regular", Helvetica, Arial, sans-serif;
     font-size: 20px;
     text-transform: uppercase;
@@ -425,7 +367,7 @@ header nav .login_btn:hover{
 .search .advanced_search #min_price:-moz-placeholder, 
 .search .advanced_search #max_price:-moz-placeholder, 
 .search .advanced_search #keywords:-moz-placeholder{ 
-   color: #95badf;  
+   color: #95badf;
 }
 
 .search .advanced_search #check_in_date::-moz-placeholder, 
@@ -433,7 +375,7 @@ header nav .login_btn:hover{
 .search .advanced_search #min_price::-moz-placeholder, 
 .search .advanced_search #max_price::-moz-placeholder, 
 .search .advanced_search #keywords::-moz-placeholder{ 
-   color: #95badf;  
+   color: #95badf;
 }
 
 .search .advanced_search #check_in_date:-ms-input-placeholder,  
@@ -441,7 +383,7 @@ header nav .login_btn:hover{
 .search .advanced_search #min_price:-ms-input-placeholder,  
 .search .advanced_search #max_price:-ms-input-placeholder,  
 .search .advanced_search #keywords:-ms-input-placeholder{  
-   color: #95badf;  
+   color: #95badf;
 } 
 
 
@@ -485,7 +427,7 @@ header nav .login_btn:hover{
     top: 10px;
     left: 10px;
     padding: 15px 20px;
-    background: #ffffff;
+    background: #93c4ec;
     color: #514d4d;
     font-family: "lato-bold", Helvetica, Arial, sans-serif;
     font-size: 16px;

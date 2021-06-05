@@ -9,6 +9,7 @@
 <body>
 <div class="page">
     <div th:insert="header::copy"></div>
+    <H2>Order Details </H2>
     <form th:method="Post" th:action="@{/invoice/new}" th:object="${order}">
         <table class="table">
             <tr>
@@ -31,7 +32,7 @@
         </table>
     <div sec:authorize="hasRole('ADMIN')">
 
-        <input type="submit" value="get similar offers"/>
+        <H2>Similar offers </H2>
 
         <br/>
         <table class="table">
@@ -55,8 +56,8 @@
             </tr>
             </tbody>
         </table>
-    </form>
     </div>
+    </form>
     <footer th:insert="footer::copy">footer</footer>
 </div>
 </body>

@@ -1,9 +1,7 @@
 package com.shkubel.project.web;
 
 import com.shkubel.project.models.*;
-import com.shkubel.project.service.BookingService;
-import com.shkubel.project.service.OrderService;
-import com.shkubel.project.service.UserService;
+import com.shkubel.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,6 +20,10 @@ public class AdminController {
     private OrderService orderService;
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private SellerService sellerService;
+    @Autowired
+    private HotelService hotelService;
 
 
     @GetMapping("/users")
@@ -72,10 +74,9 @@ public class AdminController {
     @GetMapping("/orders/{id}")
     public String showOrder(@PathVariable ("id") Long id, Model model ) {
         OrderUser order= orderService.findOrderById(id);
-        List <Hotel> hotels = bookingService.findOffers(order);
+        List <Hotel> hotels = hotelService.findOffers(order);
         model.addAttribute("order", order);
         model.addAttribute("offers", hotels);
-
         return "order/id";
     }
 
@@ -92,10 +93,12 @@ public class AdminController {
                              Model model) {
         OrderUser order = orderService.findOrderById(orderId);
         Hotel hotel = bookingService.findHotelById(offerId);
-        List <Seller> sellers = bookingService.findAllSeller();
+        List <Seller> sellers =sellerService.findAllSeller();
+        Integer bookingPeriod = bookingService.bookingPeriod(order);
         model.addAttribute("order", order);
         model.addAttribute("hotel", hotel);
         model.addAttribute("sellers", sellers);
+        model.addAttribute("period",bookingPeriod);
 
         return "/invoice/new";
     }
