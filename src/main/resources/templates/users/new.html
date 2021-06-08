@@ -20,6 +20,16 @@
             <div style="color: red" th:if="${usernameError}" th:text="${usernameError}">Error</div>
             <br/>
 
+            <label for="firstname"> Enter first name </label>
+            <input type="text" th:field="*{userFirstname}" id="firstname" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('userFirstname')}" th:errors="*{userFirstname}">Error</div>
+            <br/>
+
+            <label for="lastname"> Enter last name </label>
+            <input type="text" th:field="*{userLastname}" id="lastname" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('userLastname')}" th:errors="*{userLastname}">Error</div>
+            <br/>
+
             <label for="email"> Enter email </label>
             <input type="text" th:field="*{email}" id="email" required/>
             <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>

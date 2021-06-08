@@ -36,7 +36,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <tbody>
     <tr  th:each="element: ${userOrder}">
         <div sec:authorize="hasRole('ADMIN')">
-        <th scope="col"><a th:href="@{/orders/{id}(id=${element.getId()})}" th:text="${element.getUser()}">user</a></th>
+        <th scope="col"><a th:href="@{/administrator/orders/{id}(id=${element.getId()})}" th:text="${element.getUser()}">user</a></th>
         </div>
         <div sec:authorize="!hasRole('ADMIN')">
             <th scope="col"><a th:href="@{/myprofile/orders/{id}(id=${element.getId()})}" th:text="${element.getUser()}">user</a></th>

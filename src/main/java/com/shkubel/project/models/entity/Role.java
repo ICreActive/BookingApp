@@ -1,4 +1,4 @@
-package com.shkubel.project.models;
+package com.shkubel.project.models.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -10,18 +10,18 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
 
     @Id
-    private long id;
+    private Long id;
     private String name;
 
     @Transient
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
-    public Role(long id) {
+    public Role(Long id) {
         this.id = id;
     }
 
-    public Role(long id, String name) {
+    public Role(Long id, String name) {
         this.id = id;
         this.name = name;
     }

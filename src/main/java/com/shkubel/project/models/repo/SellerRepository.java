@@ -1,13 +1,13 @@
-package com.shkubel.project.repo;
+package com.shkubel.project.models.repo;
 
-import com.shkubel.project.models.Seller;
+import com.shkubel.project.models.entity.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SellerRepository extends JpaRepository<Seller, Long> {
 
-    Seller findSellerById(long id);
+    Seller findSellerById(Long id);
     Seller findSellerByName(String name);
 
 }

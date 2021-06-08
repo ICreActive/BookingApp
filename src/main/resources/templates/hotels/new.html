@@ -24,8 +24,8 @@
                 <option  th:each="klass:${klassAp}" th:text="${klass.getName()}" th:value="${klass}"></option>
             </select>
             </td>
-            <td><input id="numofseats" required th:field="*{numberOfSeats}" type="text"/></td>
-            <td><input id="price" required th:field="*{price}" type="text"/></td>
+        <td><input id="numofseats" required th:field="*{numberOfSeats}" type="text"/></td>
+        <td><input id="price" required th:field="*{price}" type="text"/></td>
             <td><button type="submit" value="Create hotel">Create hotel</button></td>
             </tbody>
         </table>

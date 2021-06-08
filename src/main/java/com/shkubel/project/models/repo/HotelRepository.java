@@ -1,7 +1,7 @@
-package com.shkubel.project.repo;
+package com.shkubel.project.models.repo;
 
-import com.shkubel.project.models.Hotel;
-import com.shkubel.project.models.KlassAppartament;
+import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.KlassAppartament;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
-    List<Hotel> findHotelByNumberOfSeats(int numberOfSeats);
+    List<Hotel> findHotelByNumberOfSeats(Integer numberOfSeats);
     Hotel findHotelByDateFinishBetween(LocalDate start, LocalDate finish);
     List<Hotel> findHotelByKlassApartment(KlassAppartament klassAppartament);
 
-    Hotel findById(long id);
+    Hotel findHotelById(Long id);
 
 }

@@ -1,4 +1,4 @@
-package com.shkubel.project.models;
+package com.shkubel.project.models.entity;
 
 import javax.persistence.*;
 
@@ -7,7 +7,7 @@ public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @OneToOne
     private Seller seller;
@@ -16,10 +16,10 @@ public class Invoice {
     @ManyToOne
     private Hotel hotel;
 
-    private boolean paid;
+    private Boolean paid;
 
 
-    public Invoice(long id, Seller seller, User user, Hotel hotel) {
+    public Invoice(Long id, Seller seller, User user, Hotel hotel) {
         this.id = id;
         this.seller = seller;
         this.user = user;
@@ -33,7 +33,7 @@ public class Invoice {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -61,11 +61,11 @@ public class Invoice {
         this.seller = seller;
     }
 
-    public boolean isPaid() {
+    public Boolean isPaid() {
         return paid;
     }
 
-    public void setPaid(boolean paid) {
+    public void setPaid(Boolean paid) {
         this.paid = paid;
     }
 }

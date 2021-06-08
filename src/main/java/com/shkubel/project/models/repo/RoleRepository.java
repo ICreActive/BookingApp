@@ -1,8 +1,7 @@
-package com.shkubel.project.repo;
+package com.shkubel.project.models.repo;
 
-import com.shkubel.project.models.Role;
+import com.shkubel.project.models.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -35,19 +35,22 @@
     </tr>
     </thead>
     <tbody>
-    <tr  th:each="element: ${users}">
-        <th scope="col"><a th:href="@{/users/profile/{id}(id=${element.getId()})}" th:text="${element.getId()}">user</a></th>
-        <th scope="col"><a th:href="@{/users/profile/{id}(id=${element.getId()})}" th:text="${element.getUsername()}">user</a></th>
-        <th scope="col"><a th:href="@{/users/profile/{id}(id=${element.getId()})}" th:text="${element.getEmail()}">user</a></th>
-        <th scope="col"><a th:href="@{/users/profile/{id}(id=${element.getId()})}" th:text="${element.getRoles()}">user</a></th>
+    <tr th:each="element: ${users}">
+        <th scope="col"><a th:href="@{/administrator/users/profile/{id}(id=${element.getId()})}"
+                           th:text="${element.getId()}">user</a></th>
+        <th scope="col"><a th:href="@{/administrator/users/profile/{id}(id=${element.getId()})}"
+                           th:text="${element.getUsername()}">user</a></th>
+        <th scope="col"><a th:href="@{/administrator/users/profile/{id}(id=${element.getId()})}"
+                           th:text="${element.getEmail()}">user</a></th>
+        <th scope="col"><a th:href="@{/administrator/users/profile/{id}(id=${element.getId()})}"
+                           th:text="${element.getRoles()}">user</a></th>
         <form method="post">
-        <th scope="col" name="delete">
-            <input type="hidden" name="userId" th:value="${element.id}"/>
-            <input type="hidden" name="action" value="delete">
-            <button type="submit">Delete</button>
-        </th>
+            <th scope="col" name="delete">
+                <input type="hidden" name="userId" th:value="${element.id}"/>
+                <input type="hidden" name="action" value="delete">
+                <button type="submit">Delete</button>
+            </th>
         </form>
-
     </tr>
     </tbody>
 </table>

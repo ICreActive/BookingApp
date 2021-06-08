@@ -1,7 +1,7 @@
 package com.shkubel.project.util;
 
-import com.shkubel.project.models.Hotel;
-import com.shkubel.project.models.KlassAppartament;
+import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.KlassAppartament;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

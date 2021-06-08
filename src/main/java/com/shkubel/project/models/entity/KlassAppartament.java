@@ -1,4 +1,4 @@
-package com.shkubel.project.models;
+package com.shkubel.project.models.entity;
 
 public enum KlassAppartament {
     HIGH ("High"),

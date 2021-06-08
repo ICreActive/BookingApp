@@ -1,9 +1,9 @@
 package com.shkubel.project.web;
 
-import com.shkubel.project.models.OrderUser;
-import com.shkubel.project.models.User;
-import com.shkubel.project.repo.OrderRepository;
-import com.shkubel.project.service.OrderService;
+import com.shkubel.project.models.entity.OrderUser;
+import com.shkubel.project.models.entity.User;
+import com.shkubel.project.models.repo.OrderRepository;
+import com.shkubel.project.service.impl.OrderServiceImpl;
 import com.shkubel.project.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +21,7 @@ public class OrderController {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
-    OrderService orderService;
+    OrderServiceImpl orderServiceImpl;
     @Autowired
     ValidationUtil validationUtil;
 
@@ -38,7 +38,7 @@ public class OrderController {
 
     @GetMapping("/myprofile/orders")
     public String userOrders(Model model, @AuthenticationPrincipal User user) {
-       List<OrderUser> orders = orderService.findOrderByUserId(user.getId());
+       List<OrderUser> orders = orderServiceImpl.findOrderByUserId(user.getId());
        model.addAttribute("userOrder", orders);
         return "order/orders";
     }
@@ -47,14 +47,14 @@ public class OrderController {
     public String delete(@RequestParam (required = true, defaultValue = "") Long orderId,
                          @RequestParam (required = true, defaultValue = "") String action) {
        if (action.equals("delete")) {
-           orderService.deleteOrderById(orderId);
+           orderServiceImpl.deleteOrderById(orderId);
        }
         return "redirect:order/orders";
     }
 
     @GetMapping("/myprofile/orders/{id}")
-    public String orderDetail(@PathVariable ("id") long id, Model model) {
-        OrderUser order = orderService.findOrderById(id);
+    public String orderDetail(@PathVariable ("id") Long id, Model model) {
+        OrderUser order = orderServiceImpl.findOrderById(id);
         model.addAttribute("order", order);
         return "order/id";
     }

@@ -1,4 +1,4 @@
-package com.shkubel.project.models;
+package com.shkubel.project.models.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotEmpty(message = "Pass should not be empty")
     @Size(min=6, message = "Pass should be more then 6 characters")
@@ -28,6 +28,12 @@ public class User implements UserDetails {
     @NotEmpty(message = "Name should not be empty")
     @Size(min=3, max=15, message = "Name should be between 3 and 15 characters")
     private String username;
+
+    @NotEmpty
+    @Size(min=2, max=15, message = "Name should be between 2 and 15 characters")
+    private String userFirstname;
+    @NotEmpty
+    private String userLastname;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -45,6 +51,22 @@ public class User implements UserDetails {
         this.email=email;
     }
 
+    public String getUserFirstname() {
+        return userFirstname;
+    }
+
+    public void setUserFirstname(String userFirstname) {
+        this.userFirstname = userFirstname;
+    }
+
+    public String getUserLastname() {
+        return userLastname;
+    }
+
+    public void setUserLastname(String userLastname) {
+        this.userLastname = userLastname;
+    }
+
     public User() {
     }
 
@@ -57,11 +79,11 @@ public class User implements UserDetails {
     }
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

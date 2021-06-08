@@ -1,4 +1,4 @@
-package com.shkubel.project.models;
+package com.shkubel.project.models.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +9,7 @@ public class Seller {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private String name;
     private String BankAccount;
@@ -17,7 +17,7 @@ public class Seller {
     public Seller() {
     }
 
-    public Seller(long id, String name, String bankAccount) {
+    public Seller(Long id, String name, String bankAccount) {
         this.id = id;
         this.name = name;
         BankAccount = bankAccount;
@@ -27,7 +27,7 @@ public class Seller {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

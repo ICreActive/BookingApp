@@ -1,8 +1,7 @@
 package com.shkubel.project.web;
 
-import com.shkubel.project.models.KlassAppartament;
-import com.shkubel.project.models.OrderUser;
-import com.shkubel.project.models.User;
+import com.shkubel.project.models.entity.KlassAppartament;
+import com.shkubel.project.models.entity.OrderUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

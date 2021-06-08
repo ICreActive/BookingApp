@@ -1,7 +1,8 @@
 package com.shkubel.project.web;
 
-import com.shkubel.project.models.User;
-import com.shkubel.project.service.UserService;
+import com.shkubel.project.mapper.UserMapper;
+import com.shkubel.project.models.entity.User;
+import com.shkubel.project.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("userNew") User user) {
@@ -37,27 +38,24 @@ public class UserController {
             model.addAttribute("usernameError", "This username already exists. ");
             return "/users/new";
         } 
-        userService.saveUser(user);
 
         return "redirect:/";
     }
     @GetMapping ("/myprofile")
     public String getProfile (Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("userId", user.getId());
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("email", user.getEmail());
+        model.addAttribute("user", UserMapper.INSTANCE.toDTO(user));
         return "users/myprofile";
     }
 
     @GetMapping("/myprofile/{id}/edit")
-    public String userEdit(@PathVariable("id") long id, Model model) {
+    public String userEdit(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "users/edit";
     }
 
     @PostMapping("/myprofile/{id}/edit")
     public String userUpd(@ModelAttribute("user") @Valid User user,
-                          BindingResult bindingResult, @PathVariable("id") long id) {
+                          BindingResult bindingResult, @PathVariable("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "users/edit";
         }

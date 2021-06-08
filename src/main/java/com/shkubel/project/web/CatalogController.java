@@ -1,10 +1,9 @@
 package com.shkubel.project.web;
 
 
-import com.shkubel.project.models.Hotel;
-import com.shkubel.project.models.KlassAppartament;
-import com.shkubel.project.service.BookingService;
-import com.shkubel.project.service.HotelService;
+import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.KlassAppartament;
+import com.shkubel.project.service.impl.HotelServiceImpl;
 import com.shkubel.project.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class CatalogController {
 
     @Autowired
-    BookingService bookingService;
-    @Autowired
-    HotelService hotelService;
+    HotelServiceImpl hotelService;
 
     @GetMapping("/catalog")
     public String hotels (Model model) {
-        Iterable <Hotel> hotels = bookingService.findAllHotel();
+        Iterable <Hotel> hotels = hotelService.findAllHotel();
         model.addAttribute("hotels", hotels);
         return "/hotels/catalog";
     }
@@ -45,8 +42,8 @@ public class CatalogController {
 
 
     @GetMapping("/{id}")
-    public String show (@PathVariable("id") long id, Model model) {
-        model.addAttribute("hotel", bookingService.findHotelById(id));
+    public String show (@PathVariable("id") Long id, Model model) {
+        model.addAttribute("hotel", hotelService.findHotelById(id));
         return "hotels/id";
     }
 

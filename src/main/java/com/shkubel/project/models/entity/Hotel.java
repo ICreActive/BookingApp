@@ -1,4 +1,6 @@
-package com.shkubel.project.models;
+package com.shkubel.project.models.entity;
+
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,13 +11,22 @@ public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
+
     private String title;
+
     private String description;
+
+    @Value("Unknown")
     private KlassAppartament klassApartment;
-    private int numberOfSeats;
-    private int price;
+
+    @Column(columnDefinition = "integer default 0")
+    private Integer numberOfSeats;
+    @Column(columnDefinition = "integer default 0")
+    private Integer price;
+
     private LocalDate dateStart;
+
     private LocalDate dateFinish;
 
     @OneToMany
@@ -25,18 +36,11 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(String title, String description, KlassAppartament klassApartment, int numberOfSeats) {
-        this.title = title;
-        this.description = description;
-        this.klassApartment = klassApartment;
-        this.numberOfSeats = numberOfSeats;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,10 +50,6 @@ public class Hotel {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getDescription() {
@@ -76,11 +76,11 @@ public class Hotel {
         return numberOfSeats;
     }
 
-    public void setQuantityRoom(int quantityRoom) {
+    public void setQuantityRoom(Integer quantityRoom) {
         this.numberOfSeats = quantityRoom;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -88,7 +88,7 @@ public class Hotel {
         return numberOfSeats;
     }
 
-    public void setNumberOfSeats(int numberOfSeats) {
+    public void setNumberOfSeats(Integer numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
 

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>User Profile</title>
 </head>
@@ -11,18 +12,22 @@
     <thead>
 
     <tr>
-        <th scope="col">id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Login</th>
+        <th>id</th>
+        <th>Login</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>E-mail</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-                <form method="Get" th:action="'/users/profile/'+ ${user.getId()} + '/edit'">
-                <th scope="row" th:text="${user.getId()}">VALUE</th>
-                <td th:text="${user.getUsername()}">VALUE</td>
-                <td th:text="${user.getEmail()}">VALUE</td>
-                </form>
+        <form method="Get" th:action="'/users/profile/'+ ${user.getId()} + '/edit'">
+            <th th:text="${user.getId()}">VALUE</th>
+            <th th:text="${user.getUsername()}">VALUE</th>
+            <td th:text="${user.getUserFirstname()}">VALUE</td>
+            <td th:text="${user.getUserLastname()}">VALUE</td>
+            <td th:text="${user.getEmail()}">VALUE</td>
+        </form>
 
     </tr>
     </tbody>
