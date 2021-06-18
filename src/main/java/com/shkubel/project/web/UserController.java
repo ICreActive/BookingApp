@@ -35,7 +35,7 @@ public class UserController {
             return "/users/new";
         }
         if (!userService.saveUser(user)) {
-            model.addAttribute("usernameError", "This username already exists. ");
+            model.addAttribute("usernameError", "This username or e-mail already exists");
             return "/users/new";
         } 
 

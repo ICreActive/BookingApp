@@ -20,6 +20,12 @@ public class HotelServiceImpl implements HotelService {
     @Autowired
     private HotelRepository hotelRepository;
 
+    public Hotel createHotel () {
+        Hotel hotel = new Hotel();
+        hotel.setNumberOfSeats(0);
+        hotel.setPrice(0);
+        return hotel;
+    }
 
     @Override
     public List<Hotel> findHotelByNumberOfSeats(Integer numberOfSeats) {
@@ -41,11 +47,10 @@ public class HotelServiceImpl implements HotelService {
 
         List<Hotel> hotelsWithNOS = findHotelByNumberOfSeats(orderUser.getNumberOfSeats());
 
-        List<Hotel> hotelsOffers = hotelsWithNOS.stream().
+        return hotelsWithNOS.stream().
                 filter(Objects::nonNull)
                 .filter(klass -> klass.getKlassApartment().equals(orderUser.getKlassOfApartment()))
                 .collect(Collectors.toList());
-        return hotelsOffers;
     }
 
     @Override

@@ -19,11 +19,11 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
     @Autowired
-    OrderServiceImpl orderServiceImpl;
+    private OrderServiceImpl orderServiceImpl;
     @Autowired
-    ValidationUtil validationUtil;
+    private ValidationUtil validationUtil;
 
    @PostMapping("/")
     public String OrderSave(@AuthenticationPrincipal User user, @ModelAttribute("userOrder") OrderUser order, BindingResult bindingResult, Model model) throws Exception {
@@ -38,7 +38,7 @@ public class OrderController {
 
     @GetMapping("/myprofile/orders")
     public String userOrders(Model model, @AuthenticationPrincipal User user) {
-       List<OrderUser> orders = orderServiceImpl.findOrderByUserId(user.getId());
+       List<OrderUser> orders = orderServiceImpl.findOrderUsersByUserId(user.getId());
        model.addAttribute("userOrder", orders);
         return "order/orders";
     }

@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -21,11 +23,11 @@ import java.util.Optional;
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -43,33 +45,43 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public List <User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    @Override
     public List<User> allUsers() {
         return userRepository.findAll();
     }
 
     @Override
+    @Transactional
     public boolean saveUser(User user) {
         User userFromDB = userRepository.findUserByUsername(user.getUsername().toLowerCase(Locale.ROOT));
-        if (userFromDB != null && !userFromDB.equals(user)) {
+        if (userFromDB != null) {
             return false;
         }
         user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setUsername(user.getUsername().toLowerCase(Locale.ROOT));
+        user.setUserActive(true);
         userRepository.save(user);
         return true;
     }
 
     @Override
+    @Transactional
     public boolean deleteUser(Long userId) {
         if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
+            User user = userRepository.findById(userId).get();
+            user.setUserActive(false);
             return true;
         }
         return false;
     }
 
     @Override
+    @Transactional
     public boolean updateUser(Long userId, User user) {
         if (userRepository.findById(userId).isPresent()) {
             User userInDB = userRepository.findById(userId).get();
@@ -78,6 +90,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<User> findUsersByUserActive(@NotNull boolean userActive) {
+        return userRepository.findUsersByUserActive();
     }
 
 }

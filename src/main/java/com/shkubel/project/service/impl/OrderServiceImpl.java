@@ -27,13 +27,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderUser findOrderById (long orderId) {
+    public OrderUser findOrderById (Long orderId) {
         Optional <OrderUser> orderInDB = orderRepository.findById(orderId);
         return orderInDB.orElse(new OrderUser());
     }
 
     @Override
-    public boolean deleteOrderById (long orderId) {
+    public boolean deleteOrderById (Long orderId) {
         if (orderRepository.findById(orderId).isPresent()) {
             orderRepository.deleteById(orderId);
             return true;
@@ -43,13 +43,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int bookingPeriod (OrderUser orderUser) {
         Period days = Period.between(orderUser.getLocalDateFinish(), orderUser.getLocalDateStart());
-        return days.getDays();
+        return Math.abs(days.getDays());
     }
-
 
     @Override
-    public List<OrderUser> findOrderByUserId(long userId) {
-        return em.createQuery("SELECT u FROM OrderUser u WHERE u.user.id = :userId", OrderUser.class)
-                .setParameter("userId", userId).getResultList();
+    public List<OrderUser> findOrderUsersByUserId(Long userId) {
+        return orderRepository.findOrderUsersByUserId(userId);
     }
+
 }

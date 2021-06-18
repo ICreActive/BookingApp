@@ -10,19 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InvoiceServiceImpl implements InvoiceService {
+public class InvoiceServiceImpl {
 
-    @Autowired
-    InvoiceRepository invoiceRepository;
-
-    @Override
-    public Invoice newInvoiceFromHotel(Hotel hotel, OrderUser orderUser, Seller seller) {
-        Invoice invoice = new Invoice();
-        invoice.setSeller(seller);
-        invoice.setUser(orderUser.getUser());
-        invoice.setHotel(hotel);
-        return invoice;
-    }
+//    @Autowired
+//    InvoiceRepository invoiceRepository;
+//
+//    @Override
+//    public Invoice newInvoiceFromHotel(Hotel hotel, OrderUser orderUser, Seller seller) {
+//        Invoice invoice = new Invoice();
+//        invoice.setSeller(seller);
+//        invoice.setUser(orderUser.getUser());
+//        invoice.setHotel(hotel);
+//        return invoice;
+//    }
 
 
 }

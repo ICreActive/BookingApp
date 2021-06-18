@@ -7,6 +7,7 @@ public class UserDTO {
     private String userFirstname;
     private String userLastname;
     private String email;
+    private String isUserActive;
 
     public UserDTO() {
     }
@@ -41,5 +42,12 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getIsUserActive() {
+        return isUserActive;
+    }
+
+    public void setIsUserActive(String isUserActive) {
+        this.isUserActive = isUserActive;
     }
 }

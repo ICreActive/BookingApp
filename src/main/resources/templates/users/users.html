@@ -6,17 +6,17 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Пользователи</title>
+    <title th:text="#{title.text}"></title>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Navbar</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:text="#{naviname.text}">Users page</a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Features</a>
-            <a class="nav-item nav-link" href="#">Pricing</a>
-            <a class="nav-item nav-link disabled" href="#">Disabled</a>
+            <a class="nav-item nav-link active" href="/administrator" th:text="#{back.text}"><span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#" th:text="#{showAllusr.text}"></a>
+            <a class="nav-item nav-link" href="#" th:text="#{showActive.text}"></a>
+            <a class="nav-item nav-link disabled" href="/" th:text="#{home.text}"></a>
         </div>
     </div>
     <form class="form-inline" method="post">
@@ -29,9 +29,10 @@
     <thead>
     <tr>
         <th scope="col">id</th>
-        <th scope="col">Name</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Role</th>
+        <th scope="col" th:text="#{nick.text}">Nickname</th>
+        <th scope="col" th:text="#{email.text}">E-mail</th>
+        <th scope="col" th:text="#{role.text}">Role</th>
+        <th scope="col" th:text="#{status.text}">Active Status</th>
     </tr>
     </thead>
     <tbody>
@@ -44,16 +45,18 @@
                            th:text="${element.getEmail()}">user</a></th>
         <th scope="col"><a th:href="@{/administrator/users/profile/{id}(id=${element.getId()})}"
                            th:text="${element.getRoles()}">user</a></th>
+        <th scope="col"><a th:href="@{/administrator/users/profile/{id}(id=${element.getId()})}"
+                           th:text="${element.isUserActive()}">user</a></th>
+
         <form method="post">
             <th scope="col" name="delete">
                 <input type="hidden" name="userId" th:value="${element.id}"/>
                 <input type="hidden" name="action" value="delete">
-                <button type="submit">Delete</button>
+                <button type="submit" th:text="#{delete.button}">Delete</button>
             </th>
         </form>
     </tr>
     </tbody>
 </table>
-
 </body>
 </html>

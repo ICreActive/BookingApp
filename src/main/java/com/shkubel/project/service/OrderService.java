@@ -7,9 +7,9 @@ import java.util.List;
 public interface OrderService {
 
     List<OrderUser> allOrders();
-    OrderUser findOrderById (long orderId);
-    boolean deleteOrderById (long orderId);
+    OrderUser findOrderById (Long orderId);
+    boolean deleteOrderById (Long orderId);
     int bookingPeriod (OrderUser orderUser);
-    List<OrderUser> findOrderByUserId(long userId);
+    List<OrderUser> findOrderUsersByUserId(Long userId);
 
 }

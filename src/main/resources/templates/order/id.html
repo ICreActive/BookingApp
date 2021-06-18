@@ -10,7 +10,7 @@
 <div class="page">
     <div th:insert="header::copy"></div>
     <H2>Order Details </H2>
-    <form th:method="Post" th:action="@{/invoice/new}" th:object="${order}">
+    <form th:method="Post" th:action="@{/administrator/invoice/new}" th:object="${order}">
         <table class="table">
             <tr>
                 <th>User</th>

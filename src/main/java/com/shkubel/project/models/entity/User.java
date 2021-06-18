@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
@@ -19,21 +20,25 @@ public class User implements UserDetails {
     private Long id;
 
     @NotEmpty(message = "Pass should not be empty")
-    @Size(min=6, message = "Pass should be more then 6 characters")
+    @Size(min = 6, message = "Pass should be more then 6 characters")
     private String password;
 
     @Transient
     private String passwordConfirm;
 
     @NotEmpty(message = "Name should not be empty")
-    @Size(min=3, max=15, message = "Name should be between 3 and 15 characters")
+    @Size(min = 3, max = 15, message = "Name should be between 3 and 15 characters")
     private String username;
 
     @NotEmpty
-    @Size(min=2, max=15, message = "Name should be between 2 and 15 characters")
+    @Size(min = 2, max = 15, message = "Name should be between 2 and 15 characters")
     private String userFirstname;
     @NotEmpty
     private String userLastname;
+
+    @Column (name = "is_active")
+    @NotNull
+    private boolean isUserActive;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -41,14 +46,14 @@ public class User implements UserDetails {
     @Email
     private String email;
 
-    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderUser> orders;
 
 
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
-        this.email=email;
+        this.email = email;
     }
 
     public String getUserFirstname() {
@@ -114,11 +119,21 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public Set<OrderUser> getOrders() {
         return orders;
     }
+
     public void setOrders(Set<OrderUser> orders) {
         this.orders = orders;
+    }
+
+    public boolean isUserActive() {
+        return isUserActive;
+    }
+
+    public void setUserActive(boolean userActive) {
+        isUserActive = userActive;
     }
 
     @Override
@@ -156,7 +171,7 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id;
+        return id.equals(user.id);
     }
 
     @Override
@@ -166,8 +181,7 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User " +
-                 username + '\'' +
-                roles;
+        return "User: " +
+                userLastname + ' ' + userFirstname;
     }
 }

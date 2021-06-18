@@ -10,30 +10,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/hotels")
 public class CatalogController {
 
     @Autowired
-    HotelServiceImpl hotelService;
+    private HotelServiceImpl hotelService;
 
     @GetMapping("/catalog")
     public String hotels (Model model) {
-        Iterable <Hotel> hotels = hotelService.findAllHotel();
+        List<Hotel> hotels = hotelService.findAllHotel();
         model.addAttribute("hotels", hotels);
         return "/hotels/catalog";
     }
 
-
     @GetMapping("/new")
     public String newHotel (Model model) {
-        model.addAttribute("hotel", new Hotel());
+        model.addAttribute("hotel", hotelService.createHotel());
         model.addAttribute("klassAp", KlassAppartament.values());
         return "/hotels/new";
     }
     @PostMapping("/new")
     public String add (@ModelAttribute("hotel") Hotel hotel, Model model) {
-        if (!ValidationUtil.validationHotel(hotel)) {
+        if (!ValidationUtil.validationHotel(hotel).equals("success")) {
             return "/hotels/new";
         }
         hotelService.saveHotel(hotel);
