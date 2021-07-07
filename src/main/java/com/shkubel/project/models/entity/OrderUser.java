@@ -29,6 +29,9 @@ public class OrderUser {
     @ManyToOne (fetch = FetchType.EAGER)
     private User user;
 
+    private String creatingDate;
+    private String updatingDate;
+
     public OrderUser() {
     }
 
@@ -86,5 +89,21 @@ public class OrderUser {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getCreatingDate() {
+        return creatingDate;
+    }
+
+    public void setCreatingDate(String creatingDate) {
+        this.creatingDate = creatingDate;
+    }
+
+    public String getUpdatingDate() {
+        return updatingDate;
+    }
+
+    public void setUpdatingDate(String updatingDate) {
+        this.updatingDate = updatingDate;
     }
 }

@@ -1,64 +1,128 @@
 <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Description</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/hotelView.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="About Us">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title th:text="#{aboutUs.text}">about us</title>
+    <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/about-us.css" media="screen">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 3.18.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "",
+        "logo": "/resources/img/default-logo.png"
+    }</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="about us">
+    <meta property="og:type" content="website">
 </head>
 <body>
-<div class="page">
-    <div th:insert="header::copy"></div>
-    <H2>Order Details </H2>
-    <form th:method="Post" th:action="@{/administrator/invoice/new}" th:object="${order}">
-        <table class="table">
-            <tr>
-                <th>User</th>
-                <th>Check-in</th>
-                <th>check-out</th>
-                <th>KlassApartment</th>
-                <th>NumSeats</th>
-            </tr>
+<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
+</header>
+<section class="u-clearfix u-gradient u-section-1" id="sec-73fe">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
+            <div class="u-layout">
+                <div class="u-layout-row" style="max-height: 100%">
+<!--                    <div class="u-align-center u-container-style u-layout-cell u-left-cell u-size-23 u-layout-cell-1">-->
+<!--                    </div>-->
+                </div>
+                <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-37 u-layout-cell-2">
+                    <div class="u-container-layout u-valign-middle u-container-layout-2">
+                        <H2>Order Details </H2>
+                        <form th:method="Post" th:action="@{/administrator/invoice/new}" th:object="${order}">
+                            <div class="container">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td>User</td>
+                                        <td th:text="${order.getUser().getUserFirstname()}+' '+ ${order.getUser().getUserLastname()}">
+                                            VALUE
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Check-in</td>
+                                        <td th:text="${order.getLocalDateStart()}">VALUE</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Check-out</td>
+                                        <td th:text="${order.getLocalDateFinish()}">VALUE</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Klass</td>
+                                        <td th:text="${order.getKlassOfApartment()}">VALUE</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Guests</td>
+                                        <td th:text="${order.getNumberOfSeats()}">VALUE</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div sec:authorize="hasRole('ADMIN')">
 
-            <tbody>
-            <tr>
-                <td th:text="${order.getUser().getUsername()}">VALUE</td>
-                <td th:text="${order.getLocalDateStart()}">VALUE</td>
-                <td th:text="${order.getLocalDateFinish()}">VALUE</td>
-                <td th:text="${order.getKlassOfApartment()}">VALUE</td>
-                <td th:text="${order.getNumberOfSeats()}">VALUE</td>
-            </tr>
-            </tbody>
-        </table>
-    <div sec:authorize="hasRole('ADMIN')">
+                                <H2>Similar offers </H2>
 
-        <H2>Similar offers </H2>
+                                <div th:if="${!offers.isEmpty()}">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>KlassApartment</th>
+                                            <th>NumSeats</th>
+                                            <th>Price</th>
+                                        </tr>
 
-        <br/>
-        <table class="table">
-            <tr>
-                <th>Title</th>
-                <th>KlassApartment</th>
-                <th>NumSeats</th>
-                <th>Price</th>
-            </tr>
+                                        <tbody th:each="element: ${offers}">
+                                        <tr>
+                                            <td th:text="${element.getTitle()}">VALUE</td>
+                                            <td th:text="${element.getKlassApartment()}">VALUE</td>
+                                            <td th:text="${element.getNumberOfSeats()}">VALUE</td>
+                                            <td th:text="${element.price}">VALUE</td>
+                                            <td>
+                                                <input type="hidden" name="orderId" th:value="${order.getId()}"/>
+                                                <button type="submit" th:value="${element.getId()}" name="offerId">
+                                                    Send
+                                                    Invoice
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
 
-            <tbody th:each="element: ${offers}">
-            <tr >
-                <td th:text="${element.getTitle()}">VALUE</td>
-                <td th:text="${element.getKlassApartment()}">VALUE</td>
-                <td th:text="${element.getNumberOfSeats()}">VALUE</td>
-                <td th:text="${element.price}">VALUE</td>
-                <td>
-                <input type="hidden" name="orderId" th:value="${order.getId()}"/>
-                    <button type="submit" th:value="${element.getId()}" name="offerId">Send Invoice</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                                </div>
+                                <H5 th:if="${offers.isEmpty()}"> None offers </H5>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </form>
-    <footer th:insert="footer::copy">footer</footer>
-</div>
+    </div>
+</section>
+
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+"></footer>
+
 </body>
 </html>
+

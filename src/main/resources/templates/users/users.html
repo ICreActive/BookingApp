@@ -14,8 +14,8 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/administrator" th:text="#{back.text}"><span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#" th:text="#{showAllusr.text}"></a>
-            <a class="nav-item nav-link" href="#" th:text="#{showActive.text}"></a>
+            <a class="nav-item nav-link" href="/administrator/users" th:text="#{showAllusr.text}"></a>
+            <a class="nav-item nav-link" href="/administrator/users/active" th:text="#{showActive.text}"></a>
             <a class="nav-item nav-link disabled" href="/" th:text="#{home.text}"></a>
         </div>
     </div>
@@ -51,8 +51,10 @@
         <form method="post">
             <th scope="col" name="delete">
                 <input type="hidden" name="userId" th:value="${element.id}"/>
-                <input type="hidden" name="action" value="delete">
-                <button type="submit" th:text="#{delete.button}">Delete</button>
+                <input type="hidden" th:if="${element.isUserActive()}" name="action" th:value="delete">
+                <input type="hidden" th:if="${!element.isUserActive()}" name="action" th:value="restore">
+                <button type="submit" th:if="${element.isUserActive()}" th:text="#{delete.button}"></button>
+                <button type="submit" th:if="${!element.isUserActive()}" th:text="#{restore.button}"></button>
             </th>
         </form>
     </tr>

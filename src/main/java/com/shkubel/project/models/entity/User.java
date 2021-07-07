@@ -49,6 +49,12 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderUser> orders;
 
+    private String creatingDate;
+    private String updatingDate;
+    private String address;
+
+    private String activationCode;
+
 
     public User(String username, String password, String email) {
         this.username = username;
@@ -134,6 +140,38 @@ public class User implements UserDetails {
 
     public void setUserActive(boolean userActive) {
         isUserActive = userActive;
+    }
+
+    public String getCreatingDate() {
+        return creatingDate;
+    }
+
+    public void setCreatingDate(String creatingDate) {
+        this.creatingDate = creatingDate;
+    }
+
+    public String getUpdatingDate() {
+        return updatingDate;
+    }
+
+    public void setUpdatingDate(String updatingDate) {
+        this.updatingDate = updatingDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 
     @Override

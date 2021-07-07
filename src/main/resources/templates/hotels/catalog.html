@@ -1,26 +1,47 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Our suggestions</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/responsive.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="About Us">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title th:text="#{aboutUs.text}">about us</title>
+    <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/about-us.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 3.18.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="about us">
+    <meta property="og:type" content="website">
+
 </head>
 <body>
-<div class="page">
-    <div th:insert="~{header::copy}"></div>
-    <table class="table">
-        <tr th:each="elem:${hotels}">
-            <br>
-            <th><a th:href="@{/hotels/{id}(id=${elem.getId()})}" th:text="${elem.getTitle()}"> title </a>
-                <p th:text="${elem.getDescription()}"> description </p>
-        </tr>
-    </table>
+<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
+</header>
+<div class="page" >
+
+    <ul>
+        <li th:each="elem:${hotels}" >
+            <a th:href="@{/hotels/{id}(id=${elem.getId()})}">
+                <h2 th:text="${elem.getTitle()}">Title #1</h2>
+            </a>
+        </li>
+    </ul>
+
     <form method="get" action="/hotels/new">
-        <button type="submit">Create new suggestion</button>
+        <button type="submit" class="">Create new</button>
     </form>
-    <footer th:insert="~{footer::copy}"></footer>
+
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+"> </footer>
+
 </div>
 </body>
 </html>

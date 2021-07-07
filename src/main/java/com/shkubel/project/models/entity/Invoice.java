@@ -16,6 +16,9 @@ public class Invoice {
     @ManyToOne
     private Hotel hotel;
 
+    private String creatingDate;
+    private String updatingDate;
+
     private Boolean paid;
 
 
@@ -65,7 +68,20 @@ public class Invoice {
         return paid;
     }
 
-    public void setPaid(Boolean paid) {
-        this.paid = paid;
+    public String getCreatingDate() {
+        return creatingDate;
     }
+
+    public void setCreatingDate(String creatingDate) {
+        this.creatingDate = creatingDate;
+    }
+
+    public String getUpdatingDate() {
+        return updatingDate;
+    }
+
+    public void setUpdatingDate(String updatingDate) {
+        this.updatingDate = updatingDate;
+    }
+
 }

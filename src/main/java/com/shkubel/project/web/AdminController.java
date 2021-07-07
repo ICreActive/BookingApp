@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -20,12 +23,15 @@ public class AdminController {
 
     @Autowired
     private UserServiceImpl userService;
-    @Autowired
-    private OrderServiceImpl orderServiceImpl;
-    @Autowired
-    private SellerServiceImpl sellerServiceImpl;
-    @Autowired
-    private HotelServiceImpl hotelService;
+    private final OrderServiceImpl orderServiceImpl;
+    private final SellerServiceImpl sellerServiceImpl;
+    private final HotelServiceImpl hotelService;
+
+    public AdminController(HotelServiceImpl hotelService, SellerServiceImpl sellerServiceImpl, OrderServiceImpl orderServiceImpl) {
+        this.hotelService = hotelService;
+        this.sellerServiceImpl = sellerServiceImpl;
+        this.orderServiceImpl = orderServiceImpl;
+    }
 
 
     @GetMapping("/users")
@@ -47,6 +53,8 @@ public class AdminController {
                              Model model) {
         if (action.equals("delete")) {
             userService.deleteUser(userId);
+        } else if (action.equals("restore")) {
+            userService.restoreUser(userId);
         }
         return "redirect:users";
     }
@@ -98,6 +106,36 @@ public class AdminController {
         model.addAttribute("period",bookingPeriod);
 
         return "/invoice/new";
+    }
+
+    @GetMapping("/users/active")
+    public String usersActive(Model model) {
+        model.addAttribute("users", userService.findUsersByStatus(true));
+        return "users/users";
+    }
+
+    @GetMapping("/sellers")
+    public String sellers(Model model) {
+        List<Seller> sellers = sellerServiceImpl.findAllSeller();
+        model.addAttribute("sellers", sellers);
+        return "users/users";
+    }
+
+    @GetMapping("/sellers/{id}/edit")
+    public String userEdit(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("seller", sellerServiceImpl.findSellerById(id));
+        return "seller/edit";
+    }
+
+    @PostMapping("/sellers/{id}/edit")
+    public String userUpd(@ModelAttribute("seller") @Valid Seller seller,
+                          BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+        final String s = "seller/edit";
+        if (bindingResult.hasErrors()) {
+            return s;
+        }
+        sellerServiceImpl.update(id, seller);
+        return "redirect:/users/myprofile";
     }
 
 }

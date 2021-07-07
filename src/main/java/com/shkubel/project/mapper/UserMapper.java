@@ -3,11 +3,12 @@ package com.shkubel.project.mapper;
 import com.shkubel.project.dto.UserDTO;
 import com.shkubel.project.models.entity.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
+@Mapper (config = CommonMapperConfig.class,
+        componentModel = "spring")
+@Component
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-    UserDTO toDTO (User user);
 
+    UserDTO toDTO (User user);
 }

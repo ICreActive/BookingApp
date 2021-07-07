@@ -9,4 +9,5 @@ public interface SellerService {
     List<Seller> findAllSeller();
     Boolean saveSeller(Seller seller);
 
+    void update(Long id, Seller seller);
 }

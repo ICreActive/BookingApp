@@ -137,7 +137,7 @@ header a.hamburger{
     margin-top: 41px;
     width: 24px;
     height: 19px;
-    background: url('../img/hamburger_icon.png') no-repeat;
+    background: url('/resources/img/hamburger_icon.png') no-repeat;
 }
 
 header nav{

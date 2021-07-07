@@ -1,5 +1,6 @@
 package com.shkubel.project.web;
 
+import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.repo.OrderRepository;
@@ -25,12 +26,18 @@ public class OrderController {
     @Autowired
     private ValidationUtil validationUtil;
 
-   @PostMapping("/")
-    public String OrderSave(@AuthenticationPrincipal User user, @ModelAttribute("userOrder") OrderUser order, BindingResult bindingResult, Model model) throws Exception {
+    @GetMapping("/orders/new")
+    public String newOrder(@ModelAttribute("userOrder") OrderUser order, Model model) {
+        model.addAttribute("klassAp", KlassAppartament.values());
+        return "order/order-new";
+    }
+
+   @PostMapping("/orders/new")
+    public String OrderSave(@AuthenticationPrincipal User user, @ModelAttribute("userOrder") OrderUser order, BindingResult bindingResult, Model model) {
        if (validationUtil.ValidationDate(order.getLocalDateStart(),order.getLocalDateFinish())) {
            order.setUser(user);
            orderRepository.save(order);
-           return "static/index";
+           return "static/home";
        }
        model.addAttribute("message", "DateError!");
        return "static/index";
@@ -58,5 +65,7 @@ public class OrderController {
         model.addAttribute("order", order);
         return "order/id";
     }
+
+
 
 }

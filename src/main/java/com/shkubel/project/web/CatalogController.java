@@ -6,11 +6,16 @@ import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.service.impl.HotelServiceImpl;
 import com.shkubel.project.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/hotels")
@@ -18,6 +23,9 @@ public class CatalogController {
 
     @Autowired
     private HotelServiceImpl hotelService;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @GetMapping("/catalog")
     public String hotels (Model model) {
@@ -33,7 +41,23 @@ public class CatalogController {
         return "/hotels/new";
     }
     @PostMapping("/new")
-    public String add (@ModelAttribute("hotel") Hotel hotel, Model model) {
+    public String add (@ModelAttribute("hotel") Hotel hotel, Model model, @RequestPart ("file") MultipartFile file) throws IOException {
+
+        if (file!=null && !file.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uniqueFile = UUID.randomUUID().toString();
+            String resultFilename = uniqueFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath +"/"+ resultFilename));
+
+            hotel.setFilename(resultFilename);
+        }
+
+
         if (!ValidationUtil.validationHotel(hotel).equals("success")) {
             return "/hotels/new";
         }
@@ -45,7 +69,7 @@ public class CatalogController {
     @GetMapping("/{id}")
     public String show (@PathVariable("id") Long id, Model model) {
         model.addAttribute("hotel", hotelService.findHotelById(id));
-        return "hotels/id";
+        return "hotels/hotelPage";
     }
 
 }

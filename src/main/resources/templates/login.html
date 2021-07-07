@@ -9,6 +9,8 @@
 <body>
 <div class="container">
   <img src="https://dwstroy.ru/lessons/les3373/demo/img/men.png">
+  <div th:if="${message}" th:text="${message}" style="color: #4CAF50">
+  </div>
 <div th:if="${param.error}">
   Invalid username and password.
 </div>

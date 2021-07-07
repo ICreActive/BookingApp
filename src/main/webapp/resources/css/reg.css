@@ -2,12 +2,13 @@
 
 /* Add padding to containers */
 .container {
+    border: #0f0f0f;
     padding: 16px;
 }
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
-    width: 100%;
+    width: 30%;
     padding: 15px;
     margin: 5px 0 22px 0;
     display: inline-block;
@@ -34,7 +35,7 @@ hr {
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 30%;
     opacity: 0.9;
 }
 

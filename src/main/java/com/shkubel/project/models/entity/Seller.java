@@ -13,6 +13,10 @@ public class Seller {
 
     private String name;
     private String BankAccount;
+    private String address;
+
+    private String creatingDate;
+    private String updatingDate;
 
     public Seller() {
     }
@@ -46,4 +50,21 @@ public class Seller {
     public void setBankAccount(String bankAccount) {
         BankAccount = bankAccount;
     }
+
+    public String getCreatingDate() {
+        return creatingDate;
+    }
+
+    public void setCreatingDate(String creatingDate) {
+        this.creatingDate = creatingDate;
+    }
+
+    public String getUpdatingDate() {
+        return updatingDate;
+    }
+
+    public void setUpdatingDate(String updatingDate) {
+        this.updatingDate = updatingDate;
+    }
+
 }

@@ -1,23 +1,87 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Update user</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/reg.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/UserPage.css" media="screen">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 3.18.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "",
+        "logo": "images/default-logo.png"
+    }</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="UserPage">
+    <meta property="og:type" content="website">
 </head>
 <body>
-    <h1>Редактирование пользователя</h1>
-        <form th:method="POST" th:object="${user}">
-            <label for="name">Enter new name</label>
-    <input  th:value="${user.username}" id="name" name="username" type="text" placeholder="Имя"/>
-            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">ERROR</div>
-    <br/>
-     <input type="text" name="password" placeholder="Введите новый пароль" />
-    <br/>
-            <input type="text" name="passwordConfirm" placeholder="Подтвердите пароль" />
+<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
+
+</header>
+
+    <h3 style="text-align: center">Редактирование пользователя</h3>
+        <form th:method="POST" th:object="${user}" style="padding: 30px">
+
+            <label for="name"> Enter name </label>
+            <input class="form-control" type="text" th:field="*{username}" id="name" pattern="[A-Za-z0-9]+" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error
+            </div>
+            <div style="color: red" th:if="${usernameError}" th:text="${usernameError}">Error</div>
             <br/>
-    <button type="submit">Update</button>
+
+            <label for="firstname"> Enter first name </label>
+            <input class="form-control" type="text" th:field="*{userFirstname}" id="firstname" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('userFirstname')}" th:errors="*{userFirstname}">Error</div>
+            <br/>
+
+            <label for="lastname"> Enter last name </label>
+            <input  class="form-control" type="text" th:field="*{userLastname}" id="lastname" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('userLastname')}" th:errors="*{userLastname}">Error</div>
+            <br/>
+
+            <label for="email"> Enter email </label>
+            <input class="form-control" type="text" th:field="*{email}" id="email" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+            <br/>
+
+            <label for="pass"> Enter password </label>
+            <input class="form-control" type="text" th:field="*{password}" id="pass"/>
+            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
+            </div>
+            </br>
+
+            <label for="passConfirm"> Confirm password </label>
+            <input class="form-control" type="text" th:field="*{passwordConfirm}" id="passConfirm" required/>
+            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
+            </div>
+            <div style="color: red" th:if="${passwordError}" th:text="${passwordError}">Error</div>
+            <br/>
+        <button class="u-btn" type="submit" style="margin-bottom: 30px">Update</button>
         </form>
+
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer"
+            style="position: relative;
+          left: 0;
+            bottom: 0;
+              width: 100%;">
+
+    </footer>
 
 </body>
 </html>

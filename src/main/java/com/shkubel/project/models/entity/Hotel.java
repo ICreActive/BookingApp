@@ -29,12 +29,10 @@ public class Hotel {
 
     private LocalDate dateFinish;
 
+    private String filename;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Invoice> invoice;
-
-
-    public Hotel() {
-    }
 
     public Long getId() {
         return id;
@@ -72,14 +70,6 @@ public class Hotel {
         this.klassApartment = klassApartment;
     }
 
-    public int getQuantityRoom() {
-        return numberOfSeats;
-    }
-
-    public void setQuantityRoom(Integer quantityRoom) {
-        this.numberOfSeats = quantityRoom;
-    }
-
     public void setPrice(Integer price) {
         this.price = price;
     }
@@ -114,5 +104,13 @@ public class Hotel {
 
     public void setDateFinish(LocalDate dateFinish) {
         this.dateFinish = dateFinish;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

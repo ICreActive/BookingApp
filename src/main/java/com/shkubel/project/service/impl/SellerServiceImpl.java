@@ -3,9 +3,10 @@ package com.shkubel.project.service.impl;
 import com.shkubel.project.models.entity.Seller;
 import com.shkubel.project.models.repo.SellerRepository;
 import com.shkubel.project.service.SellerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.shkubel.project.util.DateTimeParser;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -13,8 +14,12 @@ import java.util.List;
 public class SellerServiceImpl implements SellerService {
 
 
-    @Autowired
+    final
     SellerRepository sellerRepository;
+
+    public SellerServiceImpl(SellerRepository sellerRepository) {
+        this.sellerRepository = sellerRepository;
+    }
 
     @Override
     public Seller findSellerById(Long id) {
@@ -29,10 +34,20 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public Boolean saveSeller(Seller seller) {
         Seller sellerInDb = sellerRepository.findSellerByName(seller.getName());
-        if (sellerInDb == null) {
-            return true;
+        return sellerInDb == null;
+    }
+
+    @Override
+    public void update(Long id, Seller seller) {
+
+        if (seller.getId() == id) {
+            if (sellerRepository.findById(id).isPresent()) {
+                Seller sellerInDB = sellerRepository.findById(id).get();
+                sellerInDB.setUpdatingDate(DateTimeParser.parseToString(LocalDateTime.now()));
+                saveSeller(sellerInDB);
+            }
+
         }
-        return false;
     }
 
 }
