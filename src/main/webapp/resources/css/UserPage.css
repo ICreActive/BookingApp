@@ -1,0 +1,234 @@
+.u-section-1 {
+  background-image: linear-gradient(0deg, rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url("/resources/img/ddddddddd-min.jpg");
+  background-position: 50% 50%;
+}
+
+.u-section-1 .u-sheet-1 {
+  min-height: 764px;
+}
+
+.u-section-1 .u-list-1 {
+  width: 839px;
+  margin: 190px 130px 0 auto;
+}
+
+.u-section-1 .u-repeater-1 {
+  grid-template-columns: repeat(3, calc(33.3333% - 12px));
+  min-height: 261px;
+  grid-auto-columns: calc(33.3333% - 12px);
+  grid-gap: 18px;
+}
+
+.u-section-1 .u-list-item-1 {
+  background-image: none;
+}
+
+.u-section-1 .u-container-layout-1 {
+  padding: 30px 21px;
+}
+
+.u-section-1 .u-icon-1 {
+  height: 37px;
+  width: 37px;
+  background-image: none;
+  margin: 0 auto 0 10px;
+}
+
+.u-section-1 .u-text-1 {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 20px 0 0 10px;
+}
+
+.u-section-1 .u-text-2 {
+  font-style: italic;
+  margin: 20px 10px 0;
+}
+
+.u-section-1 .u-list-item-2 {
+  background-image: none;
+}
+
+.u-section-1 .u-container-layout-2 {
+  padding: 30px 21px;
+}
+
+.u-section-1 .u-icon-2 {
+  height: 37px;
+  width: 37px;
+  background-image: none;
+  color: rgb(119, 170, 217) !important;
+  margin: 0 auto 0 10px;
+}
+
+.u-section-1 .u-text-3 {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 20px 0 0 10px;
+}
+
+.u-section-1 .u-text-4 {
+  font-style: italic;
+  margin: 20px 10px 0;
+}
+
+.u-section-1 .u-list-item-3 {
+  background-position: 50% 50%;
+  background-image: none;
+}
+
+.u-section-1 .u-container-layout-3 {
+  padding: 30px 21px;
+}
+
+.u-section-1 .u-icon-3 {
+  height: 37px;
+  width: 37px;
+  background-image: none;
+  color: rgb(119, 170, 217) !important;
+  margin: 0 auto 0 10px;
+}
+
+.u-section-1 .u-text-5 {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 20px 0 0 10px;
+}
+
+.u-section-1 .u-text-6 {
+  font-style: italic;
+  margin: 20px 10px 0;
+}
+
+.u-section-1 .u-text-7 {
+  width: 299px;
+  margin: 251px auto 36px;
+}
+
+.u-section-1 .u-btn-1 {
+  border-style: none none solid;
+  padding: 0;
+}
+
+@media (max-width: 1199px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 726px;
+  }
+
+  .u-section-1 .u-list-1 {
+    margin-top: 321px;
+    height: auto;
+    margin-right: 101px;
+  }
+
+  .u-section-1 .u-repeater-1 {
+    grid-template-columns: repeat(3, calc(33.333333333333336% - 12px));
+    min-height: 239px;
+    grid-auto-columns: calc(33.333333333333336% - 12px);
+  }
+
+  .u-section-1 .u-icon-1 {
+    color: rgb(76, 151, 201) !important;
+  }
+
+  .u-section-1 .u-text-2 {
+    margin-right: 9px;
+  }
+
+  .u-section-1 .u-icon-2 {
+    color: rgb(76, 151, 201) !important;
+  }
+
+  .u-section-1 .u-text-4 {
+    margin-right: 9px;
+  }
+
+  .u-section-1 .u-icon-3 {
+    color: rgb(76, 151, 201) !important;
+  }
+
+  .u-section-1 .u-text-6 {
+    margin-right: 9px;
+  }
+}
+
+@media (max-width: 991px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 808px;
+  }
+
+  .u-section-1 .u-list-1 {
+    margin-top: 226px;
+    width: 720px;
+    margin-right: 0;
+  }
+
+  .u-section-1 .u-repeater-1 {
+    grid-template-columns: repeat(2, calc(50% - 9px));
+    grid-auto-columns: calc(50% - 9px);
+  }
+
+  .u-section-1 .u-text-2 {
+    margin-right: 0;
+  }
+
+  .u-section-1 .u-text-4 {
+    margin-right: 0;
+  }
+
+  .u-section-1 .u-text-6 {
+    margin-right: 0;
+  }
+
+  .u-section-1 .u-text-7 {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 936px;
+  }
+
+  .u-section-1 .u-list-1 {
+    width: 540px;
+  }
+
+  .u-section-1 .u-repeater-1 {
+    grid-auto-columns: calc(100% - 0px);
+  }
+
+  .u-section-1 .u-container-layout-1 {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .u-section-1 .u-container-layout-2 {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .u-section-1 .u-container-layout-3 {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .u-section-1 .u-text-7 {
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 1029px;
+  }
+
+  .u-section-1 .u-list-1 {
+    width: 340px;
+  }
+
+  .u-section-1 .u-repeater-1 {
+    grid-template-columns: repeat(1, 100%);
+    grid-auto-columns: 100%;
+  }
+}

@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding : 0;
+}
+
+h2, p {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+ul, li {
+    list-style: none;
+}
+
+ul {
+    overflow: hidden;
+    padding: 3em;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #60aca5;
+    background: #95b2ff;
+    display: block;
+    height: 10em;
+    width: 10em;
+    padding: 1em;
+}
+
+ul li {
+    margin: 1em;
+    float: left;
+}
