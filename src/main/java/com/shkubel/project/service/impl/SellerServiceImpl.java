@@ -5,8 +5,8 @@ import com.shkubel.project.models.repo.SellerRepository;
 import com.shkubel.project.service.SellerService;
 import com.shkubel.project.util.DateTimeParser;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -32,18 +32,32 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Boolean saveSeller(Seller seller) {
+    @Transactional
+    public boolean saveSeller(Seller seller) {
         Seller sellerInDb = sellerRepository.findSellerByName(seller.getName());
-        return sellerInDb == null;
+        if (sellerInDb == null) {
+            Seller s = new Seller();
+            s.setAddress(seller.getAddress());
+            s.setBankAccount(seller.getBankAccount());
+            s.setName(seller.getName());
+            s.setCreatingDate(DateTimeParser.nowToString());
+            sellerRepository.save(s);
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    public void update(Long id, Seller seller) {
 
+    @Override
+    @Transactional
+    public void update(Long id, Seller seller) {
         if (seller.getId() == id) {
             if (sellerRepository.findById(id).isPresent()) {
                 Seller sellerInDB = sellerRepository.findById(id).get();
-                sellerInDB.setUpdatingDate(DateTimeParser.parseToString(LocalDateTime.now()));
+                sellerInDB.setName(seller.getName());
+                sellerInDB.setBankAccount(seller.getBankAccount());
+                sellerInDB.setAddress(seller.getAddress());
+                sellerInDB.setUpdatingDate(DateTimeParser.nowToString());
                 saveSeller(sellerInDB);
             }
 

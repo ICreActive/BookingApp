@@ -18,4 +18,8 @@ public final class DateTimeParser {
         return LocalDateTime.parse(date, FORMATTER);
     }
 
+    public static String nowToString() {
+        return LocalDateTime.now().format(FORMATTER);
+    }
+
 }

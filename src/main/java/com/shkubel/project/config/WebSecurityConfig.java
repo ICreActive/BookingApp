@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-@EnableWebSecurity (debug = true)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/", "/hotels/**", "/index").permitAll()
-                .antMatchers("/users/new", "/users/activate/*").not().fullyAuthenticated()
+                .antMatchers("/users/new", "/users/activate/*", "/forgot_password", "/reset_password").not().fullyAuthenticated()
                 .antMatchers("/administrator/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()

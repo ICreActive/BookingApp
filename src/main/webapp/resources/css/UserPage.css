@@ -231,4 +231,13 @@
     grid-template-columns: repeat(1, 100%);
     grid-auto-columns: 100%;
   }
+
+
+  input:valid {
+    border-color: green;
+  }
+
+  input:invalid {
+    border-color: red;
+  }
 }

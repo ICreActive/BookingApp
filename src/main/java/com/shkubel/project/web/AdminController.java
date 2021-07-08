@@ -61,7 +61,7 @@ public class AdminController {
 
     @GetMapping("/orders")
     public String showOrds(Model model) {
-        Iterable <OrderUser> orders = orderServiceImpl.allOrders();
+        Iterable<OrderUser> orders = orderServiceImpl.allOrders();
         model.addAttribute("userOrder", orders);
         return "order/orders";
     }
@@ -77,9 +77,9 @@ public class AdminController {
     }
 
     @GetMapping("/orders/{id}")
-    public String showOrder(@PathVariable ("id") Long id, Model model ) {
-        OrderUser order= orderServiceImpl.findOrderById(id);
-        List <Hotel> hotels = hotelService.findOffers(order);
+    public String showOrder(@PathVariable("id") Long id, Model model) {
+        OrderUser order = orderServiceImpl.findOrderById(id);
+        List<Hotel> hotels = hotelService.findOffers(order);
         model.addAttribute("order", order);
         model.addAttribute("offers", hotels);
         return "order/id";
@@ -89,21 +89,21 @@ public class AdminController {
     @PostMapping("/invoice")
     public String invoiceAll(Model model) {
 
-              return "/invoice/invoice";
+        return "/invoice/invoice";
     }
 
     @PostMapping("/invoice/new")
-    public String newInvoice(@RequestParam (defaultValue = "", required = true) Long orderId,
-                             @RequestParam (defaultValue = "", required = true) Long offerId,
+    public String newInvoice(@RequestParam(defaultValue = "", required = true) Long orderId,
+                             @RequestParam(defaultValue = "", required = true) Long offerId,
                              Model model) {
         OrderUser order = orderServiceImpl.findOrderById(orderId);
         Hotel hotel = hotelService.findHotelById(offerId);
-        List <Seller> sellers = sellerServiceImpl.findAllSeller();
+        List<Seller> sellers = sellerServiceImpl.findAllSeller();
         Integer bookingPeriod = orderServiceImpl.bookingPeriod(order);
         model.addAttribute("order", order);
         model.addAttribute("hotel", hotel);
         model.addAttribute("sellers", sellers);
-        model.addAttribute("period",bookingPeriod);
+        model.addAttribute("period", bookingPeriod);
 
         return "/invoice/new";
     }
@@ -118,18 +118,24 @@ public class AdminController {
     public String sellers(Model model) {
         List<Seller> sellers = sellerServiceImpl.findAllSeller();
         model.addAttribute("sellers", sellers);
-        return "users/users";
+        return "seller/seller";
+    }
+
+    @GetMapping("/sellers/{id}")
+    public String sellerShow(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("seller", sellerServiceImpl.findSellerById(id));
+        return "seller/id";
     }
 
     @GetMapping("/sellers/{id}/edit")
-    public String userEdit(@PathVariable("id") Long id, Model model) {
+    public String sellerEdit(@PathVariable("id") Long id, Model model) {
         model.addAttribute("seller", sellerServiceImpl.findSellerById(id));
         return "seller/edit";
     }
 
     @PostMapping("/sellers/{id}/edit")
-    public String userUpd(@ModelAttribute("seller") @Valid Seller seller,
-                          BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+    public String sellerUpd(@ModelAttribute("seller") @Valid Seller seller,
+                            BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
         final String s = "seller/edit";
         if (bindingResult.hasErrors()) {
             return s;
@@ -138,4 +144,23 @@ public class AdminController {
         return "redirect:/users/myprofile";
     }
 
+    @GetMapping("/sellers/new")
+    public String sellerNew(Model model) {
+        Seller seller = new Seller();
+        model.addAttribute("sellerNew", seller);
+        return "seller/new";
+    }
+
+    @PostMapping("/sellers/new")
+    public String saveSeller(@ModelAttribute("sellerNew") @Valid Seller seller, BindingResult bindingResult, Model model) {
+        final String s = "/seller/new";
+        if (bindingResult.hasErrors()) {
+            return s;
+        }
+        if (sellerServiceImpl.saveSeller(seller)) {
+            return "redirect:/";
+        }
+        model.addAttribute("error", "The seller was not saved");
+        return s;
+    }
 }

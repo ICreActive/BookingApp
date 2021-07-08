@@ -21,7 +21,7 @@ public interface UserService {
 
     List<User> findUsersByStatus(@NotNull boolean userActive);
 
-    void restoreUser(Long userId);
+    boolean restoreUser(Long userId);
 
     User findUserByUsername(String username);
 

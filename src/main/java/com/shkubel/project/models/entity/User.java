@@ -55,6 +55,8 @@ public class User implements UserDetails {
 
     private String activationCode;
 
+    private String resetPasswordToken;
+
 
     public User(String username, String password, String email) {
         this.username = username;
@@ -172,6 +174,14 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 
     @Override

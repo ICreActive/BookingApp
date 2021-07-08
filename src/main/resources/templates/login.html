@@ -3,7 +3,7 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
   <link rel="stylesheet" type="text/css" href="/resources/css/login.css">
-  <title>Страница авторизации </title>
+  <title th:text="#{login.title}"></title>
   <meta charset="UTF-8">
 </head>
 <body>
@@ -11,22 +11,20 @@
   <img src="https://dwstroy.ru/lessons/les3373/demo/img/men.png">
   <div th:if="${message}" th:text="${message}" style="color: #4CAF50">
   </div>
-<div th:if="${param.error}">
-  Invalid username and password.
+<div th:if="${param.error}" th:text="#{login.error}">
 </div>
-<div th:if="${param.logout}" style="color: red; font-family:Arial,serif">
-  You have been logged out
+<div th:if="${param.logout}" style="color: red; font-family:Arial,serif" th:text="#{login.logout}">
 </div>
 <form th:action="@{/login}" method="post">
   <div class="dws-input">
-    <input type="text" name="username" placeholder="Введите логин">
+    <input type="text" name="username" th:placeholder="#{login.input}">
   </div>
   <div class="dws-input">
-    <input type="password" name="password" placeholder="Введите пароль">
+    <input type="password" name="password" th:placeholder="#{password.input}">
   </div>
-  <input class="dws-submit" type="submit" name="submit" value="ВОЙТИ"><br />
-  <a href="#">Восстановить пароль</a>
-  <a href="/users/new">Registration</a>
+  <input class="dws-submit" type="submit" name="submit" th:value="#{login.text}"><br />
+  <a href="/forgot_password" th:text="#{forgot.input}">Восстановить пароль</a>
+  <a href="/users/new" th:text="#{reg.button}">Registration</a>
 </form>
 </div>
 </body>

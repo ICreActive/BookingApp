@@ -2,13 +2,14 @@ package com.shkubel.project.models.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Seller {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -27,7 +28,7 @@ public class Seller {
         BankAccount = bankAccount;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -67,4 +68,11 @@ public class Seller {
         this.updatingDate = updatingDate;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

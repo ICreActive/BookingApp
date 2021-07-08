@@ -28,71 +28,45 @@
 <header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
 
 </header>
-    <div class="container">
-        <form th:method="POST" th:object="${userNew}" style="padding: 80px">
+<div class="container">
+    <form th:method="POST" th:object="${sellerNew}" style="padding: 80px">
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="title" th:field="*{username}" type="text">Login</span>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-            <div style="color: red" th:if="${usernameError}" th:text="${usernameError}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="title" type="text">Company name</span>
+            <input th:field="*{name}" type="text" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" type="text" th:field="*{userFirstname}" id="firstname" required></span>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div style="color: red" th:if="${#fields.hasErrors('userFirstname')}" th:errors="*{userFirstname}"></div>
+        <div class="input-group mb-3">
+                <span class="input-group-text" type="text" id="bankAccount" required>Bank details</span>
+            <input th:field="*{bankAccount}" type="text" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div style="color: red" th:if="${#fields.hasErrors('bankAccount')}" th:errors="*{bankAccount}"></div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" type="text" th:field="*{userLastname}" id="lastname" required></span>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div style="color: red" th:if="${#fields.hasErrors('userLastname')}" th:errors="*{userLastname}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" type="text" id="lastname" required>Legal address</span>
+            <input th:field="*{address}"  type="text" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+        <div th:if="${error}" th:text="${error}"></div>
+        <button type="submit"
+                class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1">
+            Register
+        </button>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" type="text" th:field="*{email}" id="email" required></span>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    </form>
+</div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" type="text" th:field="*{address}" id="address" required></span>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-default">
-
-            <div class="input-group mb-3">
-                <span class="input-group-text" type="text" th:field="*{password}" id="pass" required>Password</span>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
-            </div>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text" type="text" th:field="*{passwordConfirm}" id="passConfirm" required>Confirm password</span>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                       aria-describedby="inputGroup-sizing-default">
-            </div>
-              <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
-            </div>
-            <div style="color: red" th:if="${passwordError}" th:text="${passwordError}">Error</div>
-            <br/>
-                <button type="submit" class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1">Register</button>
-        </form>
-    </div>
-
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer"
-            style="position: absolute;
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer"
+        style="position: absolute;
           left: 0;
             bottom: 0;
               width: 100%;">
 
-    </footer>
+</footer>
 
 
 </body>

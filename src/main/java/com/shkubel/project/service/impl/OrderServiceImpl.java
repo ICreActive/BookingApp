@@ -6,17 +6,12 @@ import com.shkubel.project.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-
-    @PersistenceContext
-    private EntityManager em;
 
     @Autowired
     private OrderRepository orderRepository;

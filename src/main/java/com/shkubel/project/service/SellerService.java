@@ -7,7 +7,7 @@ public interface SellerService {
 
     Seller findSellerById(Long id);
     List<Seller> findAllSeller();
-    Boolean saveSeller(Seller seller);
+    boolean saveSeller(Seller seller);
 
     void update(Long id, Seller seller);
 }
