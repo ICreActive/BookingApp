@@ -21,18 +21,14 @@ public class Invoice {
 
     private Boolean paid;
 
+    @OneToOne
+    private OrderUser orderUser;
 
-    public Invoice(Long id, Seller seller, User user, Hotel hotel) {
-        this.id = id;
-        this.seller = seller;
-        this.user = user;
-        this.hotel = hotel;
-    }
 
     public Invoice() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -84,4 +80,19 @@ public class Invoice {
         this.updatingDate = updatingDate;
     }
 
+    public OrderUser getOrderUser() {
+        return orderUser;
+    }
+
+    public void setOrderUser(OrderUser orderUser) {
+        this.orderUser = orderUser;
+    }
+
+    public Boolean getPaid() {
+        return paid;
+    }
+
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
+    }
 }

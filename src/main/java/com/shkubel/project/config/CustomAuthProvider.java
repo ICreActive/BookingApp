@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
-        User user = userService.findUserByUsername(username);
+        User user = (User) userService.loadUserByUsername(username);
         if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
             if (!user.isUserActive()) {
                 throw new AuthenticationServiceException("user is not active");

@@ -33,10 +33,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user;
+        user = userRepository.findUserByUsername(login);
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            user = userRepository.findUserByEmail(login);
+            if (user == null) {
+                throw new UsernameNotFoundException("User not found");
+            }
         }
         return user;
     }
@@ -119,6 +123,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 userInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 userInDB.setUpdatingDate(DateTimeParser.nowToString());
                 userRepository.save(userInDB);
+
                 return true;
             }
             return false;
@@ -143,9 +148,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return false;
     }
 
-    public User findUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
-    }
 
     @Transactional
     public boolean activateUser(String code) {

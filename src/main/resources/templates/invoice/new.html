@@ -9,14 +9,12 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="/resources/js/invoice.js"></script>
 
-    <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
 <div id="invoice">
     <div class="toolbar hidden-print">
         <div class="text-right">
-            <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>
-            <button class="btn btn-info"><i class="fa fa-file-pdf-o"></i> Export as PDF</button>
+            <a th:href="|http://localhost:8080/administrator/download-pdf|"><span>Download PDF Document</span></a>
         </div>
         <hr>
     </div>
@@ -26,19 +24,18 @@
                 <div class="row">
                     <div class="col">
                         <a target="_blank" href="https://lobianijs.com">
-                            <img src="http://lobianijs.com/lobiadmin/version/1.0/ajax/img/logo/lobiadmin-logo-text-64.png"
-                                 data-holder-rendered="true"/>
+                            <img src="/resources/img/up.png"
+                                 data-holder-rendered="true" style="height: 108px; width: 300px;">
                         </a>
                     </div>
                     <div class="col company-details">
-                        <h2 class="name">
+                        <h2 class="name" th:text="${invoice.getSeller().getName()}">
                             <a target="_blank">
                                 Arboshiki
                             </a>
                         </h2>
-                        <div>455 Foggy Heights, AZ 85004, US</div>
-                        <div>(123) 456-789</div>
-                        <div>company@example.com</div>
+                        <div th:text="${invoice.getSeller().getAddress()}">455 Foggy Heights, AZ 85004, US</div>
+                        <div th:text="${invoice.getSeller().getBankAccount()}"></div>
                     </div>
                 </div>
             </header>
@@ -46,13 +43,16 @@
                 <div class="row contacts">
                     <div class="col invoice-to">
                         <div class="text-gray-light">INVOICE TO:</div>
-                        <h2 class="to">John Doe</h2>
-                        <div class="address">796 Silver Harbour, TX 79273, US</div>
-                        <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
+                        <h2 class="to" th:text="${invoice.getUser.getUserFirstname()} + ' ' + ${invoice.getUser().getUserLastname()}">John Doe</h2>
+                        <div class="address" th:text="${invoice.getUser().getAddress()}">796 Silver Harbour, TX 79273, US</div>
+                        <div class="email" th:text="${invoice.getUser().getEmail()}"><a></a></div>
                     </div>
                     <div class="col invoice-details">
-                        <h1 class="invoice-id">INVOICE 3-2-1</h1>
-                        <div class="date">Date of Invoice: 01/10/2018</div>
+                        <h1 class="invoice-id"><div th:text="INVOICE + ' №' +' '+ ${invoice.getId()}"></div></h1>
+                        <div class="date" >
+                            Date of Invoice:
+                            <div th:text="${invoice.getCreatingDate()}"></div>
+                        </div>
                         <div class="date">Due Date: 30/10/2018</div>
                     </div>
                 </div>
@@ -68,17 +68,17 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="no" th:text="${hotel.getId()}">01</td>
+                        <td class="no" th:text="${invoice.getHotel().getId()}">01</td>
                         <td class="text-left"><h3>
-                            <a target="_blank" th:text="${hotel.title}">
+                            <a target="_blank" th:text="${invoice.getHotel().getTitle()}">
                             </a>
                         </h3>
-                            <div th:text="${hotel.description + ', ' + hotel.numberOfSeats +' guests'} "> </div>
+                            <div th:text="${invoice.getHotel().getDescription() + ', ' + invoice.getHotel().getNumberOfSeats() +' guests'} "> </div>
                         </td>
-                        <td class="unit" th:text="${hotel.price}">$0.00</td>
+                        <td class="unit" th:text="${invoice.getHotel().getPrice()}">$0.00</td>
                         <td class="qty" th:text="${period}">0</td>
-                        <div th:with="result=${hotel.price * period}">
-                            <td class="total" th:text="'$'+${result}">$0.00</td>
+                        <div th:with="result=${invoice.getHotel().getPrice() * period}">
+                            <td class="total" th:text="'$'+${result}">0.00</td>
                         </div>
                     </tr>
                     </tbody>
@@ -86,17 +86,17 @@
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="2">SUBTOTAL</td>
-                        <td th:text="'$'+${hotel.price * period}">$00.00</td>
+                        <td th:text="'$'+${invoice.getHotel().price * period}">$00.00</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="2">TAX 20%</td>
-                        <td th:text="'$'+${hotel.price * period * 0.2}">$00.00</td>
+                        <td th:text="'$'+${invoice.getHotel().price * period * 0.2}">$00.00</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="2">GRAND TOTAL</td>
-                        <td th:text="'$'+${hotel.price * period * 1.2}">$00.00</td>
+                        <td th:text="'$'+${invoice.getHotel().price * period * 1.2}">$00.00</td>
                     </tr>
                     </tfoot>
                 </table>
@@ -109,7 +109,7 @@
                 Invoice was created on a computer and is valid without the signature and seal.
             </footer>
         </div>
-        <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
+
         <div></div>
     </div>
 </div>

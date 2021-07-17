@@ -7,5 +7,7 @@ import com.shkubel.project.models.entity.Seller;
 
 public interface InvoiceService {
 
-    Invoice newInvoiceFromHotel (Hotel hotel, OrderUser orderUser, Seller seller);
+    Invoice createInvoice (Hotel hotel, OrderUser orderUser, Seller seller);
+
+    Invoice findInvoiceById(Long id);
 }

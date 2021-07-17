@@ -12,7 +12,7 @@ import java.util.List;
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
     List<Hotel> findHotelByNumberOfSeats(Integer numberOfSeats);
-    Hotel findHotelByDateFinishBetween(LocalDate start, LocalDate finish);
+
     List<Hotel> findHotelByKlassApartment(KlassAppartament klassAppartament);
 
     Hotel findHotelById(Long id);

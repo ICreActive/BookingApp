@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "order_user")
 public class OrderUser {
 
     @Id
@@ -28,6 +29,13 @@ public class OrderUser {
 
     @ManyToOne (fetch = FetchType.EAGER)
     private User user;
+
+    @OneToOne
+    private Invoice invoice;
+
+    @Column (name = "is_active")
+    @NotNull
+    private boolean isActive;
 
     private String creatingDate;
     private String updatingDate;
@@ -105,5 +113,21 @@ public class OrderUser {
 
     public void setUpdatingDate(String updatingDate) {
         this.updatingDate = updatingDate;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

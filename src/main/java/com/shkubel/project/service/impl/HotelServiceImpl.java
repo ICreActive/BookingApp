@@ -1,6 +1,7 @@
 package com.shkubel.project.service.impl;
 
 import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.Invoice;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.repo.HotelRepository;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ConcurrentModificationException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -20,10 +23,11 @@ public class HotelServiceImpl implements HotelService {
     @Autowired
     private HotelRepository hotelRepository;
 
-    public Hotel createHotel () {
+    public Hotel createHotel() {
         Hotel hotel = new Hotel();
         hotel.setNumberOfSeats(0);
         hotel.setPrice(0);
+        hotel.setAvailable(true);
         return hotel;
     }
 
@@ -45,12 +49,27 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public List<Hotel> findOffers(OrderUser orderUser) {
 
-        List<Hotel> hotelsWithNOS = findHotelByNumberOfSeats(orderUser.getNumberOfSeats());
+        List<Hotel> hotelsWithNOS =
+                findHotelByNumberOfSeats(orderUser.getNumberOfSeats())
+                        .stream()
+                        .filter(Objects::nonNull)
+                        .filter(klass -> klass.getKlassApartment().equals(orderUser.getKlassOfApartment()))
+                        .collect(Collectors.toList());
+        if (!hotelsWithNOS.isEmpty()) {
+            try {
+                hotelsWithNOS.forEach(h -> {
+                    if (!h.isAvailableOnDate(orderUser.getLocalDateStart(), orderUser.getLocalDateFinish())) {
+                        hotelsWithNOS.remove(h);
+                    }
+                });
 
-        return hotelsWithNOS.stream().
-                filter(Objects::nonNull)
-                .filter(klass -> klass.getKlassApartment().equals(orderUser.getKlassOfApartment()))
-                .collect(Collectors.toList());
+            } catch (ConcurrentModificationException e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }
+
+        return hotelsWithNOS;
     }
 
     @Override
@@ -60,6 +79,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void saveHotel(Hotel hotel) {
+        hotel.setAvailable(true);
         hotelRepository.save(hotel);
     }
 
@@ -67,6 +87,7 @@ public class HotelServiceImpl implements HotelService {
     public Hotel findHotelById(Long id) {
         return hotelRepository.findHotelById(id);
     }
+
 
 }
 

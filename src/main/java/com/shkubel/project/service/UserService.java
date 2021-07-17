@@ -23,6 +23,4 @@ public interface UserService {
 
     boolean restoreUser(Long userId);
 
-    User findUserByUsername(String username);
-
 }

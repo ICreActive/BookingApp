@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -76,36 +78,30 @@ public class AdminController {
         return "redirect:orders";
     }
 
+    @PostMapping("/orders/active")
+    public String delOrder(@RequestParam(required = true, defaultValue = "") Long orderId,
+                              @RequestParam(required = true, defaultValue = "") String action,
+                              Model model) {
+        if (action.equals("delete")) {
+            orderServiceImpl.deleteOrderById(orderId);
+        }
+        return "redirect:orders";
+    }
+
     @GetMapping("/orders/{id}")
     public String showOrder(@PathVariable("id") Long id, Model model) {
         OrderUser order = orderServiceImpl.findOrderById(id);
         List<Hotel> hotels = hotelService.findOffers(order);
+        if (hotels==null) {
+            List<Hotel> hotel = new ArrayList<>();
+            model.addAttribute("order", order);
+            model.addAttribute("error", "Offer not found");
+            model.addAttribute("offers", hotel);
+            return "order/id";
+        }
         model.addAttribute("order", order);
         model.addAttribute("offers", hotels);
         return "order/id";
-    }
-
-
-    @PostMapping("/invoice")
-    public String invoiceAll(Model model) {
-
-        return "/invoice/invoice";
-    }
-
-    @PostMapping("/invoice/new")
-    public String newInvoice(@RequestParam(defaultValue = "", required = true) Long orderId,
-                             @RequestParam(defaultValue = "", required = true) Long offerId,
-                             Model model) {
-        OrderUser order = orderServiceImpl.findOrderById(orderId);
-        Hotel hotel = hotelService.findHotelById(offerId);
-        List<Seller> sellers = sellerServiceImpl.findAllSeller();
-        Integer bookingPeriod = orderServiceImpl.bookingPeriod(order);
-        model.addAttribute("order", order);
-        model.addAttribute("hotel", hotel);
-        model.addAttribute("sellers", sellers);
-        model.addAttribute("period", bookingPeriod);
-
-        return "/invoice/new";
     }
 
     @GetMapping("/users/active")
@@ -114,10 +110,26 @@ public class AdminController {
         return "users/users";
     }
 
+    @GetMapping("/orders/active")
+    public String ordersActive(Model model) {
+        model.addAttribute("userOrder", orderServiceImpl.findOrderUserByStatus(true));
+        return "order/orders";
+    }
+
     @GetMapping("/sellers")
     public String sellers(Model model) {
         List<Seller> sellers = sellerServiceImpl.findAllSeller();
         model.addAttribute("sellers", sellers);
+        return "seller/seller";
+    }
+
+
+    @PostMapping("/sellers")
+    public String setSeller(@RequestParam(name = "check", defaultValue = "") String param, Model model) {
+        Long id = Long.parseLong(param);
+        Seller seller = sellerServiceImpl.findSellerById(id);
+        seller.setActive(true);
+        sellerServiceImpl.saveSeller(seller);
         return "seller/seller";
     }
 

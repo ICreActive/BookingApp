@@ -23,32 +23,9 @@ public class UserController {
 
     }
 
-    @GetMapping("/new")
-    public String newUser(@ModelAttribute("userNew") User user) {
-        return "users/new";
-    }
-
-    @PostMapping("/new")
-    public String create(@ModelAttribute("userNew") @Valid User user, BindingResult bindingResult, Model model) {
-        final String s = "/users/new";
-        if (bindingResult.hasErrors()) {
-            return s;
-        }
-        if (!user.getPassword().equals(user.getPasswordConfirm())) {
-            model.addAttribute("passwordError", "The passwords don't match");
-            return s;
-        }
-        if (!userService.saveUser(user)) {
-            model.addAttribute("usernameError", "This username or e-mail already exists");
-            return s;
-        }
-
-        return "redirect:/";
-    }
-
     @GetMapping("/myprofile")
     public String getProfile(Model model, Principal principal) {
-        model.addAttribute("user",userService.findUserByUsername(principal.getName()));
+        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
         return "users/myprofile";
     }
 
@@ -76,19 +53,5 @@ public class UserController {
         userService.updateUser(id, user);
         return "redirect:/users/myprofile";
     }
-
-    @GetMapping("/activate/{code}")
-    public String activate (Model model, @PathVariable("code") String code) {
-        boolean isActivated = userService.activateUser(code);
-
-        if(isActivated) {
-            model.addAttribute("message","User successfully activated");
-        } else {
-            model.addAttribute("message","Activation code is not found");
-        }
-        return "login";
-    }
-
-
 
 }

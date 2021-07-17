@@ -28,22 +28,23 @@ public class CatalogController {
     private String uploadPath;
 
     @GetMapping("/catalog")
-    public String hotels (Model model) {
+    public String hotels(Model model) {
         List<Hotel> hotels = hotelService.findAllHotel();
         model.addAttribute("hotels", hotels);
         return "/hotels/catalog";
     }
 
     @GetMapping("/new")
-    public String newHotel (Model model) {
+    public String newHotel(Model model) {
+
         model.addAttribute("hotel", hotelService.createHotel());
         model.addAttribute("klassAp", KlassAppartament.values());
         return "/hotels/new";
     }
-    @PostMapping("/new")
-    public String add (@ModelAttribute("hotel") Hotel hotel, Model model, @RequestPart ("file") MultipartFile file) throws IOException {
 
-        if (file!=null && !file.getOriginalFilename().isEmpty()) {
+    @PostMapping("/new")
+    public String add(@ModelAttribute("hotel") Hotel hotel, Model model, @RequestPart("file") MultipartFile file) throws IOException {
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
             if (!uploadDir.exists()) {
@@ -52,7 +53,7 @@ public class CatalogController {
             String uniqueFile = UUID.randomUUID().toString();
             String resultFilename = uniqueFile + "." + file.getOriginalFilename();
 
-            file.transferTo(new File(uploadPath +"/"+ resultFilename));
+            file.transferTo(new File(uploadPath + "/" + resultFilename));
 
             hotel.setFilename(resultFilename);
         }
@@ -67,7 +68,7 @@ public class CatalogController {
 
 
     @GetMapping("/{id}")
-    public String show (@PathVariable("id") Long id, Model model) {
+    public String show(@PathVariable("id") Long id, Model model) {
         model.addAttribute("hotel", hotelService.findHotelById(id));
         return "hotels/hotelPage";
     }

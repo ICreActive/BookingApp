@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+
 import java.util.Set;
 
 @Entity
@@ -25,14 +26,13 @@ public class Hotel {
     @Column(columnDefinition = "integer default 0")
     private Integer price;
 
-    private LocalDate dateStart;
-
-    private LocalDate dateFinish;
 
     private String filename;
 
+    private Boolean isAvailable;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Invoice> invoice;
+    private Set<Invoice> invoices;
 
     public Long getId() {
         return id;
@@ -83,27 +83,11 @@ public class Hotel {
     }
 
     public Set<Invoice> getInvoice() {
-        return invoice;
+        return invoices;
     }
 
     public void setInvoice(Set<Invoice> invoice) {
-        this.invoice = invoice;
-    }
-
-    public LocalDate getDateStart() {
-        return dateStart;
-    }
-
-    public void setDateStart(LocalDate dateStart) {
-        this.dateStart = dateStart;
-    }
-
-    public LocalDate getDateFinish() {
-        return dateFinish;
-    }
-
-    public void setDateFinish(LocalDate dateFinish) {
-        this.dateFinish = dateFinish;
+        this.invoices = invoice;
     }
 
     public String getFilename() {
@@ -113,4 +97,35 @@ public class Hotel {
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.isAvailable = available;
+    }
+
+
+    public boolean isAvailableOnDate(LocalDate dateCheckIn, LocalDate dateCheckOut) {
+
+        for (Invoice invoice : invoices) {
+
+            LocalDate invCheckIn = invoice.getOrderUser().getLocalDateStart();
+            LocalDate invCheckOut = invoice.getOrderUser().getLocalDateFinish();
+            if (invCheckIn.equals(dateCheckIn) ||
+                    invCheckIn.isAfter(dateCheckIn)
+                            && invCheckIn.isBefore(dateCheckOut) ||
+                    invCheckIn.isBefore(dateCheckIn) && invCheckOut.isAfter(dateCheckOut) ||
+                    invCheckIn.isBefore(dateCheckIn) && invCheckOut.isAfter(dateCheckIn) && invCheckOut.isBefore(dateCheckOut)
+            ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
+
+
+

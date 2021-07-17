@@ -16,7 +16,7 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "Pass should not be empty")
@@ -46,8 +46,8 @@ public class User implements UserDetails {
     @Email
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<OrderUser> orders;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Set<OrderUser> orders;
 
     private String creatingDate;
     private String updatingDate;
@@ -128,13 +128,13 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public Set<OrderUser> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<OrderUser> orders) {
-        this.orders = orders;
-    }
+//    public Set<OrderUser> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(Set<OrderUser> orders) {
+//        this.orders = orders;
+//    }
 
     public boolean isUserActive() {
         return isUserActive;
@@ -229,7 +229,6 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User: " +
-                userLastname + ' ' + userFirstname;
+        return userLastname + ' ' + userFirstname;
     }
 }

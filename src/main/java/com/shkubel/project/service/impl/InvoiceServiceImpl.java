@@ -1,28 +1,58 @@
 package com.shkubel.project.service.impl;
 
-import com.shkubel.project.models.entity.Hotel;
-import com.shkubel.project.models.entity.Invoice;
-import com.shkubel.project.models.entity.OrderUser;
-import com.shkubel.project.models.entity.Seller;
+import com.shkubel.project.models.entity.*;
 import com.shkubel.project.models.repo.InvoiceRepository;
 import com.shkubel.project.service.InvoiceService;
+import com.shkubel.project.util.DateTimeParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
 
 @Service
-public class InvoiceServiceImpl {
+public class InvoiceServiceImpl implements InvoiceService {
 
-//    @Autowired
-//    InvoiceRepository invoiceRepository;
-//
-//    @Override
-//    public Invoice newInvoiceFromHotel(Hotel hotel, OrderUser orderUser, Seller seller) {
-//        Invoice invoice = new Invoice();
-//        invoice.setSeller(seller);
-//        invoice.setUser(orderUser.getUser());
-//        invoice.setHotel(hotel);
-//        return invoice;
-//    }
+
+    @Autowired
+    InvoiceRepository invoiceRepository;
+    @Autowired
+    OrderServiceImpl orderService;
+
+    @Transactional
+    @Override
+    public Invoice createInvoice(Hotel hotel, OrderUser orderUser, Seller seller) {
+
+        Invoice invInDb = invoiceRepository.findInvoiceByOrderUser(orderUser);
+        if (invInDb == null) {
+            Invoice invoice = new Invoice();
+            invoice.setSeller(seller);
+            invoice.setUser(orderUser.getUser());
+            invoice.setOrderUser(orderUser);
+            invoice.setHotel(hotel);
+            invoice.setPaid(false);
+            invoice.setCreatingDate(DateTimeParser.nowToString());
+            Set<Invoice> hot = hotel.getInvoice();
+            hot.add(invoice);
+            invoiceRepository.save(invoice);
+            orderUser.setInvoice(invoice);
+            orderService.updateOrder(orderUser);
+            return invoice;
+        }
+        return invInDb;
+    }
+
+    @Override
+    public Invoice findInvoiceById(Long id) {
+        return invoiceRepository.findInvoiceById(id);
+    }
+
+    public List<Invoice> findAllByUser(User user) {
+        return invoiceRepository.findAllByUser(user);
+    }
+
+    ;
 
 
 }

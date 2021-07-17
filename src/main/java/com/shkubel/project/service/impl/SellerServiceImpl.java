@@ -35,12 +35,15 @@ public class SellerServiceImpl implements SellerService {
     @Transactional
     public boolean saveSeller(Seller seller) {
         Seller sellerInDb = sellerRepository.findSellerByName(seller.getName());
+
         if (sellerInDb == null) {
             Seller s = new Seller();
             s.setAddress(seller.getAddress());
             s.setBankAccount(seller.getBankAccount());
             s.setName(seller.getName());
             s.setCreatingDate(DateTimeParser.nowToString());
+            s.setActive(true);
+            sellerRepository.findAll().forEach(sell -> sell.setActive(false));
             sellerRepository.save(s);
             return true;
         }
@@ -62,7 +65,16 @@ public class SellerServiceImpl implements SellerService {
             }
 
         }
+
+
+    }
+
+    @Override
+    public Seller findSellerByIsActive(Boolean active) {
+        return sellerRepository.findSellerByIsActive(active);
     }
 
 }
+
+
 

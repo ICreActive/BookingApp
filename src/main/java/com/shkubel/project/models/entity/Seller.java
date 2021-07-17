@@ -1,9 +1,6 @@
 package com.shkubel.project.models.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Seller {
@@ -15,6 +12,9 @@ public class Seller {
     private String name;
     private String BankAccount;
     private String address;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 
     private String creatingDate;
     private String updatingDate;
@@ -74,5 +74,13 @@ public class Seller {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 }

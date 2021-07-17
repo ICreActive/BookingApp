@@ -19,13 +19,6 @@
     <link id="u-page-google-font" rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
 
-
-    <script type="application/ld+json">{
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "name": "",
-        "logo": "images/default-logo.png"
-    }</script>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="HotelPage">
     <meta property="og:type" content="website">
@@ -41,18 +34,20 @@
             <div class="u-clearfix u-sheet u-sheet-1">
                 <div class="u-form u-form-1">
                     <form method="POST" enctype="multipart/form-data"
-                                             style="padding: 80px;">
+                          style="padding: 80px;">
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="title" th:field="*{hotel.title}" type="text">Title</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <span class="input-group-text" id="title" type="text">Title</span>
+                            <input th:field="*{hotel.title}" type="text" class="form-control"
+                                   aria-label="Sizing example input"
                                    aria-describedby="inputGroup-sizing-default">
                         </div>
 
                         <div class="input-group mb-3">
-                        <span class="input-group-text" id="description" required th:field="*{hotel.description}"
+                        <span class="input-group-text" id="description" required
                               type="text">Description</span>
                             <textarea type="text" class="form-control" aria-label="Sizing example input"
-                                      aria-describedby="inputGroup-sizing-default"></textarea>
+                                      aria-describedby="inputGroup-sizing-default"
+                                      th:field="*{hotel.description}"></textarea>
                         </div>
 
                         <select select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
@@ -63,16 +58,18 @@
                         </select>
 
                         <div class="input-group mb-3">
-                        <span class="input-group-text" id="numofseats" required th:field="*{hotel.numberOfSeats}"
+                        <span class="input-group-text" id="numofseats" required
                               type="text">Number of seats</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input th:field="*{hotel.numberOfSeats}" type="text" class="form-control"
+                                   aria-label="Sizing example input"
                                    aria-describedby="inputGroup-sizing-default">
                         </div>
 
                         <div class="input-group mb-3">
-                        <span class="input-group-text" id="price" required th:field="*{hotel.price}"
+                        <span class="input-group-text" id="price" required
                               type="text">Price</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input th:field="*{hotel.price}" type="text" class="form-control"
+                                   aria-label="Sizing example input"
                                    aria-describedby="inputGroup-sizing-default">
                         </div>
 

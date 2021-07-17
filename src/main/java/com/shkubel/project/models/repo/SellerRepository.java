@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     Seller findSellerById(Long id);
+
     Seller findSellerByName(String name);
+
+    Seller findSellerByIsActive(Boolean active);
 
 }

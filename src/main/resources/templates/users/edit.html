@@ -58,13 +58,13 @@
             <br/>
 
             <label for="pass"> Enter password </label>
-            <input class="form-control" type="text" th:field="*{password}" id="pass"/>
+            <input class="form-control" type="password" th:field="*{password}" id="pass"/>
             <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
             </div>
             </br>
 
             <label for="passConfirm"> Confirm password </label>
-            <input class="form-control" type="text" th:field="*{passwordConfirm}" id="passConfirm" required/>
+            <input class="form-control" type="password" th:field="*{passwordConfirm}" id="passConfirm" required/>
             <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
             </div>
             <div style="color: red" th:if="${passwordError}" th:text="${passwordError}">Error</div>
