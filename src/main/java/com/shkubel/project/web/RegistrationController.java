@@ -2,23 +2,26 @@ package com.shkubel.project.web;
 
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.service.impl.UserServiceImpl;
+import com.shkubel.project.util.MailSender;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+@Controller
+@RequestMapping("/users")
 public class RegistrationController {
 
     private final UserServiceImpl userService;
+    private final MailSender mailSender;
 
-
-    public RegistrationController(UserServiceImpl userService) {
+    public RegistrationController(UserServiceImpl userService, MailSender mailSender) {
         this.userService = userService;
 
+        this.mailSender = mailSender;
     }
 
     @GetMapping("/new")
@@ -27,7 +30,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute("userNew") @Valid User user, BindingResult bindingResult, Model model) {
+    public String create(@ModelAttribute("userNew") @Valid User user, BindingResult bindingResult, HttpServletRequest request, Model model) {
         final String s = "/users/new";
         if (bindingResult.hasErrors()) {
             return s;
@@ -40,18 +43,19 @@ public class RegistrationController {
             model.addAttribute("usernameError", "This username or e-mail already exists");
             return s;
         }
+        mailSender.sendActivationMessage(user, request);
 
         return "redirect:/";
     }
 
     @GetMapping("/activate/{code}")
-    public String activate (Model model, @PathVariable("code") String code) {
+    public String activate(Model model, @PathVariable("code") String code) {
         boolean isActivated = userService.activateUser(code);
 
-        if(isActivated) {
-            model.addAttribute("message","User successfully activated");
+        if (isActivated) {
+            model.addAttribute("message", "User successfully activated");
         } else {
-            model.addAttribute("message","Activation code is not found");
+            model.addAttribute("message", "Activation code is not found");
         }
         return "login";
     }

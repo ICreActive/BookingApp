@@ -34,19 +34,14 @@ public class ForgotPasswordController {
     public String processForgotPassword(HttpServletRequest request, Model model) {
         String email = request.getParameter("email");
         String token = RandomString.make(30);
-
         try {
             userService.updateResetPasswordToken(token, email);
-            String resetPasswordLink = MailSender.getSiteURL(request) + "/reset_password?token=" + token;
-            mailSender.sendEmail(email, resetPasswordLink);
+            mailSender.sendEmailForPasswordReset(request, email, token);
             model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
 
         } catch (UserNotFoundException ex) {
             model.addAttribute("error", ex.getMessage());
-        } catch (UnsupportedEncodingException | MessagingException e) {
-            model.addAttribute("error", "Error while sending email");
         }
-
         return "forgot_password";
     }
 

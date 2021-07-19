@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
     <link rel="stylesheet" type="text/css" href="/resources/css/invoice.css"/>
-    <link rel="stylesheet" type="text/css" href="/resources/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/responsive.css"/>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="/resources/js/invoice.js"></script>
@@ -14,9 +14,8 @@
 <div id="invoice">
     <div class="toolbar hidden-print">
         <div class="text-right">
-            <a th:href="|http://localhost:8080/administrator/download-pdf|"><span>Download PDF Document</span></a>
+            <a th:href="@{/administrator/download-pdf}">Download PDF Document</a>
         </div>
-        <hr>
     </div>
     <div class="invoice overflow-auto">
         <div style="min-width: 600px">
@@ -25,14 +24,10 @@
                     <div class="col">
                         <a target="_blank" href="https://lobianijs.com">
                             <img src="/resources/img/up.png"
-                                 data-holder-rendered="true" style="height: 108px; width: 300px;">
+                                 data-holder-rendered="true" style="height: 108px; width: 300px;"/>
                         </a>
                     </div>
                     <div class="col company-details">
-                        <h2 class="name" th:text="${invoice.getSeller().getName()}">
-                            <a target="_blank">
-                                Arboshiki
-                            </a>
                         </h2>
                         <div th:text="${invoice.getSeller().getAddress()}">455 Foggy Heights, AZ 85004, US</div>
                         <div th:text="${invoice.getSeller().getBankAccount()}"></div>

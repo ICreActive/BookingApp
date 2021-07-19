@@ -1,17 +1,13 @@
 package com.shkubel.project.util;
 
+import com.shkubel.project.models.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 
 @Service
 public class MailSender {
@@ -19,11 +15,37 @@ public class MailSender {
     @Autowired
     private JavaMailSender emailSender;
 
+
     @Value("${spring.mail.username}")
     private String username;
 
-    @Async
-    public void send (String emailTo, String subject, String message) {
+    public void sendActivationMessage(User user, HttpServletRequest request) {
+        String activationUrl = getSiteURL(request) + "/users/activate/" + user.getActivationCode();
+        String message = String.format(
+                "Hello, %s! \n Welcome to BookingService." +
+                        "Please, visit next link for activate your account: %s",
+                user.getUserFirstname(),
+                activationUrl);
+        send(user.getEmail(), "Activation code", message);
+    }
+
+    public void sendEmailForPasswordReset(HttpServletRequest request, String email, String token) {
+
+        String resetPasswordLink = getSiteURL(request) + "/reset_password?token=" + token;
+
+        String message =
+                "Hello,"
+                        + "\n You have requested to reset your password."
+                        + "\nClick the link below to change your password:"
+                        + "\n" + resetPasswordLink + " Change my password"
+                        + "\n"
+                        + "\nIgnore this email if you do remember your password, "
+                        + "or you have not made the request.";
+
+        send(email, "Reset Password", message);
+    }
+
+    public void send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
         mailMessage.setTo(emailTo);
@@ -37,32 +59,4 @@ public class MailSender {
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");
     }
-
-    public void sendEmail(String recipientEmail, String link)
-            throws MessagingException, UnsupportedEncodingException {
-        MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(username, "Booking App Support");
-        helper.setTo(recipientEmail);
-
-        String subject = "Here's the link to reset your password";
-
-        String content = "<p>Hello,</p>"
-                + "<p>You have requested to reset your password.</p>"
-                + "<p>Click the link below to change your password:</p>"
-                + "<p><a href=\"" + link + "\">Change my password</a></p>"
-                + "<br>"
-                + "<p>Ignore this email if you do remember your password, "
-                + "or you have not made the request.</p>";
-
-        helper.setSubject(subject);
-
-        helper.setText(content, true);
-
-        emailSender.send(message);
-    }
-
-
-
 }

@@ -1,7 +1,6 @@
 package com.shkubel.project.service.impl;
 
 import com.shkubel.project.models.entity.Hotel;
-import com.shkubel.project.models.entity.Invoice;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.repo.HotelRepository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ConcurrentModificationException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

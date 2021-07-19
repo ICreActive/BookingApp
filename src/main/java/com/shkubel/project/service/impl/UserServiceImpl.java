@@ -20,16 +20,15 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    private final MailSender mailSender;
 
     private final UserRepository userRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, MailSender mailSender) {
+    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
-        this.mailSender = mailSender;
+
     }
 
     @Override
@@ -78,14 +77,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         user.setUsername(user.getUsername().toLowerCase(Locale.ROOT));
         user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
-
-        String message = String.format(
-                "Hello, %s! \n + Welcome to BookingService." +
-                        "Please, visit next link: http://localhost:8080/users/activate/%s",
-                user.getUserFirstname(),
-                user.getActivationCode());
-
-        mailSender.send(user.getEmail(), "Activation code", message);
 
         return true;
     }

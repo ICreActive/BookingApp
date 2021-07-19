@@ -2,8 +2,6 @@ package com.shkubel.project.util;
 
 import com.shkubel.project.models.entity.Hotel;
 import com.shkubel.project.models.entity.KlassAppartament;
-import com.shkubel.project.models.entity.OrderUser;
-import com.shkubel.project.models.repo.HotelRepository;
 import com.shkubel.project.service.impl.HotelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +34,5 @@ public class ValidationUtil {
         return !checkin.isAfter(checkout) && !checkin.equals(checkout);
     }
 
-//    public boolean hotelIsFree (OrderUser orderUser, Long offerId) {
-//
-//    }
 }
 

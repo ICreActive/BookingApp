@@ -1,20 +1,14 @@
 package com.shkubel.project.web;
 
-import com.lowagie.text.DocumentException;
 import com.shkubel.project.models.entity.*;
 import com.shkubel.project.service.PdfService;
 import com.shkubel.project.service.impl.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 
@@ -24,21 +18,21 @@ import java.util.List;
 @RequestMapping("/administrator")
 public class InvoiceController {
 
+
     private final UserServiceImpl userService;
     private final OrderServiceImpl orderServiceImpl;
     private final SellerServiceImpl sellerServiceImpl;
     private final HotelServiceImpl hotelService;
     private final InvoiceServiceImpl invoiceService;
-    private final PdfService pdfService;
 
 
-    public InvoiceController(HotelServiceImpl hotelService, SellerServiceImpl sellerServiceImpl, OrderServiceImpl orderServiceImpl, InvoiceServiceImpl invoiceService, UserServiceImpl userService, PdfService pdfService) {
+    public InvoiceController(HotelServiceImpl hotelService, SellerServiceImpl sellerServiceImpl, OrderServiceImpl orderServiceImpl, InvoiceServiceImpl invoiceService, UserServiceImpl userService) {
         this.hotelService = hotelService;
         this.sellerServiceImpl = sellerServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.invoiceService = invoiceService;
         this.userService = userService;
-        this.pdfService = pdfService;
+
     }
 
     @GetMapping("/invoices")
@@ -75,19 +69,18 @@ public class InvoiceController {
     }
 
     @GetMapping("/download-pdf")
-    public void downloadPDFResource(HttpServletResponse response) {
-        try {
-             Path file = Paths.get(pdfService.generatePdf().getAbsolutePath());
-            if (Files.exists(file)) {
-                response.setContentType("application/pdf");
-                response.addHeader("Content-Disposition",
-                        "attachment; filename=" + file.getFileName());
-                Files.copy(file, response.getOutputStream());
-                response.getOutputStream().flush();
-            }
-        } catch (IOException | DocumentException ex) {
-            ex.printStackTrace();
-        }
+    public void exportToPDF(HttpServletResponse response) throws Exception {
+        Invoice invoice = invoiceService.findInvoiceById(15L);
+        response.setContentType("application/pdf");
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=inv-%s.pdf",
+        invoice.getId());
+
+        response.setHeader(headerKey, headerValue);
+        PdfService pdfService = new PdfService(invoice);
+
+        pdfService.export(response);
+
     }
 
 

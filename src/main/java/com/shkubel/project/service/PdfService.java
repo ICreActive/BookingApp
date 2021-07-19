@@ -1,59 +1,77 @@
 package com.shkubel.project.service;
 
-import com.shkubel.project.service.impl.InvoiceServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import com.shkubel.project.models.entity.Invoice;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 
 @Service
 public class PdfService {
 
-    private static final String PDF_RESOURCES = "/pdf-resources/";
-    private InvoiceServiceImpl invoiceService;
-    private SpringTemplateEngine templateEngine;
+    private Invoice invoice;
 
-    @Autowired
-    public PdfService(InvoiceServiceImpl invoiceService, SpringTemplateEngine templateEngine) {
-        this.invoiceService = invoiceService;
-        this.templateEngine = templateEngine;
+    public PdfService(Invoice invoice) {
+        this.invoice = invoice;
+    }
+    public PdfService() {
+
     }
 
-    public File generatePdf() throws IOException, com.lowagie.text.DocumentException {
-        Context context = getContext();
-        String html = loadAndFillTemplate(context);
-        return renderPdf(html);
+    private void writeTableHeader(PdfPTable table) {
+        table.addCell("Hotel_ID");
+        table.addCell("DESCRIPTION");
+        table.addCell("PRICE PER DAY");
+        table.addCell("QUANTITY (DAYS)");
+        table.addCell("TOTAL");
     }
 
+    private void writeTableData(PdfPTable table) {
 
-    private File renderPdf(String html) throws IOException, com.lowagie.text.DocumentException {
-        File file = File.createTempFile("students", ".pdf");
-        OutputStream outputStream = new FileOutputStream(file);
-        ITextRenderer renderer = new ITextRenderer(20f * 4f / 3f, 20);
-        renderer.setDocumentFromString(html, new ClassPathResource(PDF_RESOURCES).getURL().toExternalForm());
-        renderer.layout();
-        renderer.createPDF(outputStream);
-        outputStream.close();
-        file.deleteOnExit();
-        return file;
+        table.addCell(invoice.getSeller().getName());
+        table.addCell("INVOICE TO:");
+
+        table.addCell(invoice.getSeller().getAddress());
+        table.addCell(invoice.getUser().getUserFirstname()+ ' ' + invoice.getUser().getUserLastname());
+
+        table.addCell(invoice.getSeller().getBankAccount());
+        table.addCell(invoice.getUser().getEmail());
+
     }
 
-    private Context getContext() {
-        Context context = new Context();
-        context.setVariable("invoices", invoiceService.findInvoiceById(23L));
-        return context;
-    }
+    public void export(HttpServletResponse response) throws IOException {
+        Document document = new Document(PageSize.A4);
 
-    private String loadAndFillTemplate(Context context) {
-        return templateEngine.process("invoice/new", context);
-    }
+        PdfWriter.getInstance(document, response.getOutputStream());
 
+        document.open();
+
+        PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(15);
+        table.setWidthPercentage(100);
+
+        writeTableData(table);
+        document.add(table);
+
+        document.add(new Paragraph("Invoice № " + invoice.getId()));
+        document.add(new Paragraph("Date of Invoice: " + invoice.getCreatingDate()));
+        document.add(new Paragraph("Due Date: " + invoice.getCreatingDate()+3));
+
+        PdfPTable table1 = new PdfPTable(5);
+        table1.setSpacingAfter(15);
+        table1.setWidthPercentage(100);
+
+        writeTableHeader(table1);
+
+        document.add(table1);
+
+        document.close();
+
+    }
 
 }
