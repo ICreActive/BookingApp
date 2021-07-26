@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-        <link rel="stylesheet" type="text/css" href="/resources/css/reg.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/reg.css"/>
     <meta charset="UTF-8">
     <title>Preview</title>
 
-        <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
-        <link rel="stylesheet" href="/resources/css/UserPage.css" media="screen">
-        <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
-        <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
+    <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/userPage.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/invoices.css">
+    <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
 
 </head>
 <body>
-<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
+<div class="wrapper">
+<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr" style="margin-bottom: 50px">
 </header>
 
-<form th:method="Get" th:each="element:${invoices}">
-    <div th:text="${element.getId() + ' ' + element.getCreatingDate()}"></div>
-        <br/>
-</form>
 
-
+<div id="menu" class=main>
+    <div th:method="Get" th:each="element:${invoices}">
+        <a th:href="@{/users/myprofile/invoices/{id}(id=${element.getId()})}">
+            <img src="/resources/icon/invoice.png"/>
+            <div th:text="${element.getId() + ' ' + element.getHotel().getTitle()}"></div>
+        </a>
+    </div>
 </div>
-<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-">
-</footer>
+
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer footer" id="sec-6847" th:insert="footer"></footer>
+</div>
 </body>
 
 </html>

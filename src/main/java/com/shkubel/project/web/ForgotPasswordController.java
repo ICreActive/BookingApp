@@ -2,27 +2,28 @@ package com.shkubel.project.web;
 
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.User;
-import com.shkubel.project.service.impl.UserServiceImpl;
+import com.shkubel.project.service.UserService;
 import com.shkubel.project.util.MailSender;
 import net.bytebuddy.utility.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 
 @Controller
 public class ForgotPasswordController {
-    @Autowired
-    private MailSender mailSender;
 
-    @Autowired
-    private UserServiceImpl userService;
+    private final MailSender mailSender;
+
+    private final UserService userService;
+
+    public ForgotPasswordController(MailSender mailSender, UserService userService) {
+        this.mailSender = mailSender;
+        this.userService = userService;
+    }
 
     @GetMapping("/forgot_password")
     public String showForgotPasswordForm() {

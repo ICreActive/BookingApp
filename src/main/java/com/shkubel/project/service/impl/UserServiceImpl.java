@@ -6,10 +6,6 @@ import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.repo.UserRepository;
 import com.shkubel.project.service.UserService;
 import com.shkubel.project.util.DateTimeParser;
-import com.shkubel.project.util.MailSender;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
@@ -29,19 +25,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
 
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user;
-        user = userRepository.findUserByUsername(login);
-        if (user == null) {
-            user = userRepository.findUserByEmail(login);
-            if (user == null) {
-                throw new UsernameNotFoundException("User not found");
-            }
-        }
-        return user;
     }
 
     @Override
@@ -114,7 +97,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 userInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 userInDB.setUpdatingDate(DateTimeParser.nowToString());
                 userRepository.save(userInDB);
-
                 return true;
             }
             return false;
@@ -129,15 +111,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public boolean restoreUser(Long userId) {
+    public boolean restoreUser(Long userId) throws UserNotFoundException {
         if (userRepository.findById(userId).isPresent()) {
-            User user = userRepository.findById(userId).get();
-            user.setUserActive(true);
-            user.setUpdatingDate(DateTimeParser.nowToString());
-            return true;
+            User user = userRepository.findById(userId).orElse(null);
+            if (user != null) {
+                user.setUserActive(true);
+                user.setUpdatingDate(DateTimeParser.nowToString());
+                return true;
+            } else
+                throw new UserNotFoundException("User not found");
         }
         return false;
     }
+
 
 
     @Transactional
@@ -159,7 +145,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             user.setResetPasswordToken(token);
             userRepository.save(user);
         } else {
-            throw new UserNotFoundException("Could not find any customer with the email " + email);
+            throw new UserNotFoundException("Could not find any user with the email " + email);
         }
     }
 
@@ -172,5 +158,21 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         user.setPassword(encodedPassword);
         user.setResetPasswordToken(null);
         userRepository.save(user);
+    }
+
+    @Override
+    public User findUserByUserName(String username) throws UserNotFoundException {
+
+        User user = userRepository.findUserByUsername(username);
+        if (user!=null) {
+            return user;
+        } else {
+            throw new UserNotFoundException("User not found");
+        }
+    }
+
+    @Override
+    public List<User> findAdmins() {
+        return userRepository.findAdmins();
     }
 }

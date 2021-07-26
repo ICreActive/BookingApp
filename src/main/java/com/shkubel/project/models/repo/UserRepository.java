@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findUserByResetPasswordToken (String token);
 
+    @Query("select u from User u INNER JOIN Role r ON r.id=1")
+    List<User> findAdmins ();
+
 }

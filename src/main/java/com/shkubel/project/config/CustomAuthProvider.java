@@ -1,14 +1,13 @@
 package com.shkubel.project.config;
 
 import com.shkubel.project.models.entity.User;
-import com.shkubel.project.service.impl.UserServiceImpl;
+import com.shkubel.project.service.impl.UserSecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class CustomAuthProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserSecurityServiceImpl userService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -40,7 +39,5 @@ public class CustomAuthProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
-
-
 
 }

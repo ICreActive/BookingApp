@@ -18,10 +18,11 @@ public interface HotelService {
 
     List<Hotel> findOffers(OrderUser orderUser);
 
-    List <Hotel> findAllHotel();
+    List<Hotel> findAllHotel();
 
     void saveHotel(Hotel hotel);
 
     Hotel findHotelById(Long id);
 
+    Hotel createHotel();
 }

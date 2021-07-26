@@ -1,5 +1,6 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.exception.OrderNotFoundException;
 import com.shkubel.project.models.entity.*;
 import com.shkubel.project.models.repo.InvoiceRepository;
 import com.shkubel.project.service.InvoiceService;
@@ -22,7 +23,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Transactional
     @Override
-    public Invoice createInvoice(Hotel hotel, OrderUser orderUser, Seller seller) {
+    public Invoice createInvoice(Hotel hotel, OrderUser orderUser, Seller seller) throws OrderNotFoundException {
 
         Invoice invInDb = invoiceRepository.findInvoiceByOrderUser(orderUser);
         if (invInDb == null) {
@@ -33,6 +34,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoice.setHotel(hotel);
             invoice.setPaid(false);
             invoice.setCreatingDate(DateTimeParser.nowToString());
+            invoice.setActive(true);
             Set<Invoice> hot = hotel.getInvoice();
             hot.add(invoice);
             invoiceRepository.save(invoice);
@@ -51,8 +53,4 @@ public class InvoiceServiceImpl implements InvoiceService {
     public List<Invoice> findAllByUser(User user) {
         return invoiceRepository.findAllByUser(user);
     }
-
-    ;
-
-
 }

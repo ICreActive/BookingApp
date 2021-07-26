@@ -1,13 +1,16 @@
 package com.shkubel.project.service;
 
-import com.shkubel.project.models.entity.Hotel;
-import com.shkubel.project.models.entity.Invoice;
-import com.shkubel.project.models.entity.OrderUser;
-import com.shkubel.project.models.entity.Seller;
+import com.shkubel.project.exception.OrderNotFoundException;
+import com.shkubel.project.models.entity.*;
+
+import java.util.List;
 
 public interface InvoiceService {
 
-    Invoice createInvoice (Hotel hotel, OrderUser orderUser, Seller seller);
+    Invoice createInvoice (Hotel hotel, OrderUser orderUser, Seller seller) throws OrderNotFoundException;
 
     Invoice findInvoiceById(Long id);
+
+    List<Invoice> findAllByUser(User user);
+
 }

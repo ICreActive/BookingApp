@@ -14,7 +14,10 @@
 <div id="invoice">
     <div class="toolbar hidden-print">
         <div class="text-right">
-            <a th:href="@{/administrator/download-pdf}">Download PDF Document</a>
+            <form method="post" th:action="@{/users/download-pdf}">
+            <button type="submit" class="btn btn-info">Download PDF Document</button>
+                <input type="hidden" name="invoiceId" th:value="${invoice.getId()}"/>
+            </form>
         </div>
     </div>
     <div class="invoice overflow-auto">
@@ -77,27 +80,11 @@
                         </div>
                     </tr>
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <td colspan="2"></td>
-                        <td colspan="2">SUBTOTAL</td>
-                        <td th:text="'$'+${invoice.getHotel().price * period}">$00.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"></td>
-                        <td colspan="2">TAX 20%</td>
-                        <td th:text="'$'+${invoice.getHotel().price * period * 0.2}">$00.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"></td>
-                        <td colspan="2">GRAND TOTAL</td>
-                        <td th:text="'$'+${invoice.getHotel().price * period * 1.2}">$00.00</td>
-                    </tr>
-                    </tfoot>
-                </table>
+                     </table>
                 <div class="notices">
                     <div>NOTICE:</div>
-                    <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+                    <div class="notice">
+                        in case of non-payment, the invoice will be canceled and the reservation will be canceled</div>
                 </div>
             </main>
             <footer>

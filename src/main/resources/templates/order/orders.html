@@ -7,17 +7,18 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Пользователи</title>
+    <title th:text="#{o_title.text}"></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" th:text="#{naviname.text}">Users page</a>
+    <a class="navbar-brand" th:text="#{o_naviname.text}">Users page</a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="/administrator" th:text="#{back.text}"><span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="/administrator/orders" th:text="#{showAllusr.text}"></a>
-            <a class="nav-item nav-link" href="/administrator/orders/active" th:text="#{showActive.text}"></a>
-            <a class="nav-item nav-link disabled" href="/" th:text="#{home.text}"></a>
+            <a class="nav-item nav-link" href="/administrator" th:text="#{back.text}"><span
+                    class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/administrator/orders" th:text="#{o_ordersActive.text}"></a>
+            <a class="nav-item nav-link" href="/administrator/orders/all" th:text="#{o_ordersAll.text}"></a>
+            <a class="nav-item nav-link" href="/" th:text="#{home.text}"></a>
         </div>
     </div>
     <form class="form-inline" method="post">
@@ -31,36 +32,41 @@
        border: 1px solid green;
        margin: auto;">
     <thead>
-    <tr >
-        <th scope="col" style="">Incoming order by user:</th>
+    <tr>
+        <th scope="col" style="" th:text="#{o_inOrder.text}"></th>
+        <div th:if="${message}" th:text="${message}"></div>
 
     </tr>
     </thead>
     <tbody>
     <tr style="white-space: nowrap; width: 1%;" th:each="element: ${userOrder}">
         <div sec:authorize="hasRole('ADMIN')">
-            <th scope="col"><a th:href="@{/administrator/orders/{id}(id=${element.getId()})}"
-                               th:text="${element.getUser()}">user</a></th>
+            <th scope="col">
+                <a th:href="@{/administrator/orders/{id}(id=${element.getId()})}"
+                   th:text="${element.getUser()}">
+                </a>
+            </th>
         </div>
         <div sec:authorize="!hasRole('ADMIN')">
-            <th scope="col"><a th:href="@{/myprofile/orders/{id}(id=${element.getId()})}"
-                               th:text="${element.getUser()}">user</a></th>
+            <th scope="col">
+                <a th:href="@{/myprofile/orders/{id}(id=${element.getId()})}"
+                   th:text="${element.getUser()}">
+                </a>
+            </th>
         </div>
         <div th:if="${element.getInvoice()}">
-        <form method="get" th:action="@{/administrator/invoice/{id}(id=${element.getInvoice().getId()})}">
-            <th scope="col" name="Check">
-<!--                <input type="hidden" name="invoice"/>-->
-<!--                <input type="hidden" name="action" value="invoice">-->
-                <button type="submit" class="btn btn-outline-info">Show Invoice</button>
-            </th>
-        </form>
+            <form method="get" th:action="@{/administrator/invoice/{id}(id=${element.getInvoice().getId()})}">
+                <th scope="col" name="Check">
+                    <button type="submit" class="btn btn-outline-info" th:text="#{o_showInv.text}"></button>
+                </th>
+            </form>
         </div>
         <form method="post">
-        <th scope="col" name="delete">
-            <input type="hidden" name="orderId" th:value="${element.id}"/>
-            <input type="hidden" name="action" value="delete">
-            <button type="submit" class="btn btn-secondary">Delete</button>
-        </th>
+            <th scope="col" name="delete">
+                <input type="hidden" name="orderId" th:value="${element.id}"/>
+                <input type="hidden" name="action" value="delete"/>
+                <button type="submit" class="btn btn-secondary" th:text="#{delete.button}"></button>
+            </th>
         </form>
     </tr>
     </tbody>

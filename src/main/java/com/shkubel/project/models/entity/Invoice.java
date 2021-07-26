@@ -1,6 +1,8 @@
 package com.shkubel.project.models.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.Period;
 
 @Entity
 public class Invoice {
@@ -15,6 +17,10 @@ public class Invoice {
     private User user;
     @ManyToOne
     private Hotel hotel;
+
+    @Column (name = "is_active")
+    @NotNull
+    private boolean isActive;
 
     private String creatingDate;
     private String updatingDate;
@@ -94,5 +100,18 @@ public class Invoice {
 
     public void setPaid(Boolean paid) {
         this.paid = paid;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public Integer getPeriod() {
+        Period days = Period.between(orderUser.getLocalDateFinish(), orderUser.getLocalDateStart());
+        return Math.abs(days.getDays());
     }
 }

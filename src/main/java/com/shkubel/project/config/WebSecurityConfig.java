@@ -1,5 +1,11 @@
 package com.shkubel.project.config;
 
+import com.shkubel.project.models.entity.User;
+import com.shkubel.project.service.impl.UserSecurityServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -8,12 +14,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
+
 
 @Configuration
 @EnableWebSecurity
+@EnableOAuth2Sso
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Qualifier("oauth2ClientContext")
+    @Autowired
+    private OAuth2ClientContext oAuth2ClientContext;
 
 
     private final CustomAuthProvider customAuthProvider;
@@ -35,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/", "/hotels/**", "/index").permitAll()
-                .antMatchers("/users/new", "/users/activate/*", "/forgot_password", "/reset_password").not().fullyAuthenticated()
+                .antMatchers("/users/new", "/users/activate/*", "/forgot_password", "/reset_password", "/login/google").not().fullyAuthenticated()
                 .antMatchers("/administrator/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -48,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
+
     }
 
     @Override
@@ -64,4 +79,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/resources/fonts/**",
                 "/resources/icon/**");
     }
+
+
+    @Bean
+    public PrincipalExtractor principalExtractor(UserSecurityServiceImpl userSecurityService) {
+        return map -> {
+            String email = (String) map.get("email");
+            UserDetails user;
+            user = userSecurityService.loadUserByUsername(email);
+            if (user == null) {
+                User newUser = new User();
+                newUser.setUserFirstname((String) map.get("given_name"));
+                newUser.setUserLastname((String) map.get("family_name"));
+                newUser.setEmail((String) map.get("email"));
+                newUser.setUserFirstname((String) map.get("given_name"));
+                return newUser;
+            }
+
+            user.getAuthorities();
+
+            return user;
+        };
+    }
 }
+

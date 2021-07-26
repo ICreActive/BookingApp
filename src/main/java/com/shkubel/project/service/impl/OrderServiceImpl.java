@@ -1,12 +1,13 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.exception.OrderNotFoundException;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.repo.OrderRepository;
 import com.shkubel.project.service.OrderService;
+import com.shkubel.project.util.DateTimeParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,11 +41,6 @@ public class OrderServiceImpl implements OrderService {
         return false;
     }
 
-    @Override
-    public int bookingPeriod(OrderUser orderUser) {
-        Period days = Period.between(orderUser.getLocalDateFinish(), orderUser.getLocalDateStart());
-        return Math.abs(days.getDays());
-    }
 
     @Override
     public List<OrderUser> findOrderUsersByUserId(Long userId) {
@@ -53,6 +49,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderUser create(OrderUser order) {
+        order.setActive(true);
+        order.setCreatingDate(DateTimeParser.nowToString());
         return orderRepository.save(order);
     }
 
@@ -60,15 +58,16 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findOrderUsersByStatus(active);
     }
 
-    public void updateOrder (OrderUser order) {
-        try{
-        OrderUser orderInDb = orderRepository.findById(order.getId()).orElse(null);
+    public void updateOrder (OrderUser order) throws OrderNotFoundException {
+        OrderUser orderInDb;
+        if (orderRepository.findById(order.getId()).isPresent()) {
+            orderInDb= orderRepository.findOrderUserById(order.getId());
         orderInDb.setInvoice(order.getInvoice());
+        order.setUpdatingDate(DateTimeParser.nowToString());
         orderRepository.save(orderInDb);
-        } catch (NullPointerException e) {
-            System.out.println("Order not found in DB");  // поправить
+        } else {
+            throw new OrderNotFoundException("Order not found in DB");
         }
-
-    };
+    }
 
 }

@@ -1,75 +1,77 @@
 <!DOCTYPE html>
 <html style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org" lang="en">
-  <head>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title th:text="#{c_title.text}">Contact</title>
-      <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
-      <link rel="stylesheet" href="/resources/css/contact.css" media="screen">
-      <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
-      <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
+    <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/contact.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.18.3, nicepage.com">
-    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
-    
-    
-    <script type="application/ld+json">{
-		"@context": "http://schema.org",
-		"@type": "Organization",
-		"name": "",
-		"logo": "images/default-logo.png"
-}</script>
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+
+
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="Contact">
     <meta property="og:type" content="website">
-  </head>
-  <body class="u-body"><header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
-  </header>
-    <section class="u-clearfix u-image u-section-1" id="sec-5d1b" data-image-width="1980" data-image-height="1100">
-      <div class="u-clearfix u-sheet u-valign-middle-sm u-sheet-1">
+</head>
+<body class="u-body">
+<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
+</header>
+<section class="u-clearfix u-image u-section-1" id="sec-5d1b" data-image-width="1980" data-image-height="1100">
+    <div class="u-clearfix u-sheet u-valign-middle-sm u-sheet-1">
         <div class="u-align-center u-container-style u-group u-white u-group-1">
           <div class="u-container-layout u-container-layout-1">
 
             <h1 class="u-text u-text-1" th:text="#{c_titleForm.text}">Contact Us</h1>
             <div class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-form u-form-1">
-              <form action="https://nicepage.com/editor/Forms/Process" method="POST" class="u-clearfix u-form-spacing-22 u-form-vertical u-inner-form" style="padding: 10px" source="email" name="form">
+              <form th:action="@{/contact}" method="POST"
+                    class="u-clearfix u-form-spacing-22 u-form-vertical u-inner-form" style="padding: 10px"
+                    source="email" name="form">
                 <input type="hidden" id="siteId" name="siteId" value="481084" wfd-invisible="true">
                 <input type="hidden" id="pageId" name="pageId" value="481086" wfd-invisible="true">
                 <div class="u-form-group u-form-name u-form-group-1">
                   <label for="name-5a14" class="u-form-control-hidden u-label" wfd-invisible="true">Name</label>
-                  <input type="text" th:placeholder="#{c_username.text}" id="name-5a14" name="name" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                  <input type="text" th:placeholder="#{c_username.text}" id="name-5a14" name="name"
+                         class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white"
+                         required="">
                 </div>
                 <div class="u-form-email u-form-group u-form-group-2">
-                  <label for="email-5a14" class="u-form-control-hidden u-label" wfd-invisible="true" >Email</label>
-                  <input type="email" th:placeholder="#{c_address.text}" id="email-5a14" name="email" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                  <label for="email-5a14" class="u-form-control-hidden u-label" wfd-invisible="true">Email</label>
+                  <input type="email" th:placeholder="#{c_address.text}" id="email-5a14" name="email"
+                         class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white"
+                         required="">
                 </div>
                 <div class="u-form-group u-form-message u-form-group-3">
-                  <label for="message-5a14" class="u-form-control-hidden u-label" wfd-invisible="true" >Message</label>
-                  <textarea th:placeholder="#{c_feedback.text}" rows="4" cols="50" id="message-5a14" name="message" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required=""></textarea>
+                  <label for="message-5a14" class="u-form-control-hidden u-label" wfd-invisible="true">Message</label>
+                  <textarea th:placeholder="#{c_feedback.text}" rows="4" cols="50" id="message-5a14" name="message"
+                            class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white"
+                            required=""></textarea>
                 </div>
                 <div class="u-align-center u-form-group u-form-submit u-form-group-4">
-                  <a href="" class="u-active-palette-2-light-2 u-btn u-btn-submit u-button-style u-hover-palette-2-light-2 u-palette-1-light-1 u-text-active-white u-text-hover-white u-btn-1" th:text="#{subm.button}">Submit</a>
-                  <input type="submit" value="submit" class="u-form-control-hidden" wfd-invisible="true">
+<!--                  <a class="u-active-palette-2-light-2 u-btn u-btn-submit u-button-style u-hover-palette-2-light-2 u-palette-1-light-1 u-text-active-white u-text-hover-white u-btn-1" th:text="#{subm.button}">Submit</a>-->
+                  <button th:type="submit" value="submit">Submit</button>
                 </div>
-                <div class="u-form-send-message u-form-send-success" wfd-invisible="true" th:text="#{successSend.text}"></div>
-                <div class="u-form-send-error u-form-send-message" wfd-invisible="true" th:text="#{errorSend.text}"></div>
-                <input type="hidden" value="" name="recaptchaResponse" wfd-invisible="true">
               </form>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
 
-  <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="position: absolute;
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
 "></footer>
 
-  </body>
+</body>
 </html>

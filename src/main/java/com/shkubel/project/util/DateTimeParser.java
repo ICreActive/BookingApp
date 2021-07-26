@@ -5,21 +5,22 @@ import java.time.format.DateTimeFormatter;
 
 public final class DateTimeParser {
 
+
     private DateTimeParser() {
     }
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static String parseToString(LocalDateTime localDateTime) {
-        return localDateTime.format(FORMATTER);
+        return localDateTime.format(dtf);
     }
 
     public static LocalDateTime parseToDate(String date) {
-        return LocalDateTime.parse(date, FORMATTER);
+        return LocalDateTime.parse(date, dtf);
     }
 
     public static String nowToString() {
-        return LocalDateTime.now().format(FORMATTER);
+        return LocalDateTime.now().format(dtf);
     }
 
 }

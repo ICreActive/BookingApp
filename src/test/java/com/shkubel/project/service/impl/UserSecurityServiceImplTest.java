@@ -1,9 +1,10 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.models.entity.Role;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.repo.RoleRepository;
 import com.shkubel.project.models.repo.UserRepository;
-import org.junit.Before;
+import com.shkubel.project.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,23 +13,25 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Collections;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class UserServiceImplTest {
+class UserSecurityServiceImplTest {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @MockBean
     private UserRepository userRepository;
-    @MockBean
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @MockBean
     private RoleRepository roleRepository;
+
 
     private User user;
 
@@ -59,6 +62,7 @@ class UserServiceImplTest {
         userService.saveUser(user);
         Assertions.assertEquals(user.getRoles().toString(), "[ROLE_USER]");
     }
+
     @Test
     void savedUserHasSingleRoleTest() {
         userService.saveUser(user);
@@ -66,7 +70,17 @@ class UserServiceImplTest {
     }
 
 
+    @Test
+    void findAdmins1() {
+        List<User> admins = userService.findAdmins();
+        Assertions.assertTrue(admins.isEmpty());
+    }
 
-
-
+    @Test
+    void findAdmins2() {
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_ADMIN")));
+        userRepository.save(user);
+        List<User> admins = userService.findAdmins();
+        Assertions.assertFalse(admins.isEmpty());
+    }
 }

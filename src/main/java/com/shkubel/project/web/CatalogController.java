@@ -3,9 +3,8 @@ package com.shkubel.project.web;
 
 import com.shkubel.project.models.entity.Hotel;
 import com.shkubel.project.models.entity.KlassAppartament;
-import com.shkubel.project.service.impl.HotelServiceImpl;
+import com.shkubel.project.service.HotelService;
 import com.shkubel.project.util.ValidationUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +20,14 @@ import java.util.UUID;
 @RequestMapping("/hotels")
 public class CatalogController {
 
-    @Autowired
-    private HotelServiceImpl hotelService;
+    private final HotelService hotelService;
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    public CatalogController(HotelService hotelService) {
+        this.hotelService = hotelService;
+    }
 
     @GetMapping("/catalog")
     public String hotels(Model model) {

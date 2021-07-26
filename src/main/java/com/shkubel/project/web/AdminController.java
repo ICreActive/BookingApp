@@ -1,10 +1,14 @@
 package com.shkubel.project.web;
 
+import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.Hotel;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.entity.Seller;
 import com.shkubel.project.models.entity.User;
-import com.shkubel.project.service.impl.*;
+import com.shkubel.project.service.HotelService;
+import com.shkubel.project.service.OrderService;
+import com.shkubel.project.service.SellerService;
+import com.shkubel.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -24,15 +27,15 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private UserServiceImpl userService;
-    private final OrderServiceImpl orderServiceImpl;
-    private final SellerServiceImpl sellerServiceImpl;
-    private final HotelServiceImpl hotelService;
+    private UserService userService;
+    private final OrderService orderService;
+    private final SellerService sellerService;
+    private final HotelService hotelService;
 
-    public AdminController(HotelServiceImpl hotelService, SellerServiceImpl sellerServiceImpl, OrderServiceImpl orderServiceImpl) {
+    public AdminController(HotelService hotelService, SellerService sellerService, OrderService orderService) {
         this.hotelService = hotelService;
-        this.sellerServiceImpl = sellerServiceImpl;
-        this.orderServiceImpl = orderServiceImpl;
+        this.sellerService = sellerService;
+        this.orderService = orderService;
     }
 
 
@@ -56,14 +59,21 @@ public class AdminController {
         if (action.equals("delete")) {
             userService.deleteUser(userId);
         } else if (action.equals("restore")) {
+            try {
             userService.restoreUser(userId);
+            } catch (UserNotFoundException e) {
+                System.err.println(e);
+                model.addAttribute("message", e);
+                return "users/users";
+            }
+
         }
         return "redirect:users";
     }
 
     @GetMapping("/orders")
     public String showOrds(Model model) {
-        Iterable<OrderUser> orders = orderServiceImpl.allOrders();
+        List<OrderUser> orders = orderService.findOrderUserByStatus(true);
         model.addAttribute("userOrder", orders);
         return "order/orders";
     }
@@ -73,24 +83,24 @@ public class AdminController {
                               @RequestParam(required = true, defaultValue = "") String action,
                               Model model) {
         if (action.equals("delete")) {
-            orderServiceImpl.deleteOrderById(orderId);
+            orderService.deleteOrderById(orderId);
         }
         return "redirect:orders";
     }
 
-    @PostMapping("/orders/active")
+    @PostMapping("/orders/all")
     public String delOrder(@RequestParam(required = true, defaultValue = "") Long orderId,
                               @RequestParam(required = true, defaultValue = "") String action,
                               Model model) {
         if (action.equals("delete")) {
-            orderServiceImpl.deleteOrderById(orderId);
+            orderService.deleteOrderById(orderId);
         }
         return "redirect:orders";
     }
 
     @GetMapping("/orders/{id}")
     public String showOrder(@PathVariable("id") Long id, Model model) {
-        OrderUser order = orderServiceImpl.findOrderById(id);
+        OrderUser order = orderService.findOrderById(id);
         List<Hotel> hotels = hotelService.findOffers(order);
         if (hotels==null) {
             List<Hotel> hotel = new ArrayList<>();
@@ -110,15 +120,15 @@ public class AdminController {
         return "users/users";
     }
 
-    @GetMapping("/orders/active")
+    @GetMapping("/orders/all")
     public String ordersActive(Model model) {
-        model.addAttribute("userOrder", orderServiceImpl.findOrderUserByStatus(true));
+        model.addAttribute("userOrder", orderService.allOrders());
         return "order/orders";
     }
 
     @GetMapping("/sellers")
     public String sellers(Model model) {
-        List<Seller> sellers = sellerServiceImpl.findAllSeller();
+        List<Seller> sellers = sellerService.findAllSeller();
         model.addAttribute("sellers", sellers);
         return "seller/seller";
     }
@@ -127,21 +137,23 @@ public class AdminController {
     @PostMapping("/sellers")
     public String setSeller(@RequestParam(name = "check", defaultValue = "") String param, Model model) {
         Long id = Long.parseLong(param);
-        Seller seller = sellerServiceImpl.findSellerById(id);
+        Seller seller = sellerService.findSellerById(id);
         seller.setActive(true);
-        sellerServiceImpl.saveSeller(seller);
+        sellerService.saveSeller(seller);
+        List<Seller> sellers = sellerService.findAllSeller();
+        model.addAttribute("sellers", sellers);
         return "seller/seller";
     }
 
     @GetMapping("/sellers/{id}")
     public String sellerShow(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("seller", sellerServiceImpl.findSellerById(id));
+        model.addAttribute("seller", sellerService.findSellerById(id));
         return "seller/id";
     }
 
     @GetMapping("/sellers/{id}/edit")
     public String sellerEdit(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("seller", sellerServiceImpl.findSellerById(id));
+        model.addAttribute("seller", sellerService.findSellerById(id));
         return "seller/edit";
     }
 
@@ -152,7 +164,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return s;
         }
-        sellerServiceImpl.update(id, seller);
+        sellerService.update(id, seller);
         return "redirect:/users/myprofile";
     }
 
@@ -169,7 +181,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return s;
         }
-        if (sellerServiceImpl.saveSeller(seller)) {
+        if (sellerService.saveSeller(seller)) {
             return "redirect:/";
         }
         model.addAttribute("error", "The seller was not saved");

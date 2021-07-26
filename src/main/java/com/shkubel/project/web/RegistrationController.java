@@ -1,7 +1,7 @@
 package com.shkubel.project.web;
 
 import com.shkubel.project.models.entity.User;
-import com.shkubel.project.service.impl.UserServiceImpl;
+import com.shkubel.project.service.UserService;
 import com.shkubel.project.util.MailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +15,10 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class RegistrationController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final MailSender mailSender;
 
-    public RegistrationController(UserServiceImpl userService, MailSender mailSender) {
+    public RegistrationController(UserService userService, MailSender mailSender) {
         this.userService = userService;
 
         this.mailSender = mailSender;

@@ -19,6 +19,14 @@ public class MailSender {
     @Value("${spring.mail.username}")
     private String username;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void sendActivationMessage(User user, HttpServletRequest request) {
         String activationUrl = getSiteURL(request) + "/users/activate/" + user.getActivationCode();
         String message = String.format(

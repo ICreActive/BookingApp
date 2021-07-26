@@ -12,10 +12,10 @@ public interface OrderService {
 
     boolean deleteOrderById(Long orderId);
 
-    int bookingPeriod(OrderUser order);
-
     List<OrderUser> findOrderUsersByUserId(Long userId);
 
     OrderUser create(OrderUser order);
+
+    List <OrderUser> findOrderUserByStatus(boolean active);
 
 }
