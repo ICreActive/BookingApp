@@ -1,10 +1,10 @@
 package com.shkubel.project.service.impl;
 
-import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
-import com.shkubel.project.models.repo.HotelRepository;
-import com.shkubel.project.service.HotelService;
+import com.shkubel.project.models.repo.RoomRepository;
+import com.shkubel.project.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,38 +16,38 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class HotelServiceImpl implements HotelService {
+public class RoomServiceImpl implements RoomService {
 
     @Autowired
-    private HotelRepository hotelRepository;
+    private RoomRepository roomRepository;
 
-    public Hotel createHotel() {
-        Hotel hotel = new Hotel();
-        hotel.setNumberOfSeats(0);
-        hotel.setPrice(0);
-        hotel.setAvailable(true);
-        return hotel;
+    public Room createHotel() {
+        Room room = new Room();
+        room.setNumberOfSeats(0);
+        room.setPrice(0);
+        room.setAvailable(true);
+        return room;
     }
 
     @Override
-    public List<Hotel> findHotelByNumberOfSeats(Integer numberOfSeats) {
-        return hotelRepository.findHotelByNumberOfSeats(numberOfSeats);
+    public List<Room> findHotelByNumberOfSeats(Integer numberOfSeats) {
+        return roomRepository.findRoomsByNumberOfSeats(numberOfSeats);
     }
 
     @Override
-    public Hotel findHotelByDateFinishBetween(LocalDate start, LocalDate finish) {
+    public Room findHotelByDateFinishBetween(LocalDate start, LocalDate finish) {
         return null;
     }
 
     @Override
-    public List<Hotel> findHotelByKlassApartment(KlassAppartament klassAppartament) {
-        return hotelRepository.findHotelByKlassApartment(klassAppartament);
+    public List<Room> findHotelByKlassApartment(KlassAppartament klassAppartament) {
+        return roomRepository.findRoomsByKlassApartment(klassAppartament);
     }
 
     @Override
-    public List<Hotel> findOffers(OrderUser orderUser) {
+    public List<Room> findOffers(OrderUser orderUser) {
 
-        List<Hotel> hotelsWithNOS =
+        List<Room> hotelsWithNOS =
                 findHotelByNumberOfSeats(orderUser.getNumberOfSeats())
                         .stream()
                         .filter(Objects::nonNull)
@@ -62,7 +62,6 @@ public class HotelServiceImpl implements HotelService {
                 });
 
             } catch (ConcurrentModificationException e) {
-                System.out.println(e.getMessage());
                 return null;
             }
         }
@@ -71,19 +70,19 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<Hotel> findAllHotel() {
-        return hotelRepository.findAll();
+    public List<Room> findAllHotel() {
+        return roomRepository.findAll();
     }
 
     @Override
-    public void saveHotel(Hotel hotel) {
-        hotel.setAvailable(true);
-        hotelRepository.save(hotel);
+    public void saveHotel(Room room) {
+        room.setAvailable(true);
+        roomRepository.save(room);
     }
 
     @Override
-    public Hotel findHotelById(Long id) {
-        return hotelRepository.findHotelById(id);
+    public Room findHotelById(Long id) {
+        return roomRepository.findRoomsById(id);
     }
 
 

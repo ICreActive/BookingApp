@@ -43,7 +43,7 @@ public class OrderController {
                 User user = userService.findUserByUserName(principal.getName());
                 order.setUser(user);
                 orderService.create(order);
-                return "static/home";
+                return "redirect:/home";
             } catch (UserNotFoundException e) {
                 return "order/new";
             }

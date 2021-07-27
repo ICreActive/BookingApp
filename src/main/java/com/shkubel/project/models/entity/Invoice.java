@@ -15,10 +15,12 @@ public class Invoice {
     private Seller seller;
     @ManyToOne
     private User user;
-    @ManyToOne
-    private Hotel hotel;
 
-    @Column (name = "is_active")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    @Column(name = "is_active")
     @NotNull
     private boolean isActive;
 
@@ -50,12 +52,12 @@ public class Invoice {
         this.user = user;
     }
 
-    public Hotel getHotel() {
-        return hotel;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public Seller getSeller() {

@@ -37,7 +37,7 @@
                           style="padding: 80px;">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="title" type="text">Title</span>
-                            <input th:field="*{hotel.title}" type="text" class="form-control"
+                            <input th:field="*{room.title}" type="text" class="form-control"
                                    aria-label="Sizing example input"
                                    aria-describedby="inputGroup-sizing-default">
                         </div>
@@ -47,11 +47,11 @@
                               type="text">Description</span>
                             <textarea type="text" class="form-control" aria-label="Sizing example input"
                                       aria-describedby="inputGroup-sizing-default"
-                                      th:field="*{hotel.description}"></textarea>
+                                      th:field="*{room.description}"></textarea>
                         </div>
 
-                        <select select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
-                                th:field="*{hotel.klassApartment}">
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                th:field="*{room.klassApartment}">
                             <option th:each="klass:${klassAp}" th:text="${klass.getName()}"
                                     th:value="${klass}"></option>
 
@@ -60,7 +60,7 @@
                         <div class="input-group mb-3">
                         <span class="input-group-text" id="numofseats" required
                               type="text">Number of seats</span>
-                            <input th:field="*{hotel.numberOfSeats}" type="text" class="form-control"
+                            <input th:field="*{room.numberOfSeats}" type="text" class="form-control"
                                    aria-label="Sizing example input"
                                    aria-describedby="inputGroup-sizing-default">
                         </div>
@@ -68,7 +68,7 @@
                         <div class="input-group mb-3">
                         <span class="input-group-text" id="price" required
                               type="text">Price</span>
-                            <input th:field="*{hotel.price}" type="text" class="form-control"
+                            <input th:field="*{room.price}" type="text" class="form-control"
                                    aria-label="Sizing example input"
                                    aria-describedby="inputGroup-sizing-default">
                         </div>
@@ -78,7 +78,7 @@
                             <label class="input-group-text" for="inputGroupFile02">Upload</label>
                         </div>
 
-                        <button type="submit" value="Create hotel">Create hotel</button>
+                        <button type="submit" value="Create room">Create room</button>
 
                     </form>
                 </div>

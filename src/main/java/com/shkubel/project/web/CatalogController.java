@@ -1,9 +1,9 @@
 package com.shkubel.project.web;
 
 
-import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.KlassAppartament;
-import com.shkubel.project.service.HotelService;
+import com.shkubel.project.service.RoomService;
 import com.shkubel.project.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,35 +17,35 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/hotels")
+@RequestMapping("/rooms")
 public class CatalogController {
 
-    private final HotelService hotelService;
+    private final RoomService roomService;
 
-    @Value("${upload.path}")
+    @Value("${spring.servlet.multipart.location}")
     private String uploadPath;
 
-    public CatalogController(HotelService hotelService) {
-        this.hotelService = hotelService;
+    public CatalogController(RoomService roomService) {
+        this.roomService = roomService;
     }
 
     @GetMapping("/catalog")
     public String hotels(Model model) {
-        List<Hotel> hotels = hotelService.findAllHotel();
-        model.addAttribute("hotels", hotels);
+        List<Room> rooms = roomService.findAllHotel();
+        model.addAttribute("rooms", rooms);
         return "/hotels/catalog";
     }
 
     @GetMapping("/new")
     public String newHotel(Model model) {
 
-        model.addAttribute("hotel", hotelService.createHotel());
+        model.addAttribute("room", roomService.createHotel());
         model.addAttribute("klassAp", KlassAppartament.values());
         return "/hotels/new";
     }
 
     @PostMapping("/new")
-    public String add(@ModelAttribute("hotel") Hotel hotel, Model model, @RequestPart("file") MultipartFile file) throws IOException {
+    public String add(@ModelAttribute("room") Room room, Model model, @RequestPart("file") MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
@@ -57,21 +57,21 @@ public class CatalogController {
 
             file.transferTo(new File(uploadPath + "/" + resultFilename));
 
-            hotel.setFilename(resultFilename);
+            room.setFilename(resultFilename);
         }
 
 
-        if (!ValidationUtil.validationHotel(hotel).equals("success")) {
+        if (!ValidationUtil.validationHotel(room).equals("success")) {
             return "/hotels/new";
         }
-        hotelService.saveHotel(hotel);
-        return "redirect:/hotels/catalog";
+        roomService.saveHotel(room);
+        return "redirect:/rooms/catalog";
     }
 
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("hotel", hotelService.findHotelById(id));
+        model.addAttribute("room", roomService.findHotelById(id));
         return "hotels/hotelPage";
     }
 

@@ -34,7 +34,6 @@ class OrderServiceImplTest {
         order.setKlassOfApartment(KlassAppartament.HIGH);
         order.setNumberOfSeats(2);
         order.setId(1L);
-        orderRepository.save(order);
     }
 
     @Test
@@ -43,8 +42,4 @@ class OrderServiceImplTest {
         Assertions.assertFalse(orderService.findOrderById(1L).isActive());
     }
 
-    @Test
-    void deleteOrderByIdOrderNotFound() {
-        Assertions.assertFalse(orderService.deleteOrderById(1L));
-    }
 }

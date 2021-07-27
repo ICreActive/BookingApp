@@ -1,5 +1,6 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.Role;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.repo.RoleRepository;
@@ -13,6 +14,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
@@ -21,10 +23,12 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class UserSecurityServiceImplTest {
+class UserServiceImplTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @MockBean
     private UserRepository userRepository;
@@ -41,6 +45,7 @@ class UserSecurityServiceImplTest {
         user.setUsername("Yuri");
         user.setEmail("email@email.com");
         user.setPassword("123456");
+        user.setId(1L);
     }
 
     @Test
@@ -67,20 +72,18 @@ class UserSecurityServiceImplTest {
     void savedUserHasSingleRoleTest() {
         userService.saveUser(user);
         Assertions.assertEquals(user.getRoles().size(), 1);
-    }
 
-
-    @Test
-    void findAdmins1() {
-        List<User> admins = userService.findAdmins();
-        Assertions.assertTrue(admins.isEmpty());
     }
 
     @Test
-    void findAdmins2() {
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_ADMIN")));
-        userRepository.save(user);
-        List<User> admins = userService.findAdmins();
-        Assertions.assertFalse(admins.isEmpty());
+    void restoreUserThrowsUserNotFoundException() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.restoreUser(user.getId()));
+    }
+
+    @Test
+    void updatePassword() {
+        userService.updatePassword(user, "654321");
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+
     }
 }

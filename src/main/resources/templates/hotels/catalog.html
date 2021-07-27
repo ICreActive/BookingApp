@@ -9,6 +9,7 @@
     <title th:text="#{aboutUs.text}">about us</title>
     <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/resources/css/about-us.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/invoices.css">
     <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.18.3, nicepage.com">
@@ -24,15 +25,16 @@
 </header>
 <div class="page" >
 
-    <ul>
-        <li th:each="elem:${hotels}" >
-            <a th:href="@{/hotels/{id}(id=${elem.getId()})}">
-                <h2 th:text="${elem.getTitle()}">Title #1</h2>
+    <div id="menu" class=main>
+        <div th:each="elem:${rooms}" >
+            <a th:href="@{/rooms/{id}(id=${elem.getId()})}">
+                <img src="/resources/icon/invoice.png" alt="image"/>
+                <div th:text="${elem.getTitle()}"></div>
             </a>
-        </li>
-    </ul>
+        </div>
+    </div>
 
-    <form method="get" action="/hotels/new">
+    <form method="get" action="/rooms/new">
         <button type="submit" class="">Create new</button>
     </form>
 

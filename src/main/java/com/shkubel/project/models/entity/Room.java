@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
-public class Hotel {
+public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +33,7 @@ public class Hotel {
 
     private Boolean isAvailable;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
     private Set<Invoice> invoices;
 
     public Long getId() {
@@ -111,20 +113,22 @@ public class Hotel {
 
         for (Invoice invoice : invoices) {
 
-            LocalDate invCheckIn = invoice.getOrderUser().getLocalDateStart();
-            LocalDate invCheckOut = invoice.getOrderUser().getLocalDateFinish();
-            if (invCheckIn.equals(dateCheckIn) ||
-                    invCheckIn.isAfter(dateCheckIn)
-                            && invCheckIn.isBefore(dateCheckOut) ||
-                    invCheckIn.isBefore(dateCheckIn) && invCheckOut.isAfter(dateCheckOut) ||
-                    invCheckIn.isBefore(dateCheckIn) && invCheckOut.isAfter(dateCheckIn) && invCheckOut.isBefore(dateCheckOut)
-            ) {
-                return false;
+            if (invoice.isActive()) {
+
+                LocalDate invCheckIn = invoice.getOrderUser().getLocalDateStart();
+                LocalDate invCheckOut = invoice.getOrderUser().getLocalDateFinish();
+                if (invCheckIn.equals(dateCheckIn) ||
+                        invCheckIn.isAfter(dateCheckIn)
+                                && invCheckIn.isBefore(dateCheckOut) ||
+                        invCheckIn.isBefore(dateCheckIn) && invCheckOut.isAfter(dateCheckOut) ||
+                        invCheckIn.isBefore(dateCheckIn) && invCheckOut.isAfter(dateCheckIn) && invCheckOut.isBefore(dateCheckOut)
+                ) {
+                    return false;
+                }
             }
         }
         return true;
     }
-
 }
 
 

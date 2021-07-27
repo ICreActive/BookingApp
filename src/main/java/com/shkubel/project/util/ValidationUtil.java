@@ -1,8 +1,8 @@
 package com.shkubel.project.util;
 
-import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.KlassAppartament;
-import com.shkubel.project.service.impl.HotelServiceImpl;
+import com.shkubel.project.service.impl.RoomServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import java.util.Locale;
 public class ValidationUtil {
 
     @Autowired
-    HotelServiceImpl hotelService;
+    RoomServiceImpl hotelService;
 
-    public static String validationHotel(Hotel hotel) {
+    public static String validationHotel(Room room) {
         String message=null;
         for (KlassAppartament elem : KlassAppartament.values()) {
-            if (!elem.getName().toLowerCase(Locale.ROOT).equals(hotel.getKlassApartment().getName().toLowerCase(Locale.ROOT))) {
+            if (!elem.getName().toLowerCase(Locale.ROOT).equals(room.getKlassApartment().getName().toLowerCase(Locale.ROOT))) {
                message = "This Klass of apartment is incorrect";
             }
         }

@@ -1,18 +1,19 @@
 package com.shkubel.project.web;
 
 import com.shkubel.project.exception.OrderNotFoundException;
-import com.shkubel.project.exception.UserNotFoundException;
-import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.Invoice;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.entity.Seller;
-import com.shkubel.project.service.*;
+import com.shkubel.project.service.RoomService;
+import com.shkubel.project.service.InvoiceService;
+import com.shkubel.project.service.OrderService;
+import com.shkubel.project.service.SellerService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 
@@ -21,30 +22,30 @@ import java.util.List;
 public class InvoiceController {
 
 
-    private final UserService userService;
     private final OrderService orderService;
     private final SellerService sellerService;
-    private final HotelService hotelService;
+    private final RoomService roomService;
     private final InvoiceService invoiceService;
 
 
-    public InvoiceController(HotelService hotelService, SellerService sellerService, OrderService orderService, InvoiceService invoiceService, UserService userService) {
-        this.hotelService = hotelService;
+    public InvoiceController(RoomService roomService, SellerService sellerService, OrderService orderService, InvoiceService invoiceService) {
+        this.roomService = roomService;
         this.sellerService = sellerService;
         this.orderService = orderService;
         this.invoiceService = invoiceService;
-        this.userService = userService;
+
 
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/invoices")
-    public String invoiceAll(Principal principal, Model model) {
-        try {
-            List<Invoice> invoices = invoiceService.findAllByUser(userService.findUserByUserName(principal.getName()));
+    public String invoiceAll(Model model) {
+
+        List<Invoice> invoices = invoiceService.findAll();
+        if (invoices != null) {
             model.addAttribute("invoices", invoices);
-        } catch (UserNotFoundException e) {
-            model.addAttribute("message", e.getMessage());
+        } else {
+            model.addAttribute("message", "No invoices");
         }
         return "invoice/invoices";
     }
@@ -56,10 +57,10 @@ public class InvoiceController {
                              Model model) {
 
         OrderUser order = orderService.findOrderById(orderId);
-        Hotel hotel = hotelService.findHotelById(offerId);
-        Seller sellers = sellerService.findSellerByIsActive(true);
+        Room room = roomService.findHotelById(offerId);
+        Seller sellers = sellerService.findSellerByActiveStatus();
         try {
-            Invoice invoice = invoiceService.createInvoice(hotel, order, sellers);
+            Invoice invoice = invoiceService.createInvoice(room, order, sellers);
             Integer bookingPeriod = invoice.getPeriod();
             model.addAttribute("period", bookingPeriod);
             model.addAttribute("invoice", invoice);

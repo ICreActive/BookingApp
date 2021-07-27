@@ -2,6 +2,7 @@ package com.shkubel.project.models.repo;
 
 import com.shkubel.project.models.entity.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -11,6 +12,7 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     Seller findSellerByName(String name);
 
-    Seller findSellerByIsActive(Boolean active);
+    @Query("select u from Seller u where u.isActive=true")
+    Seller findSellerByActiveStatus();
 
 }

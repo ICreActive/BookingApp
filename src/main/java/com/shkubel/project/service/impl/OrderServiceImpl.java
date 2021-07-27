@@ -54,10 +54,11 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
-    public List <OrderUser> findOrderUserByStatus(boolean active) {
-        return orderRepository.findOrderUsersByStatus(active);
+    public List <OrderUser> findOrderUserByActiveStatus() {
+        return orderRepository.findOrderUsersByActiveStatus();
     }
 
+    @Override
     public void updateOrder (OrderUser order) throws OrderNotFoundException {
         OrderUser orderInDb;
         if (orderRepository.findById(order.getId()).isPresent()) {

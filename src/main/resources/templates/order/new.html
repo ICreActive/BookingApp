@@ -37,8 +37,6 @@
             <form method="POST" th:object="${userOrder}"
                   class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form"
                   style="padding: 10px;">
-                <input type="hidden" id="siteId" name="siteId" value="481084">
-                <input type="hidden" id="pageId" name="pageId" value="481581">
                 <div class="u-form-date u-form-group u-form-group-1">
                     <label for="date-9e0d"
                            class="u-form-control-hidden u-label u-text-palette-3-light-1 u-label-1"></label>
@@ -84,12 +82,11 @@
                         </svg>
                     </div>
                 </div>
-                <div class="u-align-left u-form-group u-form-submit">
-                    <a href="#"
+                <div class="u-align-left u-form-group">
+                    <a href="/"
                        class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1">Submit</a>
-                    <input type="submit" value="submit" class="u-form-control-hidden">
+                    <input type="submit" value="submit">
                 </div>
-                <input type="hidden" value="" name="recaptchaResponse"/>
             </form>
         </div>
     </div>

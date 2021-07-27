@@ -1,5 +1,6 @@
 package com.shkubel.project.service;
 
+import com.shkubel.project.exception.OrderNotFoundException;
 import com.shkubel.project.models.entity.OrderUser;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public interface OrderService {
 
     OrderUser create(OrderUser order);
 
-    List <OrderUser> findOrderUserByStatus(boolean active);
+    List <OrderUser> findOrderUserByActiveStatus();
 
+    void updateOrder(OrderUser order) throws OrderNotFoundException;
 }

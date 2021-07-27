@@ -70,8 +70,8 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(userId).orElseGet(() -> {
             try {
-                throw new Exception("User not found");
-            } catch (Exception e) {
+                throw new UserNotFoundException("User not found");
+            } catch (UserNotFoundException e) {
                 e.printStackTrace();
             }
             return null;
@@ -111,19 +111,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean restoreUser(Long userId) throws UserNotFoundException {
-        if (userRepository.findById(userId).isPresent()) {
-            User user = userRepository.findById(userId).orElse(null);
-            if (user != null) {
-                user.setUserActive(true);
-                user.setUpdatingDate(DateTimeParser.nowToString());
-                return true;
-            } else
-                throw new UserNotFoundException("User not found");
-        }
-        return false;
+    public void restoreUser(Long userId) throws UserNotFoundException {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            user.setUserActive(true);
+            user.setUpdatingDate(DateTimeParser.nowToString());
+        } else
+            throw new UserNotFoundException("User not found");
     }
-
 
 
     @Transactional
@@ -164,7 +159,7 @@ public class UserServiceImpl implements UserService {
     public User findUserByUserName(String username) throws UserNotFoundException {
 
         User user = userRepository.findUserByUsername(username);
-        if (user!=null) {
+        if (user != null) {
             return user;
         } else {
             throw new UserNotFoundException("User not found");

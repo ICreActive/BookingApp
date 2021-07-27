@@ -15,6 +15,6 @@ public interface OrderRepository extends JpaRepository<OrderUser,Long> {
     OrderUser findOrderUserById (Long orderId);
 
     @Query("select u from OrderUser u where u.isActive=true")
-    List <OrderUser> findOrderUsersByStatus (boolean active);
+    List <OrderUser> findOrderUsersByActiveStatus ();
 
 }

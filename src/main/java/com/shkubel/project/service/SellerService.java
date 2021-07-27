@@ -14,5 +14,5 @@ public interface SellerService {
 
     void update(Long id, Seller seller);
 
-    Seller findSellerByIsActive(Boolean active);
+    Seller findSellerByActiveStatus();
 }

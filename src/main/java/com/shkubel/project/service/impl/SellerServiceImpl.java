@@ -54,7 +54,7 @@ public class SellerServiceImpl implements SellerService {
     @Override
     @Transactional
     public void update(Long id, Seller seller) {
-        if (seller.getId() == id) {
+        if (seller.getId().equals(id)) {
             if (sellerRepository.findById(id).isPresent()) {
                 Seller sellerInDB = sellerRepository.findById(id).get();
                 sellerInDB.setName(seller.getName());
@@ -70,8 +70,8 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Seller findSellerByIsActive(Boolean active) {
-        return sellerRepository.findSellerByIsActive(active);
+    public Seller findSellerByActiveStatus() {
+        return sellerRepository.findSellerByActiveStatus();
     }
 
 }

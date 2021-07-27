@@ -51,7 +51,7 @@
                             Date of Invoice:
                             <div th:text="${invoice.getCreatingDate()}"></div>
                         </div>
-                        <div class="date">Due Date: 30/10/2018</div>
+                        <div class="date" th:text="'Due Date:' + ${invoice.getCreatingDate()} + 3">Due Date: 30/10/2018</div>
                     </div>
                 </div>
                 <table border="0" cellspacing="0" cellpadding="0">
@@ -66,16 +66,16 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="no" th:text="${invoice.getHotel().getId()}">01</td>
+                        <td class="no" th:text="${invoice.getRoom().getId()}">01</td>
                         <td class="text-left"><h3>
-                            <a target="_blank" th:text="${invoice.getHotel().getTitle()}">
+                            <a target="_blank" th:text="${invoice.getRoom().getTitle()}">
                             </a>
                         </h3>
-                            <div th:text="${invoice.getHotel().getDescription() + ', ' + invoice.getHotel().getNumberOfSeats() +' guests'} "> </div>
+                            <div th:text="${invoice.getRoom().getDescription() + ', ' + invoice.getRoom().getNumberOfSeats() +' guests'} "> </div>
                         </td>
-                        <td class="unit" th:text="${invoice.getHotel().getPrice()}">$0.00</td>
+                        <td class="unit" th:text="${invoice.getRoom().getPrice()}">$0.00</td>
                         <td class="qty" th:text="${period}">0</td>
-                        <div th:with="result=${invoice.getHotel().getPrice() * period}">
+                        <div th:with="result=${invoice.getRoom().getPrice() * period}">
                             <td class="total" th:text="'$'+${result}">0.00</td>
                         </div>
                     </tr>

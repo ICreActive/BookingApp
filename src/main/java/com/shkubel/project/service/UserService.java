@@ -22,7 +22,7 @@ public interface UserService {
 
     List<User> findUsersByStatus(@NotNull boolean userActive);
 
-    boolean restoreUser(Long userId) throws UserNotFoundException;
+    void restoreUser(Long userId) throws UserNotFoundException;
 
     List<User> findAdmins ();
 

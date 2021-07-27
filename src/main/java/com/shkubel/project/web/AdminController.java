@@ -1,11 +1,11 @@
 package com.shkubel.project.web;
 
 import com.shkubel.project.exception.UserNotFoundException;
-import com.shkubel.project.models.entity.Hotel;
+import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.entity.Seller;
 import com.shkubel.project.models.entity.User;
-import com.shkubel.project.service.HotelService;
+import com.shkubel.project.service.RoomService;
 import com.shkubel.project.service.OrderService;
 import com.shkubel.project.service.SellerService;
 import com.shkubel.project.service.UserService;
@@ -30,10 +30,10 @@ public class AdminController {
     private UserService userService;
     private final OrderService orderService;
     private final SellerService sellerService;
-    private final HotelService hotelService;
+    private final RoomService roomService;
 
-    public AdminController(HotelService hotelService, SellerService sellerService, OrderService orderService) {
-        this.hotelService = hotelService;
+    public AdminController(RoomService roomService, SellerService sellerService, OrderService orderService) {
+        this.roomService = roomService;
         this.sellerService = sellerService;
         this.orderService = orderService;
     }
@@ -73,7 +73,7 @@ public class AdminController {
 
     @GetMapping("/orders")
     public String showOrds(Model model) {
-        List<OrderUser> orders = orderService.findOrderUserByStatus(true);
+        List<OrderUser> orders = orderService.findOrderUserByActiveStatus();
         model.addAttribute("userOrder", orders);
         return "order/orders";
     }
@@ -101,16 +101,16 @@ public class AdminController {
     @GetMapping("/orders/{id}")
     public String showOrder(@PathVariable("id") Long id, Model model) {
         OrderUser order = orderService.findOrderById(id);
-        List<Hotel> hotels = hotelService.findOffers(order);
-        if (hotels==null) {
-            List<Hotel> hotel = new ArrayList<>();
+        List<Room> rooms = roomService.findOffers(order);
+        if (rooms ==null || rooms.isEmpty()) {
+            List<Room> room = new ArrayList<>();
             model.addAttribute("order", order);
             model.addAttribute("error", "Offer not found");
-            model.addAttribute("offers", hotel);
+            model.addAttribute("offers", room);
             return "order/id";
         }
         model.addAttribute("order", order);
-        model.addAttribute("offers", hotels);
+        model.addAttribute("offers", rooms);
         return "order/id";
     }
 

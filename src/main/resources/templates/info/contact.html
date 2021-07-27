@@ -18,6 +18,7 @@
           href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
 
 
+
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="Contact">
     <meta property="og:type" content="website">
@@ -32,11 +33,9 @@
 
             <h1 class="u-text u-text-1" th:text="#{c_titleForm.text}">Contact Us</h1>
             <div class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-form u-form-1">
-              <form th:action="@{/contact}" method="POST"
+              <form method="POST"
                     class="u-clearfix u-form-spacing-22 u-form-vertical u-inner-form" style="padding: 10px"
                     source="email" name="form">
-                <input type="hidden" id="siteId" name="siteId" value="481084" wfd-invisible="true">
-                <input type="hidden" id="pageId" name="pageId" value="481086" wfd-invisible="true">
                 <div class="u-form-group u-form-name u-form-group-1">
                   <label for="name-5a14" class="u-form-control-hidden u-label" wfd-invisible="true">Name</label>
                   <input type="text" th:placeholder="#{c_username.text}" id="name-5a14" name="name"
