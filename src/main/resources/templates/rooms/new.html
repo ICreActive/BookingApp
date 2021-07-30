@@ -23,11 +23,14 @@
     <meta property="og:title" content="HotelPage">
     <meta property="og:type" content="website">
 </head>
-<body class="u-body">
+<body style="width: 100%">
+
+<div class="wrapper" style=" width: 100%; height: 969px;padding: 0 0 148px;">
+
 <header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
 </header>
 
-<section class="u-clearfix u-image u-section-1" id="sec-5d1b" data-image-width="1980" data-image-height="1100">
+<section class="u-clearfix u-image u-section-1" id="sec-5d1b" data-image-width="1980" data-image-height="1100" style="height: -webkit-fill-available;">
     <div class="u-clearfix u-sheet u-valign-middle-sm u-sheet-1">
 
         <section class="skrollable u-clearfix u-section-2" id="sec-5c9d">
@@ -39,7 +42,7 @@
                             <span class="input-group-text" id="title" type="text">Title</span>
                             <input th:field="*{room.title}" type="text" class="form-control"
                                    aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-default">
+                                   aria-describedby="inputGroup-sizing-default"/>
                         </div>
 
                         <div class="input-group mb-3">
@@ -47,7 +50,7 @@
                               type="text">Description</span>
                             <textarea type="text" class="form-control" aria-label="Sizing example input"
                                       aria-describedby="inputGroup-sizing-default"
-                                      th:field="*{room.description}"></textarea>
+                                      th:field="*{room.description}" required ></textarea>
                         </div>
 
                         <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
@@ -62,7 +65,7 @@
                               type="text">Number of seats</span>
                             <input th:field="*{room.numberOfSeats}" type="text" class="form-control"
                                    aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-default">
+                                   aria-describedby="inputGroup-sizing-default" >
                         </div>
 
                         <div class="input-group mb-3">
@@ -70,7 +73,7 @@
                               type="text">Price</span>
                             <input th:field="*{room.price}" type="text" class="form-control"
                                    aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-default">
+                                   aria-describedby="inputGroup-sizing-default" pattern="[1-9]{,1}" required>
                         </div>
 
                         <div class="input-group mb-3">
@@ -78,7 +81,7 @@
                             <label class="input-group-text" for="inputGroupFile02">Upload</label>
                         </div>
 
-                        <button type="submit" value="Create room">Create room</button>
+                        <button type="submit" value="Create room" class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1">Create room</button>
 
                     </form>
                 </div>
@@ -86,8 +89,8 @@
         </section>
     </div>
 </section>
-
-<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer"></footer>
+</div>
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="margin-top: -148px"></footer>
 
 </body>
 </html>

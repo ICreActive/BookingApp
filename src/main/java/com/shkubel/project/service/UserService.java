@@ -35,4 +35,5 @@ public interface UserService {
     boolean activateUser(String code);
 
     User findUserByUserName (String name) throws UserNotFoundException;
+
 }

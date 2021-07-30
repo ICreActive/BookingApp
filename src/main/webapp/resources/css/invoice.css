@@ -6,6 +6,8 @@
     position: relative;
     background-color: #FFF;
     min-height: 680px;
+    width: 960px;
+    margin: auto;
 }
 
 .invoice header {
@@ -149,7 +151,7 @@
 @media print {
     .invoice {
         font-size: 11px!important;
-        overflow: hidden!important
+        overflow: hidden!important;
     }
 
     .invoice footer {

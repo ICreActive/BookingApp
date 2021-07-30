@@ -16,4 +16,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Room findRoomsById(Long id);
 
+    List<Room> findRoomsByIsAvailableTrue();
+
 }

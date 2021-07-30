@@ -44,6 +44,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             hot.add(invoice);
             invoiceRepository.save(invoice);
             orderUser.setInvoice(invoice);
+            orderUser.setActive(false);
             orderService.updateOrder(orderUser);
             return invoice;
         }

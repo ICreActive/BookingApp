@@ -35,7 +35,6 @@ public class OrderServiceImpl implements OrderService {
             OrderUser order = orderRepository.findOrderUserById(orderId);
             order.setActive(false);
             orderRepository.save(order);
-
             return true;
         }
         return false;

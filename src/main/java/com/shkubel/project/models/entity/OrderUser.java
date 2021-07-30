@@ -27,7 +27,7 @@ public class OrderUser {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate localDateFinish;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 
     @OneToOne

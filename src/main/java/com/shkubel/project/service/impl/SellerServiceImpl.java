@@ -1,5 +1,6 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.exception.SellerNotFoundException;
 import com.shkubel.project.models.entity.Seller;
 import com.shkubel.project.models.repo.SellerRepository;
 import com.shkubel.project.service.SellerService;
@@ -70,8 +71,28 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Seller findSellerByActiveStatus() {
-        return sellerRepository.findSellerByActiveStatus();
+    public Seller findSellerByActiveStatus() throws SellerNotFoundException {
+
+        Seller seller = sellerRepository.findSellerByActiveStatus();
+        if (seller != null)
+            return seller;
+        else {
+            throw new SellerNotFoundException("Seller not found");
+        }
+
+    }
+
+    @Transactional
+    @Override
+    public void setActiveSeller(Long id) {
+
+        Seller seller = findSellerById(id);
+        seller.setActive(true);
+        sellerRepository.save(seller);
+
+        sellerRepository.findAll().stream()
+                .filter(s -> !s.getId().equals(id))
+                .forEach(s -> s.setActive(false));
     }
 
 }

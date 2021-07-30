@@ -10,7 +10,7 @@ public class Seller {
     private Long id;
 
     private String name;
-    private String BankAccount;
+    private String bankAccount;
     private String address;
 
     @Column(name = "is_active")
@@ -25,7 +25,7 @@ public class Seller {
     public Seller(Long id, String name, String bankAccount) {
         this.id = id;
         this.name = name;
-        BankAccount = bankAccount;
+        this.bankAccount = bankAccount;
     }
 
     public Long getId() {
@@ -45,11 +45,11 @@ public class Seller {
     }
 
     public String getBankAccount() {
-        return BankAccount;
+        return bankAccount;
     }
 
     public void setBankAccount(String bankAccount) {
-        BankAccount = bankAccount;
+        this.bankAccount = bankAccount;
     }
 
     public String getCreatingDate() {

@@ -1,9 +1,7 @@
 package com.shkubel.project.service.impl;
 
 import com.shkubel.project.exception.UserNotFoundException;
-import com.shkubel.project.models.entity.Role;
 import com.shkubel.project.models.entity.User;
-import com.shkubel.project.models.repo.RoleRepository;
 import com.shkubel.project.models.repo.UserRepository;
 import com.shkubel.project.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -14,11 +12,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Locale;
 
 
 @RunWith(SpringRunner.class)
@@ -27,14 +23,9 @@ class UserServiceImplTest {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
 
     @MockBean
     private UserRepository userRepository;
-
-    @MockBean
-    private RoleRepository roleRepository;
 
 
     private User user;
@@ -76,14 +67,20 @@ class UserServiceImplTest {
     }
 
     @Test
-    void restoreUserThrowsUserNotFoundException() {
+    void restoreUserThrowsUserNotFoundExceptionTest() {
         Assertions.assertThrows(UserNotFoundException.class, () -> userService.restoreUser(user.getId()));
     }
 
     @Test
-    void updatePassword() {
+    void updatePasswordTest() {
         userService.updatePassword(user, "654321");
         Mockito.verify(userRepository, Mockito.times(1)).save(user);
+    }
 
+    @Test
+    void userNameLowerCaseTest() {
+        userService.saveUser(user);
+        String username = "Yuri";
+        Assertions.assertEquals(username.toLowerCase(Locale.ROOT), user.getUsername());
     }
 }

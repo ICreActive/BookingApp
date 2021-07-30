@@ -22,7 +22,7 @@
     <div th:method="Get" th:each="element:${invoices}">
         <a th:href="@{/users/myprofile/invoices/{id}(id=${element.getId()})}">
             <img src="/resources/icon/invoice.png"/>
-            <div th:text="${element.getId() + ' ' + element.getHotel().getTitle()}"></div>
+            <div th:text="${element.getId() + ' ' + element.getRoom().getTitle()}"></div>
         </a>
     </div>
 </div>

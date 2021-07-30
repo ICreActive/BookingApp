@@ -11,9 +11,9 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Seller seller;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -29,7 +29,7 @@ public class Invoice {
 
     private Boolean paid;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     private OrderUser orderUser;
 
 

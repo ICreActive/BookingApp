@@ -1,5 +1,6 @@
 package com.shkubel.project.service;
 
+import com.shkubel.project.exception.RoomNotFoundException;
 import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
@@ -18,11 +19,15 @@ public interface RoomService {
 
     List<Room> findOffers(OrderUser orderUser);
 
-    List<Room> findAllHotel();
+    List<Room> findAllRoom();
 
-    void saveHotel(Room room);
+    void saveRoom (Room room);
 
-    Room findHotelById(Long id);
+    Room findRoomById(Long id);
 
-    Room createHotel();
+    Room createRoom();
+
+    void disableRoom(Long id) throws RoomNotFoundException;
+
+    List<Room> findAllEnableRoom();
 }

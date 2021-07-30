@@ -9,8 +9,10 @@
     <title>New Order</title>
     <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/resources/css/order-new.css" media="screen">
-    <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
+    <link rel="stylesheet" href="/resources/css/message.css" media="screen">
+<!--    <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>-->
     <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/resources/js/message.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.18.3, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
@@ -31,6 +33,7 @@
             data-animation-delay="0" data-animation-direction="X" th:text="#{o_create.text}">Creating new order</h1>
     </div>
 </section>
+
 <section class="skrollable u-clearfix u-section-2" id="sec-5c9d">
     <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-form u-form-1">
@@ -43,6 +46,7 @@
                     <input type="date" placeholder="Check-in date" th:field="*{localDateStart}" id="date-9e0d"
                            name="date" class="u-border-2 u-border-palette-1-light-1 u-gradient u-input u-input-rectangle
                     u-text-palette-1-dark-1 u-input-1" required="">
+
                 </div>
                 <div class="u-form-date u-form-group u-form-group-2">
                     <label for="date-e644"
@@ -62,6 +66,7 @@
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
+                            <option value="3">4</option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" version="1.1" class="u-caret">
                             <path fill="currentColor" d="M4 8L0 4h8z"></path>
@@ -83,9 +88,15 @@
                     </div>
                 </div>
                 <div class="u-align-left u-form-group">
-                    <a href="/"
-                       class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1">Submit</a>
-                    <input type="submit" value="submit">
+                    <button type="submit" value="submit"
+                            class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1" th:text="#{subm.button}">
+                   </button>
+                </div>
+                <div th:if="${message}" id="popup-wrapper" class="popup-container show">
+                    <div class="popup-content">
+                        <span id="close">&times;</span>
+                        <p th:text="${message}"></p>
+                    </div>
                 </div>
             </form>
         </div>

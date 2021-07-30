@@ -1,5 +1,6 @@
 package com.shkubel.project.web;
 
+import com.shkubel.project.exception.DateValidationException;
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
@@ -37,21 +38,19 @@ public class OrderController {
     }
 
     @PostMapping("/orders/new")
-    public String OrderSave(Principal principal, @ModelAttribute("userOrder") OrderUser order, BindingResult bindingResult, Model model) {
-        if (validationUtil.ValidationDate(order.getLocalDateStart(), order.getLocalDateFinish())) {
-            try {
-                User user = userService.findUserByUserName(principal.getName());
-                order.setUser(user);
-                orderService.create(order);
-                return "redirect:/home";
-            } catch (UserNotFoundException e) {
-                return "order/new";
-            }
-        } else {
-            model.addAttribute("message", "DateError!");
+    public String orderSave(Principal principal, @ModelAttribute("userOrder") OrderUser order, BindingResult bindingResult, Model model) {
+        try {
+            validationUtil.validationDate(order.getLocalDateStart(), order.getLocalDateFinish());
+            User user = userService.findUserByUserName(principal.getName());
+            order.setUser(user);
+            orderService.create(order);
+            return "redirect:/home";
+        } catch (UserNotFoundException | DateValidationException e) {
+            model.addAttribute("message", e.getMessage());
             return "order/new";
         }
     }
+
 
     @GetMapping("/myprofile/orders")
     public String userOrders(Model model, Principal principal) {
@@ -69,7 +68,7 @@ public class OrderController {
 
     @PostMapping("/myprofile/orders")
     public String delete(@RequestParam(defaultValue = "") Long orderId,
-                         @RequestParam(required = true, defaultValue = "") String action) {
+                         @RequestParam(defaultValue = "") String action) {
         if (action.equals("delete")) {
             orderService.deleteOrderById(orderId);
         }

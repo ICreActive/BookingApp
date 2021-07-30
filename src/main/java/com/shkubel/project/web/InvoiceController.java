@@ -1,6 +1,7 @@
 package com.shkubel.project.web;
 
 import com.shkubel.project.exception.OrderNotFoundException;
+import com.shkubel.project.exception.SellerNotFoundException;
 import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.Invoice;
 import com.shkubel.project.models.entity.OrderUser;
@@ -55,20 +56,22 @@ public class InvoiceController {
     public String newInvoice(@RequestParam(defaultValue = "") Long orderId,
                              @RequestParam(defaultValue = "") Long offerId,
                              Model model) {
-
-        OrderUser order = orderService.findOrderById(orderId);
-        Room room = roomService.findHotelById(offerId);
-        Seller sellers = sellerService.findSellerByActiveStatus();
         try {
+            OrderUser order = orderService.findOrderById(orderId);
+            Room room = roomService.findRoomById(offerId);
+            Seller sellers = sellerService.findSellerByActiveStatus();
             Invoice invoice = invoiceService.createInvoice(room, order, sellers);
             Integer bookingPeriod = invoice.getPeriod();
             model.addAttribute("period", bookingPeriod);
             model.addAttribute("invoice", invoice);
         } catch (OrderNotFoundException e) {
             System.err.println(e);
-            model.addAttribute("message", e);
+            model.addAttribute("message", e.getMessage());
             return "order/orders";
         }
+            catch (SellerNotFoundException e) {
+                return "redirect:/administrator/sellers/new";
+            }
         return "/invoice/new";
 
     }

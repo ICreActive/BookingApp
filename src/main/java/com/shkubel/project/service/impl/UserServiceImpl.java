@@ -122,6 +122,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Transactional
+    @Override
     public boolean activateUser(String code) {
         User user = userRepository.findUserByActivationCode(code);
         if (user == null) {
@@ -134,6 +135,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    @Transactional
     public void updateResetPasswordToken(String token, String email) throws UserNotFoundException {
         User user = userRepository.findUserByEmail(email);
         if (user != null) {
@@ -144,10 +147,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public User getByResetPasswordToken(String token) {
         return userRepository.findUserByResetPasswordToken(token);
     }
 
+    @Override
+    @Transactional
     public void updatePassword(User user, String newPassword) {
         String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
         user.setPassword(encodedPassword);

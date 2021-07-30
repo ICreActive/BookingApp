@@ -53,8 +53,8 @@ public class AdminController {
     }
 
     @PostMapping("/users")
-    public String deleteUser(@RequestParam(required = true, defaultValue = "") Long userId,
-                             @RequestParam(required = true, defaultValue = "") String action,
+    public String deleteUser(@RequestParam(defaultValue = "") Long userId,
+                             @RequestParam(defaultValue = "") String action,
                              Model model) {
         if (action.equals("delete")) {
             userService.deleteUser(userId);
@@ -63,7 +63,7 @@ public class AdminController {
             userService.restoreUser(userId);
             } catch (UserNotFoundException e) {
                 System.err.println(e);
-                model.addAttribute("message", e);
+                model.addAttribute("message", e.getMessage());
                 return "users/users";
             }
 
@@ -79,8 +79,8 @@ public class AdminController {
     }
 
     @PostMapping("/orders")
-    public String deleteOrder(@RequestParam(required = true, defaultValue = "") Long orderId,
-                              @RequestParam(required = true, defaultValue = "") String action,
+    public String deleteOrder(@RequestParam(defaultValue = "") Long orderId,
+                              @RequestParam(defaultValue = "") String action,
                               Model model) {
         if (action.equals("delete")) {
             orderService.deleteOrderById(orderId);
@@ -89,9 +89,9 @@ public class AdminController {
     }
 
     @PostMapping("/orders/all")
-    public String delOrder(@RequestParam(required = true, defaultValue = "") Long orderId,
-                              @RequestParam(required = true, defaultValue = "") String action,
-                              Model model) {
+    public String delOrder(@RequestParam(defaultValue = "") Long orderId,
+                              @RequestParam(defaultValue = "") String action,
+                              ) {
         if (action.equals("delete")) {
             orderService.deleteOrderById(orderId);
         }
@@ -137,12 +137,10 @@ public class AdminController {
     @PostMapping("/sellers")
     public String setSeller(@RequestParam(name = "check", defaultValue = "") String param, Model model) {
         Long id = Long.parseLong(param);
-        Seller seller = sellerService.findSellerById(id);
-        seller.setActive(true);
-        sellerService.saveSeller(seller);
+        sellerService.setActiveSeller(id);
         List<Seller> sellers = sellerService.findAllSeller();
         model.addAttribute("sellers", sellers);
-        return "seller/seller";
+        return "redirect:/administrator";
     }
 
     @GetMapping("/sellers/{id}")

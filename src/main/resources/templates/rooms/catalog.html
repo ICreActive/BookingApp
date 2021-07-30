@@ -26,16 +26,16 @@
 <div class="page" >
 
     <div id="menu" class=main>
-        <div th:each="elem:${rooms}" >
-            <a th:href="@{/rooms/{id}(id=${elem.getId()})}">
-                <img src="/resources/icon/invoice.png" alt="image"/>
+        <div style="margin-top: 100px" th:each="elem:${rooms}" >
+            <a th:href="@{/catalog/{id}(id=${elem.getId()})}">
+                <img src="/resources/img/room.png" alt="image" width="100px", height="100px"/>
                 <div th:text="${elem.getTitle()}"></div>
             </a>
         </div>
     </div>
 
-    <form method="get" action="/rooms/new">
-        <button type="submit" class="">Create new</button>
+    <form method="get" action="/catalog/new">
+        <button type="submit" class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1" style="display: block; position: relative; margin: auto">Create new</button>
     </form>
 
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="position: absolute;

@@ -9,11 +9,12 @@
     <meta charset="UTF-8">
     <title th:text="#{o_title.text}"></title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" th:text="#{o_naviname.text}">Users page</a>
+<body style="width: 100%">
+<div class="wrapper" style="background-image: linear-gradient(#adf6f2, #ffffff); width: 100%; height: 969px;padding: 0 0 113px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+    <a class="navbar-brand" th:text="#{o_naviname.text}" style="color: #ffffff">Users page</a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+        <div class="navbar-nav" style="margin-left: 100px">
             <a class="nav-item nav-link" href="/administrator" th:text="#{back.text}"><span
                     class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="/administrator/orders" th:text="#{o_ordersActive.text}"></a>
@@ -28,12 +29,17 @@
 </nav>
 
 <table class="table table-striped"
-       style="width: 60%;
+       style="width: auto;
        border: 1px solid green;
-       margin: auto;">
+       margin-top: 100px;
+       margin-left: auto;
+       margin-right: auto;
+       background-color: #ffffff;
+       max-width:100%;
+       white-space:break-spaces;">
     <thead>
     <tr>
-        <th scope="col" style="" th:text="#{o_inOrder.text}"></th>
+        <th scope="col" th:text="#{o_inOrder.text}"></th>
         <div th:if="${message}" th:text="${message}"></div>
 
     </tr>
@@ -55,22 +61,34 @@
             </th>
         </div>
         <div th:if="${element.getInvoice()}">
+            <form method="post">
+                <th scope="col" name="delete">
+                    <input type="hidden" name="orderId" th:value="${element.id}"/>
+                    <input type="hidden" name="action" value="delete"/>
+                    <button type="submit" class="btn btn-secondary" th:text="#{delete.button}"></button>
+                </th>
+            </form>
             <form method="get" th:action="@{/administrator/invoice/{id}(id=${element.getInvoice().getId()})}">
                 <th scope="col" name="Check">
                     <button type="submit" class="btn btn-outline-info" th:text="#{o_showInv.text}"></button>
                 </th>
             </form>
         </div>
-        <form method="post">
-            <th scope="col" name="delete">
-                <input type="hidden" name="orderId" th:value="${element.id}"/>
-                <input type="hidden" name="action" value="delete"/>
-                <button type="submit" class="btn btn-secondary" th:text="#{delete.button}"></button>
-            </th>
-        </form>
     </tr>
     </tbody>
 </table>
+</div>
+
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  background-color: #0f0f0f;
+"></footer>
+
+
 
 </body>
 </html>

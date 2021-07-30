@@ -10,7 +10,7 @@
     <div class="u-clearfix u-sheet u-sheet-1">
         <a href="/"><img src="/resources/img/up.png" class="u-logo-image u-logo-image-1">
         </a>
-        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1" style="opacity: 1;">
             <div class="menu-collapse u-custom-font u-font-raleway"
                  style="font-size: 1rem; letter-spacing: 0px; font-weight: 700;">
                 <a class="u-button-style u-custom-active-border-color u-custom-active-color u-custom-border u-custom-border-color u-custom-borders u-custom-hover-border-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-color u-custom-text-decoration u-custom-text-hover-color u-custom-text-shadow u-custom-text-shadow-blur u-custom-text-shadow-color u-custom-text-shadow-transparency u-custom-text-shadow-x u-custom-text-shadow-y u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
@@ -82,15 +82,19 @@
                                     to registration</a>
                                 </li>
                             </ul>
-                    <li class="u-nav-item"><a
-                            class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-palette-1-base u-text-black u-text-hover-grey-30"
-                            sec:authorize="isAuthenticated()"
-                            style="padding: 10px; text-shadow: 0px 2px 4px rgba(128,128,128,0.8);"
-                            th:text="#{logout.text}"
-                            href="/logout">Logout</a>
+                        </div>
+                    <li class="u-nav-item">
+                        <a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-palette-1-base u-text-black u-text-hover-grey-30"
+                           sec:authorize="isAuthenticated()"
+                           style="padding: 10px; text-shadow: 0px 2px 4px rgba(128,128,128,0.8);"
+                           th:text="#{logout.text}"
+                           href="/logout">
+                            Logout
+                        </a>
                     </li>
+                </ul>
             </div>
-            </li></ul>
+        </nav>
     </div>
     <div class="u-custom-menu u-nav-container-collapse">
         <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
@@ -131,7 +135,6 @@
         </div>
         <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
     </div>
-    </nav>
 </div>
 </body>
 </html>
