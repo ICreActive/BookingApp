@@ -90,7 +90,7 @@ public class AdminController {
 
     @PostMapping("/orders/all")
     public String delOrder(@RequestParam(defaultValue = "") Long orderId,
-                              @RequestParam(defaultValue = "") String action,
+                              @RequestParam(defaultValue = "") String action
                               ) {
         if (action.equals("delete")) {
             orderService.deleteOrderById(orderId);
