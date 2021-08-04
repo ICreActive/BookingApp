@@ -1,5 +1,6 @@
 package com.shkubel.project.util;
 
+import com.shkubel.project.exception.AppartmentValidationException;
 import com.shkubel.project.exception.DateValidationException;
 import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.KlassAppartament;
@@ -17,18 +18,13 @@ public class ValidationUtil {
     @Autowired
     RoomServiceImpl hotelService;
 
-    public static String validationHotel(Room room) {
-        String message=null;
+    public static void validationHotel(Room room) throws AppartmentValidationException {
+
         for (KlassAppartament elem : KlassAppartament.values()) {
             if (!elem.getName().toLowerCase(Locale.ROOT).equals(room.getKlassApartment().getName().toLowerCase(Locale.ROOT))) {
-                message = "This Klass of apartment is incorrect";
-                break;
+                throw new AppartmentValidationException("This Klass of apartment is incorrect");
             }
         }
-        if (message!=null) {
-            message="success";
-        }
-        return message;
     }
 
 

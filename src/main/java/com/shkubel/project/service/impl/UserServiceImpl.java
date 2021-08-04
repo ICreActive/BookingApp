@@ -1,8 +1,10 @@
 package com.shkubel.project.service.impl;
 
 import com.shkubel.project.exception.UserNotFoundException;
+import com.shkubel.project.models.entity.Provider;
 import com.shkubel.project.models.entity.Role;
 import com.shkubel.project.models.entity.User;
+import com.shkubel.project.models.oidc.CustomOidUser;
 import com.shkubel.project.models.repo.UserRepository;
 import com.shkubel.project.service.UserService;
 import com.shkubel.project.util.DateTimeParser;
@@ -34,8 +36,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email.toLowerCase(Locale.ROOT));
+    public User findUserByEmail(String email) throws UserNotFoundException {
+        User user = userRepository.findUserByEmail(email.toLowerCase(Locale.ROOT));
+        if (user==null) {
+            throw new UserNotFoundException("User not found");
+        }
+        return user;
     }
 
     @Override
@@ -175,5 +181,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAdmins() {
         return userRepository.findAdmins();
+    }
+
+    @Override
+    public void processOAuthPostLogin(CustomOidUser oidUser) {
+
+        String email = oidUser.getEmail();
+        String password = oidUser.getAttribute("sub");
+
+        User existUser = userRepository.findUserByEmail(email);
+
+        if (existUser == null) {
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setPassword(bCryptPasswordEncoder.encode(password));
+            newUser.setUsername(oidUser.getAttribute("name"));
+            newUser.setUserFirstname(oidUser.getAttribute("given_name"));
+            newUser.setUserLastname(oidUser.getAttribute("family_name"));
+            newUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
+            newUser.setProvider(Provider.GOOGLE);
+            newUser.setUserActive(true);
+            newUser.setCreatingDate(DateTimeParser.nowToString());
+            userRepository.save(newUser);
+        }
     }
 }

@@ -5,9 +5,9 @@ import com.shkubel.project.models.entity.Invoice;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.service.InvoiceService;
 import com.shkubel.project.service.PdfService;
-import com.shkubel.project.service.impl.PdfServiceImpl;
 import com.shkubel.project.service.UserService;
-import com.shkubel.project.util.MailSender;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,19 +25,17 @@ public class UserController {
 
     private final UserService userService;
     private final InvoiceService invoiceService;
-    private final MailSender mailSender;
     private final PdfService pdfService;
 
 
-    public UserController(UserService userService, InvoiceService invoiceService, MailSender mailSender, PdfService pdfService) {
+    public UserController(UserService userService, InvoiceService invoiceService, PdfService pdfService) {
         this.userService = userService;
         this.invoiceService = invoiceService;
-        this.mailSender = mailSender;
         this.pdfService = pdfService;
     }
 
     @GetMapping("/myprofile")
-    public String getProfile(Model model, Principal principal) {
+    public String getProfile(Principal principal, Model model) {
         try {
             User user = userService.findUserByUserName(principal.getName());
             model.addAttribute("user", user);
@@ -74,14 +72,15 @@ public class UserController {
     }
 
     @GetMapping("/myprofile/invoices")
-    public String showUserInvoice(Principal principal, Model model) {
+    public String showUserInvoice(@AuthenticationPrincipal OAuth2User principal, Model model) throws UserNotFoundException {
 
         try{
-        User user = userService.findUserByUserName(principal.getName());
+            String email = principal.getAttribute("email");
+            User user = userService.findUserByEmail(email);
         List<Invoice> invoiceList = invoiceService.findAllByUser(user);
         model.addAttribute("invoices", invoiceList);
         } catch (UserNotFoundException e) {
-            model.addAttribute("message", e);
+            model.addAttribute("message", e.getMessage());
         }
 
         return "invoice/invoices";

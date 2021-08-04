@@ -2,6 +2,7 @@ package com.shkubel.project.service;
 
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.User;
+import com.shkubel.project.models.oidc.CustomOidUser;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -10,7 +11,7 @@ public interface UserService {
 
     User findUserById(Long userId);
 
-    User findUserByEmail(String email);
+    User findUserByEmail(String email) throws UserNotFoundException;
 
     List<User> allUsers();
 
@@ -35,5 +36,7 @@ public interface UserService {
     boolean activateUser(String code);
 
     User findUserByUserName (String name) throws UserNotFoundException;
+
+    void processOAuthPostLogin (CustomOidUser oidUser);
 
 }

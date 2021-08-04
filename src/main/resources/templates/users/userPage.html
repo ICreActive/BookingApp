@@ -6,7 +6,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>UserPage</title>
+    <title th:text="#{main.title}"></title>
     <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/resources/css/UserPage.css" media="screen">
     <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
@@ -48,10 +48,9 @@
                             d="m224.323 165.588c8.26 0 14.957-6.716 14.957-15v-24.001h34.909v24.001c0 8.284 6.697 15 14.957 15s14.957-6.716 14.957-15v-78.003c0-8.284-6.697-15-14.957-15s-14.957 6.716-14.957 15v24.001h-34.909v-24.001c0-8.284-6.697-15-14.957-15s-14.957 6.716-14.957 15v78.003c0 8.284 6.697 15 14.957 15z"></path><path
                             d="m197.539 286.63h114.979c8.26 0 14.957-6.716 14.957-15s-6.697-15-14.957-15h-114.979c-8.26 0-14.957 6.716-14.957 15s6.697 15 14.957 15z"></path>
 </g></svg></span>
-                        <h5 class="u-custom-font u-text u-text-font u-text-palette-1-light-1 u-text-1">Отправить
-                            Заявку</h5>
-                        <p class="u-text u-text-2">Отправьте заявку и администратор подберет Вам самый подходящий
-                            вариант</p></a>
+                        <h5 class="u-custom-font u-text u-text-font u-text-palette-1-light-1 u-text-1"
+                            th:text="#{o_send.text}"></h5>
+                        <p class="u-text u-text-2" th:text="#{orders.description}"></p></a>
                     </div>
                 </div>
                 <div class="u-align-left u-container-style u-list-item u-repeater-item u-white u-list-item-2">
@@ -74,8 +73,9 @@
 		c-0.605,1.881-1.478,3.674-2.632,5.304c-0.291,0.411-0.563,0.759-0.801,1.03V38.8c0,1.223,0.691,2.342,1.785,2.888l8.467,4.233
 		c0.508,0.254,0.967,0.575,1.39,0.932c5.71-4.762,9.399-11.882,9.536-19.9C53.246,12.32,41.587,0.254,26.953,0.004z"></path>
 </g></svg></span> <a href="users/myprofile">
-                        <h5 class="u-custom-font u-text u-text-font u-text-palette-1-light-1 u-text-3">Профиль</h5>
-                        <p class="u-text u-text-4">Здесь вы можете просмотреть и отредактировать свой профиль</p>
+                        <h5 class="u-custom-font u-text u-text-font u-text-palette-1-light-1 u-text-3"
+                            th:text="#{profile.title}"></h5>
+                        <p class="u-text u-text-4" th:text="#{profile.text}"></p>
                     </a>
                     </div>
                 </div>
@@ -103,11 +103,13 @@
 </g><polygon style="fill:#CEC9AE;" points="10,28.761 10,2 7,2 7,36.986 "></polygon><polygon style="fill:#D1BF86;"
                                                                                             points="7,36.986 7,4 4,4 4,45.211 "></polygon></svg></span>
                         <a href="users/myprofile/invoices">
-                            <h5 class="u-custom-font u-text u-text-font u-text-palette-1-light-1 u-text-5">Счета</h5>
-                            <p class="u-text u-text-6">Здесь Вы увидите все выставленные Вам счета&nbsp;<br>
-                                <br>
-                                <br>
+                            <h5 class="u-custom-font u-text u-text-font u-text-palette-1-light-1 u-text-5"
+                                th:text="#{invoices.title}">Счета</h5>
+                            <p class="u-text u-text-6" th:text="#{invoices.description}">
                             </p>
+                            <br>
+                            <br>
+
                         </a>
                     </div>
                 </div>

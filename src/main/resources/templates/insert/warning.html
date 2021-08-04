@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="copy">
+    <link rel="stylesheet" href="/resources/css/message.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/resources/js/message.js" defer=""></script>
+<div th:if="${message}" id="popup-wrapper" class="popup-container show">
+    <div class="popup-content">
+        <span id="close">&times;</span>
+        <p th:text="${message}"></p>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

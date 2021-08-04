@@ -17,7 +17,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
     @Autowired
     private UserSecurityServiceImpl userService;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Override

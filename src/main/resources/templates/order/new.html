@@ -6,13 +6,12 @@
     <meta name="keywords" content="Creating new order">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>New Order</title>
+    <title th:text="#{o_create.text}"></title>
     <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/resources/css/order-new.css" media="screen">
-    <link rel="stylesheet" href="/resources/css/message.css" media="screen">
-<!--    <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>-->
+<!--    <link rel="stylesheet" href="/resources/css/message.css" media="screen">-->
+<!--    <script class="u-script" type="text/javascript" src="/resources/js/message.js" defer=""></script>-->
     <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="/resources/js/message.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.18.3, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
@@ -92,11 +91,8 @@
                             class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1" th:text="#{subm.button}">
                    </button>
                 </div>
-                <div th:if="${message}" id="popup-wrapper" class="popup-container show">
-                    <div class="popup-content">
-                        <span id="close">&times;</span>
-                        <p th:text="${message}"></p>
-                    </div>
+                </button>
+                <div th:insert="insert/warning">
                 </div>
             </form>
         </div>

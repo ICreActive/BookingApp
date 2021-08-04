@@ -6,13 +6,15 @@
     <meta name="keywords" content="Наши предложения">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>HotelPage</title>
+    <title th:text="#{r_create.title}"></title>
     <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/message.css" media="screen">
     <link rel="stylesheet" href="/resources/css/HotelPage.css" media="screen">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/resources/js/message.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.18.3, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
@@ -27,70 +29,91 @@
 
 <div class="wrapper" style=" width: 100%; height: 969px;padding: 0 0 148px;">
 
-<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
-</header>
+    <header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
+    </header>
 
-<section class="u-clearfix u-image u-section-1" id="sec-5d1b" data-image-width="1980" data-image-height="1100" style="height: -webkit-fill-available;">
-    <div class="u-clearfix u-sheet u-valign-middle-sm u-sheet-1">
+    <section class="u-clearfix u-image u-section-1" id="sec-5d1b" data-image-width="1980" data-image-height="1100"
+             style="height: -webkit-fill-available;">
+        <div class="u-clearfix u-sheet u-valign-middle-sm u-sheet-1">
 
-        <section class="skrollable u-clearfix u-section-2" id="sec-5c9d">
-            <div class="u-clearfix u-sheet u-sheet-1">
-                <div class="u-form u-form-1">
-                    <form method="POST" enctype="multipart/form-data"
-                          style="padding: 80px;">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="title" type="text">Title</span>
-                            <input th:field="*{room.title}" type="text" class="form-control"
-                                   aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-default"/>
-                        </div>
+            <section class="skrollable u-clearfix u-section-2" id="sec-5c9d">
+                <div class="u-clearfix u-sheet u-sheet-1">
+                    <div class="u-form u-form-1">
+                        <form method="POST" enctype="multipart/form-data"
+                              style="padding: 80px;">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="title" type="text">Title</span>
+                                <input th:field="*{room.title}" type="text" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default"/>
+                            </div>
+                            <div style="color: red" th:if="${#fields.hasErrors('room.title')}"
+                                 th:errors="*{room.title}">
+                            </div>
 
-                        <div class="input-group mb-3">
+
+                            <div class="input-group mb-3">
                         <span class="input-group-text" id="description" required
                               type="text">Description</span>
-                            <textarea type="text" class="form-control" aria-label="Sizing example input"
-                                      aria-describedby="inputGroup-sizing-default"
-                                      th:field="*{room.description}" required ></textarea>
-                        </div>
+                                <textarea type="text" class="form-control" aria-label="Sizing example input"
+                                          aria-describedby="inputGroup-sizing-default"
+                                          th:field="*{room.description}" required></textarea>
+                            </div>
+                            <div style="color: red" th:if="${#fields.hasErrors('room.description')}"
+                                 th:errors="*{room.description}">
+                            </div>
 
-                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
-                                th:field="*{room.klassApartment}">
-                            <option th:each="klass:${klassAp}" th:text="${klass.getName()}"
-                                    th:value="${klass}"></option>
+                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    th:field="*{room.klassApartment}">
+                                <option th:each="klass:${klassAp}" th:text="${klass.getName()}"
+                                        th:value="${klass}"></option>
+                                <div style="color: red" th:if="${#fields.hasErrors('room.klassApartment')}"
+                                     th:errors="*{room.klassApartment}">
+                                </div>
+                            </select>
 
-                        </select>
-
-                        <div class="input-group mb-3">
+                            <div class="input-group mb-3">
                         <span class="input-group-text" id="numofseats" required
                               type="text">Number of seats</span>
-                            <input th:field="*{room.numberOfSeats}" type="text" class="form-control"
-                                   aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-default" >
-                        </div>
+                                <input th:field="*{room.numberOfSeats}" type="text" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div style="color: red" th:if="${#fields.hasErrors('room.numberOfSeats')}"
+                                 th:errors="*{room.numberOfSeats}">
+                            </div>
 
-                        <div class="input-group mb-3">
+                            <div class="input-group mb-3">
                         <span class="input-group-text" id="price" required
                               type="text">Price</span>
-                            <input th:field="*{room.price}" type="text" class="form-control"
-                                   aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-default" pattern="[1-9]{,1}" required>
-                        </div>
+                                <input th:field="*{room.price}" type="text" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default" pattern="[1-9]{,1}" required>
+                            </div>
+                            <div style="color: red" th:if="${#fields.hasErrors('room.price')}"
+                                 th:errors="*{room.price}">
+                            </div>
 
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="inputGroupFile02" name="file">
-                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                        </div>
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" id="inputGroupFile02" name="file">
+                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                            </div>
 
-                        <button type="submit" value="Create room" class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1">Create room</button>
+                            <button type="submit" value="Create room"
+                                    class="u-border-2 u-border-grey-75 u-btn u-btn-round u-btn-submit u-button-style u-palette-3-light-2 u-radius-21 u-text-grey-70 u-btn-1">
+                                Create room
+                            </button>
 
-                    </form>
+                            <div th:insert="insert/warning"></div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </div>
-</section>
+            </section>
+        </div>
+    </section>
 </div>
-<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer" style="margin-top: -148px"></footer>
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer"
+        style="margin-top: -148px"></footer>
 
 </body>
 </html>

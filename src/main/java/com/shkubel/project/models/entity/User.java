@@ -57,6 +57,18 @@ public class User implements UserDetails {
 
     private String resetPasswordToken;
 
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+
 
     public User(String username, String password, String email) {
         this.username = username;
