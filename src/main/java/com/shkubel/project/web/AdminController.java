@@ -1,5 +1,6 @@
 package com.shkubel.project.web;
 
+import com.shkubel.project.exception.SellerNotFoundException;
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.OrderUser;
@@ -60,7 +61,7 @@ public class AdminController {
             userService.deleteUser(userId);
         } else if (action.equals("restore")) {
             try {
-            userService.restoreUser(userId);
+                userService.restoreUser(userId);
             } catch (UserNotFoundException e) {
                 System.err.println(e);
                 model.addAttribute("message", e.getMessage());
@@ -90,8 +91,8 @@ public class AdminController {
 
     @PostMapping("/orders/all")
     public String delOrder(@RequestParam(defaultValue = "") Long orderId,
-                              @RequestParam(defaultValue = "") String action
-                              ) {
+                           @RequestParam(defaultValue = "") String action
+    ) {
         if (action.equals("delete")) {
             orderService.deleteOrderById(orderId);
         }
@@ -102,7 +103,7 @@ public class AdminController {
     public String showOrder(@PathVariable("id") Long id, Model model) {
         OrderUser order = orderService.findOrderById(id);
         List<Room> rooms = roomService.findOffers(order);
-        if (rooms ==null || rooms.isEmpty()) {
+        if (rooms == null || rooms.isEmpty()) {
             List<Room> room = new ArrayList<>();
             model.addAttribute("order", order);
             model.addAttribute("error", "Offer not found");
@@ -162,8 +163,13 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return s;
         }
-        sellerService.update(id, seller);
-        return "redirect:/users/myprofile";
+        try {
+            sellerService.update(id, seller);
+            return "redirect:/users/myprofile";
+        } catch (SellerNotFoundException e) {
+            model.addAttribute("message", e.getMessage());
+            return s;
+        }
     }
 
     @GetMapping("/sellers/new")
@@ -179,10 +185,13 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return s;
         }
-        if (sellerService.saveSeller(seller)) {
+        try {
+            sellerService.saveSeller(seller);
+            model.addAttribute("error", "The seller was not saved");
+            return s;
+        } catch (SellerNotFoundException e) {
+            model.addAttribute("message", e.getMessage());
             return "redirect:/";
         }
-        model.addAttribute("error", "The seller was not saved");
-        return s;
     }
 }

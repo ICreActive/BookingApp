@@ -11,7 +11,6 @@ import com.shkubel.project.util.DateTimeParser;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -38,7 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) throws UserNotFoundException {
         User user = userRepository.findUserByEmail(email.toLowerCase(Locale.ROOT));
-        if (user==null) {
+        if (user == null) {
             throw new UserNotFoundException("User not found");
         }
         return user;
@@ -58,9 +57,14 @@ public class UserServiceImpl implements UserService {
             return false;
 
         userFromDB = userRepository.findUserByEmail(user.getEmail().toLowerCase(Locale.ROOT));
-        if (userFromDB != null)
+        if (userFromDB != null) {
+            if (userFromDB.getProvider().equals(Provider.GOOGLE)) {
+                userFromDB.setPassword(user.getPassword());
+                userFromDB.setUpdatingDate(DateTimeParser.nowToString());
+                return true;
+            }
             return false;
-
+            }
         user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setUsername(user.getUsername().toLowerCase(Locale.ROOT));
@@ -195,7 +199,7 @@ public class UserServiceImpl implements UserService {
             User newUser = new User();
             newUser.setEmail(email);
             newUser.setPassword(bCryptPasswordEncoder.encode(password));
-            newUser.setUsername(oidUser.getAttribute("name"));
+            newUser.setUsername(oidUser.getAttribute("sub"));
             newUser.setUserFirstname(oidUser.getAttribute("given_name"));
             newUser.setUserLastname(oidUser.getAttribute("family_name"));
             newUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));

@@ -11,9 +11,9 @@ public interface SellerService {
 
     List<Seller> findAllSeller();
 
-    boolean saveSeller(Seller seller);
+    void saveSeller(Seller seller) throws SellerNotFoundException;
 
-    void update(Long id, Seller seller);
+    void update(Long id, Seller seller) throws SellerNotFoundException;
 
     Seller findSellerByActiveStatus() throws SellerNotFoundException;
 

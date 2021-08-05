@@ -1,4 +1,4 @@
-package com.shkubel.project.service.impl;
+package com.shkubel.project.service.security;
 
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.repo.UserRepository;
@@ -8,13 +8,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserSecurityServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
 
 
     private final UserRepository userRepository;
 
 
-    public UserSecurityServiceImpl(UserRepository userRepository) {
+    public UserDetailServiceImpl(UserRepository userRepository) {
 
         this.userRepository = userRepository;
 
@@ -32,5 +32,7 @@ public class UserSecurityServiceImpl implements UserDetailsService {
         }
         return user;
     }
+
+
 
 }

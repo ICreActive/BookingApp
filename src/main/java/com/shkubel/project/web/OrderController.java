@@ -1,13 +1,16 @@
 package com.shkubel.project.web;
 
+import com.shkubel.project.config.CustomAuthProvider;
 import com.shkubel.project.exception.DateValidationException;
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.entity.User;
+import com.shkubel.project.models.oidc.CustomOidUser;
 import com.shkubel.project.service.OrderService;
 import com.shkubel.project.service.UserService;
 import com.shkubel.project.util.ValidationUtil;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,6 +50,7 @@ public class OrderController {
             return "redirect:/home";
         } catch (UserNotFoundException | DateValidationException e) {
             model.addAttribute("message", e.getMessage());
+            model.addAttribute("klassAp", KlassAppartament.values());
             return "order/new";
         }
     }

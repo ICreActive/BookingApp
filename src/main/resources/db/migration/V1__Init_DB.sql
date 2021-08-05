@@ -70,7 +70,7 @@ create table user
     password             varchar(255),
     user_firstname       varchar(15),
     user_lastname        varchar(255),
-    username             varchar(15),
+    username             varchar(255),
     address              varchar(255),
     is_active            bit default true      NOT NULL,
     activation_code      varchar(255),

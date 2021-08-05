@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String passwordConfirm;
 
     @NotEmpty(message = "Name should not be empty")
-    @Size(min = 3, max = 15, message = "Name should be between 3 and 15 characters")
+    @Size(min = 3, message = "Name cannot be shorter than 3 characters")
     private String username;
 
     @NotEmpty

@@ -37,11 +37,12 @@ public class UserController {
     @GetMapping("/myprofile")
     public String getProfile(Principal principal, Model model) {
         try {
-            User user = userService.findUserByUserName(principal.getName());
+            String username = principal.getName();
+            User user = userService.findUserByUserName(username);
             model.addAttribute("user", user);
             return "users/profile-id";
         } catch (UserNotFoundException e) {
-            model.addAttribute("message", e);
+            model.addAttribute("message", e.getMessage());
             return "users/profile-id";
         }
     }

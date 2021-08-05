@@ -34,27 +34,26 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     @Transactional
-    public boolean saveSeller(Seller seller) {
-        Seller sellerInDb = sellerRepository.findSellerByName(seller.getName());
+    public void saveSeller(Seller seller) throws SellerNotFoundException {
 
-        if (sellerInDb == null) {
-            Seller s = new Seller();
-            s.setAddress(seller.getAddress());
-            s.setBankAccount(seller.getBankAccount());
-            s.setName(seller.getName());
-            s.setCreatingDate(DateTimeParser.nowToString());
-            s.setActive(true);
-            sellerRepository.findAll().forEach(sell -> sell.setActive(false));
-            sellerRepository.save(s);
-            return true;
+        Seller sellerInDb = sellerRepository.findSellerByName(seller.getName());
+        if (sellerInDb != null) {
+            throw new SellerNotFoundException("Seller with the same name already exists");
         }
-        return false;
+        Seller s = new Seller();
+        s.setAddress(seller.getAddress());
+        s.setBankAccount(seller.getBankAccount());
+        s.setName(seller.getName());
+        s.setCreatingDate(DateTimeParser.nowToString());
+        s.setActive(true);
+        sellerRepository.findAll().forEach(sell -> sell.setActive(false));
+        sellerRepository.save(s);
     }
 
 
     @Override
     @Transactional
-    public void update(Long id, Seller seller) {
+    public void update(Long id, Seller seller) throws SellerNotFoundException {
         if (seller.getId().equals(id)) {
             if (sellerRepository.findById(id).isPresent()) {
                 Seller sellerInDB = sellerRepository.findById(id).get();
@@ -64,10 +63,7 @@ public class SellerServiceImpl implements SellerService {
                 sellerInDB.setUpdatingDate(DateTimeParser.nowToString());
                 saveSeller(sellerInDB);
             }
-
         }
-
-
     }
 
     @Override
