@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
@@ -40,8 +39,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoice.setPaid(false);
             invoice.setCreatingDate(DateTimeParser.nowToString());
             invoice.setActive(true);
-            Set<Invoice> hot = room.getInvoice();
-            hot.add(invoice);
             invoiceRepository.save(invoice);
             orderUser.setInvoice(invoice);
             orderUser.setActive(false);

@@ -1,7 +1,7 @@
 package com.shkubel.project.config;
 
 import com.shkubel.project.service.security.UserDetailServiceImpl;
-import com.shkubel.project.service.oidcService.CustomOidUserService;
+import com.shkubel.project.service.security.CustomOidUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

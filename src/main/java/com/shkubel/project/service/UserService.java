@@ -4,12 +4,11 @@ import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.oidc.CustomOidUser;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface UserService {
 
-    User findUserById(Long userId);
+    User findUserById(Long userId) throws UserNotFoundException;
 
     User findUserByEmail(String email) throws UserNotFoundException;
 
@@ -17,11 +16,11 @@ public interface UserService {
 
     boolean saveUser(User user);
 
-    boolean deleteUser(Long userId);
+    boolean deleteUser(Long userId) throws UserNotFoundException;
 
     boolean updateUser(Long userId, User user);
 
-    List<User> findUsersByStatus(@NotNull boolean userActive);
+    List<User> findUsersByStatusActive ();
 
     void restoreUser(Long userId) throws UserNotFoundException;
 
@@ -33,7 +32,7 @@ public interface UserService {
 
     void updatePassword(User user, String password);
 
-    boolean activateUser(String code);
+    boolean activateUser(String code) throws UserNotFoundException;
 
     User findUserByUserName (String name) throws UserNotFoundException;
 

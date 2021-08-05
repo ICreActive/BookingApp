@@ -49,8 +49,13 @@ public class UserController {
 
     @GetMapping("/myprofile/{id}/edit")
     public String userEdit(@PathVariable("id") Long id, Model model) {
+        try {
         model.addAttribute("user", userService.findUserById(id));
         return "users/edit";
+    } catch (UserNotFoundException e) {
+            model.addAttribute("message", e.getMessage());
+            return "message";
+        }
     }
 
     @PostMapping("/myprofile/{id}/edit")
@@ -72,8 +77,9 @@ public class UserController {
         return "redirect:/users/myprofile";
     }
 
+//    need correct
     @GetMapping("/myprofile/invoices")
-    public String showUserInvoice(@AuthenticationPrincipal OAuth2User principal, Model model) throws UserNotFoundException {
+    public String showUserInvoice(@AuthenticationPrincipal OAuth2User principal, Model model) {
 
         try{
             String email = principal.getAttribute("email");

@@ -1,5 +1,6 @@
 package com.shkubel.project.web;
 
+import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.service.UserService;
 import com.shkubel.project.util.MailSender;
@@ -50,13 +51,19 @@ public class RegistrationController {
 
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable("code") String code) {
-        boolean isActivated = userService.activateUser(code);
 
-        if (isActivated) {
-            model.addAttribute("message", "User successfully activated");
-        } else {
-            model.addAttribute("message", "Activation code is not found");
+        try {
+            boolean isActivated = userService.activateUser(code);
+            if (isActivated) {
+                model.addAttribute("message", "User successfully activated");
+            } else {
+                model.addAttribute("message", "Activation code is not found");
+            }
+            return "login";
+
+        } catch (UserNotFoundException e) {
+            model.addAttribute("message", e.getMessage() + " Please, try again");
+            return "login";
         }
-        return "login";
     }
 }

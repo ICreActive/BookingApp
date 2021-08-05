@@ -1,4 +1,4 @@
-package com.shkubel.project.service.oidcService;
+package com.shkubel.project.service.security;
 
 import com.shkubel.project.models.oidc.CustomOidUser;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;

@@ -11,7 +11,7 @@ import com.shkubel.project.util.DateTimeParser;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import javax.validation.constraints.NotNull;
+
 import java.util.*;
 
 @Service
@@ -29,9 +29,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Long userId) {
+    public User findUserById(Long userId) throws UserNotFoundException {
         Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
+        return userFromDb.orElseThrow(()->new UserNotFoundException("User not found"));
     }
 
     @Override
@@ -76,22 +76,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean deleteUser(Long userId) {
+    public boolean deleteUser(Long userId) throws UserNotFoundException {
 
-        User user = userRepository.findById(userId).orElseGet(() -> {
-            try {
-                throw new UserNotFoundException("User not found");
-            } catch (UserNotFoundException e) {
-                e.printStackTrace();
-            }
-            return null;
-        });
-        if (user != null) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
             user.setUserActive(false);
             user.setUpdatingDate(DateTimeParser.nowToString());
             return true;
-        }
-        return false;
     }
 
 
@@ -115,34 +105,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUsersByStatus(@NotNull boolean userActive) {
+    public List<User> findUsersByStatusActive() {
         return userRepository.findUsersByUserActive();
     }
 
     @Override
     @Transactional
     public void restoreUser(Long userId) throws UserNotFoundException {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user != null) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
             user.setUserActive(true);
             user.setUpdatingDate(DateTimeParser.nowToString());
-        } else
-            throw new UserNotFoundException("User not found");
     }
 
 
     @Transactional
     @Override
-    public boolean activateUser(String code) {
+    public boolean activateUser(String code) throws UserNotFoundException {
         User user = userRepository.findUserByActivationCode(code);
         if (user == null) {
-            return false;
+            throw new UserNotFoundException("User not found");
         }
         user.setActivationCode(null);
         user.setUserActive(true);
         userRepository.save(user);
         return true;
-
     }
 
     @Override

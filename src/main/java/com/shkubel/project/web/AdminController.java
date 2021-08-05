@@ -49,8 +49,14 @@ public class AdminController {
 
     @GetMapping("users/profile/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.findUserById(id));
-        return "users/profile-id";
+        try {
+            model.addAttribute("user", userService.findUserById(id));
+            return "users/profile-id";
+        } catch (UserNotFoundException e) {
+            model.addAttribute("message", e.getMessage());
+            model.addAttribute("user", new User());
+            return "users/profile-id";
+        }
     }
 
     @PostMapping("/users")
@@ -58,12 +64,18 @@ public class AdminController {
                              @RequestParam(defaultValue = "") String action,
                              Model model) {
         if (action.equals("delete")) {
-            userService.deleteUser(userId);
+            try {
+                userService.deleteUser(userId);
+            } catch (UserNotFoundException e) {
+                System.err.println(e.getMessage());
+                model.addAttribute("message", e.getMessage());
+                return "users/users";
+            }
         } else if (action.equals("restore")) {
             try {
                 userService.restoreUser(userId);
             } catch (UserNotFoundException e) {
-                System.err.println(e);
+                System.err.println(e.getMessage());
                 model.addAttribute("message", e.getMessage());
                 return "users/users";
             }
@@ -117,7 +129,7 @@ public class AdminController {
 
     @GetMapping("/users/active")
     public String usersActive(Model model) {
-        model.addAttribute("users", userService.findUsersByStatus(true));
+        model.addAttribute("users", userService.findUsersByStatusActive());
         return "users/users";
     }
 
