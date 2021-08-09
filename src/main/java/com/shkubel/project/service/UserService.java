@@ -18,7 +18,7 @@ public interface UserService {
 
     boolean deleteUser(Long userId) throws UserNotFoundException;
 
-    boolean updateUser(Long userId, User user);
+    void updateUser(Long userId, User user) throws UserNotFoundException;
 
     List<User> findUsersByStatusActive ();
 

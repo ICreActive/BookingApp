@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class UserServiceImplTest {
@@ -26,7 +25,6 @@ class UserServiceImplTest {
 
     @MockBean
     private UserRepository userRepository;
-
 
     private User user;
 
@@ -124,6 +122,12 @@ class UserServiceImplTest {
         Assertions.assertFalse(user.isUserActive());
     }
 
+    @Test
+    void updateUserThrowUserNotFoundExceptionTest() {
+        Long id = 10L;
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.updateUser(id, user));
+
+    }
 
     @Test
     void findUserByStatusActiveTest() {

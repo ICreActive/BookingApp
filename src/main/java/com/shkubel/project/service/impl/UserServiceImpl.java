@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean updateUser(Long userId, User user) {
+    public void updateUser(Long userId, User user) throws UserNotFoundException {
         if (user.getId().equals(userId)) {
             if (userRepository.findById(userId).isPresent()) {
                 User userInDB = userRepository.findById(userId).get();
@@ -97,11 +97,10 @@ public class UserServiceImpl implements UserService {
                 userInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 userInDB.setUpdatingDate(DateTimeParser.nowToString());
                 userRepository.save(userInDB);
-                return true;
             }
-            return false;
+            throw new UserNotFoundException("User not found");
         }
-        return false;
+        throw new UserNotFoundException("Unknown user");
     }
 
     @Override

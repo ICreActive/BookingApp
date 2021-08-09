@@ -69,12 +69,14 @@ public class UserController {
             model.addAttribute("passwordError", "The passwords don't match");
             return s;
         }
-        if (!userService.updateUser(id, user)) {
-            model.addAttribute("usernameError", "This username or e-mail already exists");
+        try {
+            userService.updateUser(id, user);
+            return "redirect:/users/myprofile";
+
+        } catch (UserNotFoundException e) {
+            model.addAttribute("usernameError", e.getMessage());
             return s;
         }
-        userService.updateUser(id, user);
-        return "redirect:/users/myprofile";
     }
 
 //    need correct
