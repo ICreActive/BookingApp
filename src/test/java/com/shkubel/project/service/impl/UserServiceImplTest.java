@@ -126,7 +126,6 @@ class UserServiceImplTest {
     void updateUserThrowUserNotFoundExceptionTest() {
         Long id = 10L;
         Assertions.assertThrows(UserNotFoundException.class, () -> userService.updateUser(id, user));
-
     }
 
     @Test
