@@ -1,11 +1,7 @@
 package com.shkubel.project.config;
 
-import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.oidc.CustomOidUser;
 import com.shkubel.project.service.UserService;
-import com.shkubel.project.service.security.UserDetailServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -20,9 +16,6 @@ public class OAth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
     private final UserService userService;
 
-    @Autowired
-    private UserDetailServiceImpl userSecurityService;
-
     public OAth2LoginSuccessHandler(UserService userService) {
         this.userService = userService;
     }
@@ -33,9 +26,6 @@ public class OAth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
         CustomOidUser oidcUser = (CustomOidUser) authentication.getPrincipal();
         userService.processOAuthPostLogin(oidcUser);
-
-//        User user = (User) userSecurityService.loadUserByUsername(oidcUser.getAttribute("email"));
-//        new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
 
         super.onAuthenticationSuccess(request, response, authentication);
     }

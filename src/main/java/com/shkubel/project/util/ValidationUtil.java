@@ -20,10 +20,15 @@ public class ValidationUtil {
 
     public static void validationHotel(Room room) throws AppartmentValidationException {
 
+        boolean klassPresent = false;
         for (KlassAppartament elem : KlassAppartament.values()) {
-            if (!elem.getName().toLowerCase(Locale.ROOT).equals(room.getKlassApartment().getName().toLowerCase(Locale.ROOT))) {
-                throw new AppartmentValidationException("This Klass of apartment is incorrect");
+            if (elem.getName().toLowerCase(Locale.ROOT).equals(room.getKlassApartment().getName().toLowerCase(Locale.ROOT))) {
+                klassPresent = true;
+                break;
             }
+        }
+        if (!klassPresent) {
+            throw new AppartmentValidationException("This Klass of apartment is incorrect");
         }
     }
 
@@ -31,13 +36,13 @@ public class ValidationUtil {
     public boolean validationDate(LocalDate checkin, LocalDate checkout) throws DateValidationException {
 
         if (checkin.isBefore(LocalDate.now())) {
-            throw new DateValidationException ("Check-in date cannot be earlier than the current date");
+            throw new DateValidationException("Check-in date cannot be earlier than the current date");
         }
         if (checkin.isAfter(checkout)) {
-            throw new DateValidationException ("Check-in date cannot be later than the check-out");
+            throw new DateValidationException("Check-in date cannot be later than the check-out");
         }
         if (checkin.equals(checkout)) {
-            throw new DateValidationException ("Check-in date cannot be equal to check-out date");
+            throw new DateValidationException("Check-in date cannot be equal to check-out date");
         }
 
         return !checkin.isAfter(checkout) && !checkin.equals(checkout);

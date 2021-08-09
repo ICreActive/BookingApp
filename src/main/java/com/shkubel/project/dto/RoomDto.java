@@ -2,7 +2,7 @@ package com.shkubel.project.dto;
 
 import com.shkubel.project.models.entity.KlassAppartament;
 
-public class HotelDTO {
+public class RoomDto {
 
     private String title;
 

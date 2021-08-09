@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MVCconfig implements WebMvcConfigurer {
 
-    @Value("${spring.servlet.multipart.location}")
+    @Value("${upload-path}")
     private String uploadPath;
 
     @Override
@@ -23,12 +23,12 @@ public class MVCconfig implements WebMvcConfigurer {
         registry.addViewController("/home").setViewName("/users/userPage");
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**")
-                .addResourceLocations("file//" + uploadPath + "/");
-
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+////        registry.addResourceHandler("**/resources/img/uploads/**")
+////                .addResourceLocations(uploadPath + "/");
+//
+//    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

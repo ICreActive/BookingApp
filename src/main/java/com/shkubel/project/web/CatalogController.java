@@ -26,7 +26,7 @@ public class CatalogController {
 
     private final RoomService roomService;
 
-    @Value("${spring.servlet.multipart.location}")
+    @Value("${upload-path}")
     private String uploadPath;
 
     public CatalogController(RoomService roomService) {
@@ -50,19 +50,19 @@ public class CatalogController {
 
     @PostMapping("/new")
     public String add(@ModelAttribute("room") @Valid Room room, BindingResult bindingResult, @RequestPart("file") MultipartFile file, Model model) throws IOException {
-//        if (file != null && !file.getOriginalFilename().isEmpty()) {
-//            File uploadDir = new File(uploadPath);
-//
-//            if (!uploadDir.exists()) {
-//                uploadDir.mkdir();
-//            }
-//            String uniqueFile = UUID.randomUUID().toString();
-//            String resultFilename = uniqueFile + "." + file.getOriginalFilename();
-//
-//            file.transferTo(new File(uploadPath + "/" + resultFilename));
-//
-//            room.setFilename(resultFilename);
-//        }
+
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uniqueFile = UUID.randomUUID().toString();
+            String resultFilename = uniqueFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath + "/" + resultFilename));
+            room.setFilename(resultFilename);
+        }
         if (bindingResult.hasErrors()) {
             return "/rooms/new";
         }

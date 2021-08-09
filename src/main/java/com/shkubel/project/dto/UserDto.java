@@ -1,15 +1,23 @@
 package com.shkubel.project.dto;
 
-public class UserDTO {
+import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
+
+
+public class UserDto {
 
     private Long id;
+
     private String userFirstname;
     private String userLastname;
+
     private String email;
+
+    @NotNull
     private String isUserActive;
 
-    public UserDTO() {
+    public UserDto() {
     }
 
     public Long getId() {
@@ -43,6 +51,7 @@ public class UserDTO {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getIsUserActive() {
         return isUserActive;
     }

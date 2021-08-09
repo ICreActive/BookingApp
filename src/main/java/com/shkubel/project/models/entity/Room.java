@@ -27,7 +27,6 @@ public class Room {
     @Column(columnDefinition = "integer default 0")
     private Integer price;
 
-
     private String filename;
 
     private Boolean isAvailable;
@@ -106,6 +105,8 @@ public class Room {
     public void setAvailable(Boolean available) {
         this.isAvailable = available;
     }
+
+
 
 
     public boolean isAvailableOnDate(LocalDate dateCheckIn, LocalDate dateCheckOut) {

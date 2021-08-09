@@ -18,19 +18,13 @@
           href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
 
 
-    <script type="application/ld+json">{
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "name": "",
-        "logo": "images/default-logo.png"
-    }</script>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="HotelPage">
     <meta property="og:type" content="website">
 </head>
-<body class="u-body"><header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
+<body class="u-body">
+<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
 </header>
-
 
 <section class="u-align-center u-clearfix u-gradient u-section-1" id="sec-82be">
     <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
@@ -46,7 +40,7 @@
             <div class="u-carousel-inner u-gallery-inner" role="listbox">
                 <div class="u-active u-carousel-item u-gallery-item">
                     <div class="u-back-slide">
-                        <img class="u-back-image u-expanded" src="/resources/img/uploads/3d9eb972-23df-46db-9a85-9d34a04256f8.Screenshot_3.png">
+                        <img class="u-back-image u-expanded" src="/resources/img/up.png" style="width: 80%; height: 60%; margin-left: 120px">
                     </div>
                     <div class="u-over-slide u-over-slide-1">
                         <h3 class="u-gallery-heading">Sample Title</h3>
@@ -55,7 +49,8 @@
                 </div>
                 <div class="u-carousel-item u-gallery-item">
                     <div class="u-back-slide">
-                        <img class="u-back-image u-expanded" src="images/1.svg">
+                        <img class="u-back-image u-expanded"
+                             th:src="@{/resources/img/uploads/{filename}(filename=${room.getFilename()})}">
                     </div>
                     <div class="u-over-slide u-over-slide-2">
                         <h3 class="u-gallery-heading">Sample Title</h3>
@@ -113,7 +108,8 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 <tbody class="u-table-body">
                 <tr style="height: 75px;">
                     <td class="u-border-1 u-border-grey-30 u-table-cell" th:text="*{room.klassApartment}"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell" th:text="*{room.numberOfSeats}">Description</td>
+                    <td class="u-border-1 u-border-grey-30 u-table-cell" th:text="*{room.numberOfSeats}">Description
+                    </td>
                     <td class="u-border-1 u-border-grey-30 u-table-cell"> Description</td>
                     <td class="u-border-1 u-border-grey-30 u-table-cell" th:text="*{room.price}">Description</td>
                 </tr>
@@ -134,7 +130,8 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
 </section>
 <section class="u-align-center u-clearfix u-gradient u-section-4" id="sec-4abd">
     <div class="u-align-center u-clearfix u-sheet u-sheet-1">
-        <a th:href="@{/catalog/delete/{id}(id=${room.getId()})} " class="u-btn u-button-style u-grey-90 u-btn-1">Удалить</a>
+        <a th:href="@{/catalog/delete/{id}(id=${room.getId()})} "
+           class="u-btn u-button-style u-grey-90 u-btn-1">Удалить</a>
     </div>
 </section>
 

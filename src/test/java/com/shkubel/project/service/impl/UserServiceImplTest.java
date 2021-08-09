@@ -33,6 +33,7 @@ class UserServiceImplTest {
         user = new User();
         user.setUsername("Yuri");
         user.setEmail("email@email.com");
+        user.setPassword("123");
         user.setId(1L);
     }
 
@@ -110,7 +111,6 @@ class UserServiceImplTest {
     @Test
     void deleteUserThrowUserNotFoundExceptionTest() {
         Assertions.assertThrows(UserNotFoundException.class, () -> userService.deleteUser(user.getId()));
-
     }
 
     @Test
@@ -127,6 +127,17 @@ class UserServiceImplTest {
         Long id = 10L;
         Assertions.assertThrows(UserNotFoundException.class, () -> userService.updateUser(id, user));
     }
+
+    @Test
+    void updateUserTest() throws UserNotFoundException {
+        Long id = 1L;
+        Mockito.doReturn(Optional.of(user))
+                .when(userRepository)
+                .findById(user.getId());
+        userService.updateUser(id, user);
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+    }
+
 
     @Test
     void findUserByStatusActiveTest() {

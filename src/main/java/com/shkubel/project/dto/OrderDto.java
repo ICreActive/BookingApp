@@ -1,4 +1,7 @@
 package com.shkubel.project.dto;
 
-public class OrderDTO {
+public class OrderDto {
+
+
+
 }

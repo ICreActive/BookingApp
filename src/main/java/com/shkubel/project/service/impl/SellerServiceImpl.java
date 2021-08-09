@@ -55,14 +55,12 @@ public class SellerServiceImpl implements SellerService {
     @Transactional
     public void update(Long id, Seller seller) throws SellerNotFoundException {
         if (seller.getId().equals(id)) {
-            if (sellerRepository.findById(id).isPresent()) {
-                Seller sellerInDB = sellerRepository.findById(id).get();
-                sellerInDB.setName(seller.getName());
-                sellerInDB.setBankAccount(seller.getBankAccount());
-                sellerInDB.setAddress(seller.getAddress());
-                sellerInDB.setUpdatingDate(DateTimeParser.nowToString());
-                saveSeller(sellerInDB);
-            }
+            Seller sellerInDB = sellerRepository.findById(id).orElseThrow(() -> new SellerNotFoundException("Seller not found"));
+            sellerInDB.setName(seller.getName());
+            sellerInDB.setBankAccount(seller.getBankAccount());
+            sellerInDB.setAddress(seller.getAddress());
+            sellerInDB.setUpdatingDate(DateTimeParser.nowToString());
+            saveSeller(sellerInDB);
         }
     }
 

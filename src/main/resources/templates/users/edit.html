@@ -57,18 +57,18 @@
             <div style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Error</div>
             <br/>
 
-            <label for="pass"> Enter password </label>
-            <input class="form-control" type="password" th:field="*{password}" id="pass"/>
-            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
-            </div>
-            </br>
+<!--            <label for="pass"> Enter password </label>-->
+<!--            <input class="form-control" type="password" th:field="*{password}" id="pass"/>-->
+<!--            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error-->
+<!--            </div>-->
+<!--            </br>-->
 
-            <label for="passConfirm"> Confirm password </label>
-            <input class="form-control" type="password" th:field="*{passwordConfirm}" id="passConfirm" required/>
-            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
-            </div>
-            <div style="color: red" th:if="${passwordError}" th:text="${passwordError}">Error</div>
-            <br/>
+<!--            <label for="passConfirm"> Confirm password </label>-->
+<!--            <input class="form-control" type="password" th:field="*{passwordConfirm}" id="passConfirm" required/>-->
+<!--            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error-->
+<!--            </div>-->
+<!--            <div style="color: red" th:if="${passwordError}" th:text="${passwordError}">Error</div>-->
+<!--            <br/>-->
         <button class="u-btn" type="submit" style="margin-bottom: 30px">Update</button>
         </form>
 

@@ -1,6 +1,10 @@
 package com.shkubel.project.dto;
 
-public class ProfileUserDTO {
+import com.shkubel.project.models.entity.Role;
+
+import java.util.Set;
+
+public class ProfileUserDto {
 
     private Long id;
     private String username;
@@ -8,6 +12,8 @@ public class ProfileUserDTO {
     private String userLastname;
     private String address;
     private String email;
+    private boolean isUserActive;
+
 
     public String getUserFirstname() {
         return userFirstname;
@@ -57,4 +63,21 @@ public class ProfileUserDTO {
         this.id = id;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    private Set<Role> roles;
+
+    public boolean isUserActive() {
+        return isUserActive;
+    }
+
+    public void setUserActive(boolean userActive) {
+        isUserActive = userActive;
+    }
 }

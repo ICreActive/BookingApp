@@ -1,13 +1,13 @@
 package com.shkubel.project.web;
 
+import com.shkubel.project.dto.ProfileUserDto;
 import com.shkubel.project.exception.UserNotFoundException;
+import com.shkubel.project.mapper.ProfileUserMapper;
 import com.shkubel.project.models.entity.Invoice;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.service.InvoiceService;
 import com.shkubel.project.service.PdfService;
 import com.shkubel.project.service.UserService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,11 +27,14 @@ public class UserController {
     private final InvoiceService invoiceService;
     private final PdfService pdfService;
 
+    private final ProfileUserMapper profileUserMapper;
 
-    public UserController(UserService userService, InvoiceService invoiceService, PdfService pdfService) {
+
+    public UserController(UserService userService, InvoiceService invoiceService, PdfService pdfService, ProfileUserMapper profileUserMapper) {
         this.userService = userService;
         this.invoiceService = invoiceService;
         this.pdfService = pdfService;
+        this.profileUserMapper = profileUserMapper;
     }
 
     @GetMapping("/myprofile")
@@ -39,7 +42,7 @@ public class UserController {
         try {
             String username = principal.getName();
             User user = userService.findUserByUserName(username);
-            model.addAttribute("user", user);
+            model.addAttribute("user", profileUserMapper.toDTO(user));
             return "users/profile-id";
         } catch (UserNotFoundException e) {
             model.addAttribute("message", e.getMessage());
@@ -49,28 +52,26 @@ public class UserController {
 
     @GetMapping("/myprofile/{id}/edit")
     public String userEdit(@PathVariable("id") Long id, Model model) {
+
         try {
-        model.addAttribute("user", userService.findUserById(id));
-        return "users/edit";
-    } catch (UserNotFoundException e) {
+            ProfileUserDto userDto = profileUserMapper.toDTO(userService.findUserById(id));
+            model.addAttribute("user", userDto);
+            return "users/edit";
+        } catch (UserNotFoundException e) {
             model.addAttribute("message", e.getMessage());
             return "message";
         }
     }
 
     @PostMapping("/myprofile/{id}/edit")
-    public String userUpd(@ModelAttribute("user") @Valid User user,
+    public String userUpd(@ModelAttribute("user") @Valid ProfileUserDto user,
                           BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
         final String s = "users/edit";
         if (bindingResult.hasErrors()) {
             return s;
         }
-        if (!user.getPassword().equals(user.getPasswordConfirm())) {
-            model.addAttribute("passwordError", "The passwords don't match");
-            return s;
-        }
         try {
-            userService.updateUser(id, user);
+            userService.updateUser(id, profileUserMapper.toEntity(user));
             return "redirect:/users/myprofile";
 
         } catch (UserNotFoundException e) {
@@ -79,19 +80,18 @@ public class UserController {
         }
     }
 
-//    need correct
+    //    need correct
     @GetMapping("/myprofile/invoices")
-    public String showUserInvoice(@AuthenticationPrincipal OAuth2User principal, Model model) {
+    public String showUserInvoice(Principal principal, Model model) {
 
-        try{
-            String email = principal.getAttribute("email");
-            User user = userService.findUserByEmail(email);
-        List<Invoice> invoiceList = invoiceService.findAllByUser(user);
-        model.addAttribute("invoices", invoiceList);
+        try {
+            String email = principal.getName();
+            User user = userService.findUserByUserName(email);
+            List<Invoice> invoiceList = invoiceService.findAllByUser(user);
+            model.addAttribute("invoices", invoiceList);
         } catch (UserNotFoundException e) {
             model.addAttribute("message", e.getMessage());
         }
-
         return "invoice/invoices";
     }
 

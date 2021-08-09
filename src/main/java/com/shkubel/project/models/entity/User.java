@@ -46,9 +46,6 @@ public class User implements UserDetails {
     @Email
     private String email;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Set<OrderUser> orders;
-
     private String creatingDate;
     private String updatingDate;
     private String address;
@@ -56,6 +53,9 @@ public class User implements UserDetails {
     private String activationCode;
 
     private String resetPasswordToken;
+
+    @Column(name = "prov_id")
+    private String provId;
 
     @Enumerated(EnumType.STRING)
     private Provider provider;
@@ -140,14 +140,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-//    public Set<OrderUser> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(Set<OrderUser> orders) {
-//        this.orders = orders;
-//    }
-
     public boolean isUserActive() {
         return isUserActive;
     }
@@ -194,6 +186,14 @@ public class User implements UserDetails {
 
     public void setResetPasswordToken(String resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public String getProvId() {
+        return provId;
+    }
+
+    public void setProvId(String provId) {
+        this.provId = provId;
     }
 
     @Override

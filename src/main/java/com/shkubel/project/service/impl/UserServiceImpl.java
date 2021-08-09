@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(Long userId) throws UserNotFoundException {
         Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElseThrow(()->new UserNotFoundException("User not found"));
+        return userFromDb.orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
                 return true;
             }
             return false;
-            }
+        }
         user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setUsername(user.getUsername().toLowerCase(Locale.ROOT));
@@ -79,9 +79,9 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(Long userId) throws UserNotFoundException {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
-            user.setUserActive(false);
-            user.setUpdatingDate(DateTimeParser.nowToString());
-            return true;
+        user.setUserActive(false);
+        user.setUpdatingDate(DateTimeParser.nowToString());
+        return true;
     }
 
 
@@ -89,19 +89,17 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(Long userId, User user) throws UserNotFoundException {
         if (user.getId().equals(userId)) {
-            if (userRepository.findById(userId).isPresent()) {
-                User userInDB = userRepository.findById(userId).get();
-                userInDB.setUserFirstname(user.getUserFirstname());
-                userInDB.setUserLastname(user.getUserLastname());
-                userInDB.setAddress(user.getAddress());
-                userInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-                userInDB.setUpdatingDate(DateTimeParser.nowToString());
-                userRepository.save(userInDB);
-            }
-            throw new UserNotFoundException("User not found");
+            User userInDB = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+            userInDB.setUserFirstname(user.getUserFirstname());
+            userInDB.setUserLastname(user.getUserLastname());
+            userInDB.setAddress(user.getAddress());
+            userInDB.setUpdatingDate(DateTimeParser.nowToString());
+            userRepository.save(userInDB);
+        } else {
+            throw new UserNotFoundException("Unknown user");
         }
-        throw new UserNotFoundException("Unknown user");
     }
+
 
     @Override
     public List<User> findUsersByStatusActive() {
@@ -112,8 +110,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void restoreUser(Long userId) throws UserNotFoundException {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
-            user.setUserActive(true);
-            user.setUpdatingDate(DateTimeParser.nowToString());
+        user.setUserActive(true);
+        user.setUpdatingDate(DateTimeParser.nowToString());
     }
 
 
@@ -159,13 +157,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUserName(String username) throws UserNotFoundException {
 
-        User user = userRepository.findUserByUsername(username);
-        if (user != null) {
-            return user;
-        } else {
-            throw new UserNotFoundException("User not found");
+        User user;
+        user = userRepository.findUserByUsername(username);
+        if (user == null) {
+            user = userRepository.findUserByProvId(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found");
+            }
         }
+        return user;
     }
+
 
     @Override
     public List<User> findAdmins() {
@@ -176,14 +178,14 @@ public class UserServiceImpl implements UserService {
     public void processOAuthPostLogin(CustomOidUser oidUser) {
 
         String email = oidUser.getEmail();
-        String password = oidUser.getAttribute("sub");
+        String sub = oidUser.getAttribute("sub");
 
         User existUser = userRepository.findUserByEmail(email);
 
         if (existUser == null) {
             User newUser = new User();
             newUser.setEmail(email);
-            newUser.setPassword(bCryptPasswordEncoder.encode(password));
+            newUser.setPassword(bCryptPasswordEncoder.encode(sub));
             newUser.setUsername(oidUser.getAttribute("sub"));
             newUser.setUserFirstname(oidUser.getAttribute("given_name"));
             newUser.setUserLastname(oidUser.getAttribute("family_name"));
@@ -192,6 +194,8 @@ public class UserServiceImpl implements UserService {
             newUser.setUserActive(true);
             newUser.setCreatingDate(DateTimeParser.nowToString());
             userRepository.save(newUser);
+        } else if (existUser.getProvider().equals(Provider.GOOGLE)) {
+            existUser.setProvId(sub);
         }
     }
 }
