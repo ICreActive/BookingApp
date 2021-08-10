@@ -1,5 +1,6 @@
 package com.shkubel.project.service;
 
+import com.shkubel.project.exception.UnuniqueUserException;
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.oidc.CustomOidUser;
@@ -14,7 +15,7 @@ public interface UserService {
 
     List<User> allUsers();
 
-    boolean saveUser(User user);
+    boolean saveUser(User user) throws UnuniqueUserException;
 
     boolean deleteUser(Long userId) throws UserNotFoundException;
 

@@ -9,6 +9,7 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/resources/css/UserPage.css" media="screen">
+    <link rel="stylesheet" href="/resources/css/invoices.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
@@ -24,61 +25,49 @@
     <meta property="og:type" content="website">
 </head>
 <body>
-<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr">
 
-</header>
+<div class="wrapper">
+    <header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr"></header>
 
-    <h3 style="text-align: center">Редактирование пользователя</h3>
-        <form th:method="POST" th:object="${user}" style="padding: 30px">
+    <h3 style="text-align: center" th:text="#{u_edit.title}"></h3>
+    <form th:method="POST" th:object="${user}" style="padding: 30px">
 
-            <label hidden for="name"> Enter name </label>
-            <input type="text" th:field="*{username}" id="name" th:value="*{username}" hidden/>
+        <label hidden for="name"> Enter name </label>
+        <input type="text" th:field="*{username}" id="name" th:value="*{username}" hidden/>
 
-            <div style="color: red" th:if="${usernameError}" th:text="${usernameError}">Error</div>
-            <br/>
+        <div style="color: red" th:if="${usernameError}" th:text="${usernameError}">Error</div>
+        <br/>
 
-            <label for="firstname"> Enter first name </label>
-            <input class="form-control" type="text" th:field="*{userFirstname}" id="firstname" required/>
-            <div style="color: red" th:if="${#fields.hasErrors('userFirstname')}" th:errors="*{userFirstname}">Error</div>
-            <br/>
+        <label for="firstname"> Enter first name </label>
+        <input class="form-control" type="text" th:field="*{userFirstname}" id="firstname" required/>
+        <div style="color: red" th:if="${#fields.hasErrors('userFirstname')}" th:errors="*{userFirstname}">Error</div>
+        <br/>
 
-            <label for="lastname"> Enter last name </label>
-            <input  class="form-control" type="text" th:field="*{userLastname}" id="lastname" required/>
-            <div style="color: red" th:if="${#fields.hasErrors('userLastname')}" th:errors="*{userLastname}">Error</div>
-            <br/>
+        <label for="lastname"> Enter last name </label>
+        <input class="form-control" type="text" th:field="*{userLastname}" id="lastname" required/>
+        <div style="color: red" th:if="${#fields.hasErrors('userLastname')}" th:errors="*{userLastname}">Error</div>
+        <br/>
 
-            <label for="email"> Enter email </label>
-            <input class="form-control" type="text" th:field="*{email}" id="email" required/>
-            <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
-            <br/>
+        <label for="email"> Enter email </label>
+        <input class="form-control" type="text" th:field="*{email}" id="email" required/>
+        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+        <br/>
 
-            <label for="address">Enter address</label>
-            <input class="form-control" type="text" th:field="*{address}" id="address" required/>
-            <div style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Error</div>
-            <br/>
+        <label for="address">Enter address</label>
+        <input class="form-control" type="text" th:field="*{address}" id="address" required/>
+        <div style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Error</div>
+        <br/>
 
-<!--            <label for="pass"> Enter password </label>-->
-<!--            <input class="form-control" type="password" th:field="*{password}" id="pass"/>-->
-<!--            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error-->
-<!--            </div>-->
-<!--            </br>-->
-
-<!--            <label for="passConfirm"> Confirm password </label>-->
-<!--            <input class="form-control" type="password" th:field="*{passwordConfirm}" id="passConfirm" required/>-->
-<!--            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error-->
-<!--            </div>-->
-<!--            <div style="color: red" th:if="${passwordError}" th:text="${passwordError}">Error</div>-->
-<!--            <br/>-->
         <button class="u-btn" type="submit" style="margin-bottom: 30px">Update</button>
-        </form>
+    </form>
 
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6847" th:insert="footer"
-            style="position: relative;
+            style="position: fixed;
           left: 0;
             bottom: 0;
               width: 100%;">
 
     </footer>
-
+</div>
 </body>
 </html>

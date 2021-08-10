@@ -1,5 +1,6 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.exception.UnuniqueUserException;
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.Provider;
 import com.shkubel.project.models.entity.Role;
@@ -50,27 +51,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean saveUser(User user) {
+    public boolean saveUser(User user) throws UnuniqueUserException {
         User userFromDB;
         userFromDB = userRepository.findUserByUsername(user.getUsername().toLowerCase(Locale.ROOT));
-        if (userFromDB != null)
-            return false;
+        if (userFromDB != null){
+            throw new UnuniqueUserException("User with the same name already exists");
+        }
 
         userFromDB = userRepository.findUserByEmail(user.getEmail().toLowerCase(Locale.ROOT));
         if (userFromDB != null) {
-            if (userFromDB.getProvider().equals(Provider.GOOGLE)) {
-                userFromDB.setPassword(user.getPassword());
+            if (userFromDB.getProvider()!=null && userFromDB.getProvider().equals(Provider.GOOGLE)) {
+                userFromDB.setUsername(user.getUsername().toLowerCase(Locale.ROOT));
+                userFromDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                userFromDB.setAddress(user.getAddress());
                 userFromDB.setUpdatingDate(DateTimeParser.nowToString());
+                userRepository.save(userFromDB);
                 return true;
             }
-            return false;
+            throw new UnuniqueUserException("User already exists");
         }
         user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setUsername(user.getUsername().toLowerCase(Locale.ROOT));
         user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
-
         return true;
     }
 
@@ -191,11 +195,13 @@ public class UserServiceImpl implements UserService {
             newUser.setUserLastname(oidUser.getAttribute("family_name"));
             newUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
             newUser.setProvider(Provider.GOOGLE);
+            newUser.setProvId(oidUser.getAttribute("sub"));
             newUser.setUserActive(true);
             newUser.setCreatingDate(DateTimeParser.nowToString());
             userRepository.save(newUser);
-        } else if (existUser.getProvider().equals(Provider.GOOGLE)) {
+        } else if (existUser.getProvider()==null) {
             existUser.setProvId(sub);
+            userRepository.save(existUser);
         }
     }
 }

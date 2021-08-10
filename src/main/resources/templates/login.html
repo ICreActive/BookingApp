@@ -22,7 +22,14 @@
   <div class="dws-input">
     <input type="password" name="password" th:placeholder="#{password.input}">
   </div>
+  <div style="padding-bottom: 30px;">
+    <a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-grey-75"
+       th:text="#{googl.text}" th:href="@{/oauth2/authorization/google}">-
+      From Google</a>
+  </div>
   <input class="dws-submit" type="submit" name="submit" th:value="#{login.text}"><br />
+
+
   <a href="/forgot_password" th:text="#{forgot.input}">Восстановить пароль</a>
   <a href="/users/new" th:text="#{reg.button}">Registration</a>
 </form>

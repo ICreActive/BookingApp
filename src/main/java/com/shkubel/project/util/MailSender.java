@@ -28,13 +28,15 @@ public class MailSender {
     }
 
     public void sendActivationMessage(User user, HttpServletRequest request) {
-        String activationUrl = getSiteURL(request) + "/users/activate/" + user.getActivationCode();
-        String message = String.format(
-                "Hello, %s! \n Welcome to BookingService." +
-                        "Please, visit next link for activate your account: %s",
-                user.getUserFirstname(),
-                activationUrl);
-        send(user.getEmail(), "Activation code", message);
+        if (!user.isUserActive()) {
+            String activationUrl = getSiteURL(request) + "/users/activate/" + user.getActivationCode();
+            String message = String.format(
+                    "Hello, %s! \n Welcome to BookingService." +
+                            "Please, visit next link for activate your account: %s",
+                    user.getUserFirstname(),
+                    activationUrl);
+            send(user.getEmail(), "Activation code", message);
+        }
     }
 
     public void sendEmailForPasswordReset(HttpServletRequest request, String email, String token) {

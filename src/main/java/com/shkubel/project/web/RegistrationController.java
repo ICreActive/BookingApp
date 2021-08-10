@@ -1,5 +1,6 @@
 package com.shkubel.project.web;
 
+import com.shkubel.project.exception.UnuniqueUserException;
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.service.UserService;
@@ -40,13 +41,14 @@ public class RegistrationController {
             model.addAttribute("passwordError", "The passwords don't match");
             return s;
         }
-        if (!userService.saveUser(user)) {
-            model.addAttribute("usernameError", "This username or e-mail already exists");
+        try {
+            userService.saveUser(user);
+            mailSender.sendActivationMessage(user, request);
+            return "redirect:/";
+        } catch (UnuniqueUserException e) {
+            model.addAttribute("usernameError", e.getMessage());
             return s;
         }
-        mailSender.sendActivationMessage(user, request);
-
-        return "redirect:/";
     }
 
     @GetMapping("/activate/{code}")

@@ -27,10 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private OAth2LoginSuccessHandler oAth2LoginSuccessHandler;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-
     private final CustomAuthProvider customAuthProvider;
 
     public WebSecurityConfig(CustomAuthProvider customAuthProvider) {
@@ -51,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login")
                 .permitAll()
                 .and()
                 .oauth2Login()
@@ -61,12 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(oAth2LoginSuccessHandler);
     }
 
-
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

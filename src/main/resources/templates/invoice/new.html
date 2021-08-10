@@ -32,7 +32,8 @@
                     </div>
                     <div class="col company-details">
                         </h2>
-                        <div th:text="${invoice.getSeller().getAddress()}">455 Foggy Heights, AZ 85004, US</div>
+                        <div th:text="${invoice.getSeller().getName()}"></div>
+                        <div th:text="${invoice.getSeller().getAddress()}"></div>
                         <div th:text="${invoice.getSeller().getBankAccount()}"></div>
                     </div>
                 </div>
@@ -41,8 +42,8 @@
                 <div class="row contacts">
                     <div class="col invoice-to">
                         <div class="text-gray-light">INVOICE TO:</div>
-                        <h2 class="to" th:text="${invoice.getUser.getUserFirstname()} + ' ' + ${invoice.getUser().getUserLastname()}">John Doe</h2>
-                        <div class="address" th:text="${invoice.getUser().getAddress()}">796 Silver Harbour, TX 79273, US</div>
+                        <h2 class="to" th:text="${invoice.getUser.getUserFirstname()} + ' ' + ${invoice.getUser().getUserLastname()}"></h2>
+                        <div class="address" th:text="${invoice.getUser().getAddress()}"></div>
                         <div class="email" th:text="${invoice.getUser().getEmail()}"><a></a></div>
                     </div>
                     <div class="col invoice-details">
@@ -51,7 +52,8 @@
                             Date of Invoice:
                             <div th:text="${invoice.getCreatingDate()}"></div>
                         </div>
-                        <div class="date" th:text="'Due Date:' + ${invoice.getCreatingDate()} + 3">Due Date: 30/10/2018</div>
+                        <div>Due Date:</div>
+                        <div class="date" th:text="${invoice.getCreatingDate()} + 3"></div>
                     </div>
                 </div>
                 <table border="0" cellspacing="0" cellpadding="0">

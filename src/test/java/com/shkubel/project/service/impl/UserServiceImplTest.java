@@ -1,5 +1,6 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.exception.UnuniqueUserException;
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.repo.UserRepository;
@@ -72,7 +73,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void savedUserTest() {
+    void savedUserTest() throws UnuniqueUserException {
 
         boolean userSaved = userService.saveUser(user);
         Assertions.assertTrue(userSaved);
@@ -80,19 +81,19 @@ class UserServiceImplTest {
     }
 
     @Test
-    void savedUserStatusFalseTest() {
+    void savedUserStatusFalseTest() throws UnuniqueUserException {
         userService.saveUser(user);
         Assertions.assertFalse(user.isUserActive());
     }
 
     @Test
-    void savedUserHasRoleUserTest() {
+    void savedUserHasRoleUserTest() throws UnuniqueUserException {
         userService.saveUser(user);
         Assertions.assertEquals(user.getRoles().toString(), "[ROLE_USER]");
     }
 
     @Test
-    void savedUserHasSingleRoleTest() {
+    void savedUserHasSingleRoleTest() throws UnuniqueUserException {
         userService.saveUser(user);
         Assertions.assertEquals(user.getRoles().size(), 1);
 
@@ -262,7 +263,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void userReceivedActivationCodeOnSaveTest() {
+    void userReceivedActivationCodeOnSaveTest() throws UnuniqueUserException {
         userService.saveUser(user);
         Assertions.assertNotNull(user.getActivationCode());
     }
