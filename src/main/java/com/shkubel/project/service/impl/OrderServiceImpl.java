@@ -1,11 +1,12 @@
 package com.shkubel.project.service.impl;
 
 import com.shkubel.project.exception.OrderNotFoundException;
+import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.repo.OrderRepository;
 import com.shkubel.project.service.OrderService;
 import com.shkubel.project.util.DateTimeParser;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +15,14 @@ import java.util.Optional;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    @InjectLogger
+    private static Logger LOGGER;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+
+    public OrderServiceImpl(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @Override
     public List<OrderUser> allOrders() {
@@ -35,8 +41,10 @@ public class OrderServiceImpl implements OrderService {
             OrderUser order = orderRepository.findOrderUserById(orderId);
             order.setActive(false);
             orderRepository.save(order);
+            LOGGER.info("Order with id:{} has been disabled successfully", orderId);
             return true;
         }
+        LOGGER.warn("Order with id:{} not found in database", orderId);
         return false;
     }
 
@@ -50,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderUser create(OrderUser order) {
         order.setActive(true);
         order.setCreatingDate(DateTimeParser.nowToString());
+        LOGGER.info("Order has been created by user with id:{}", order.getUser().getId());
         return orderRepository.save(order);
     }
 
@@ -66,6 +75,7 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdatingDate(DateTimeParser.nowToString());
         orderRepository.save(orderInDb);
         } else {
+            LOGGER.warn("Order with id:{} not found in database", order.getId());
             throw new OrderNotFoundException("Order not found in DB");
         }
     }

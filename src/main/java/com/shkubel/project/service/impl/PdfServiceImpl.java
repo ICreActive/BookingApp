@@ -3,8 +3,10 @@ package com.shkubel.project.service.impl;
 import com.lowagie.text.pdf.AcroFields;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
+import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.Invoice;
 import com.shkubel.project.service.PdfService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 public class PdfServiceImpl implements PdfService {
+
+    @InjectLogger
+    private static Logger LOGGER;
+
 
     @Value("${pdf.path}")
     private String fileName;
@@ -63,13 +69,16 @@ public class PdfServiceImpl implements PdfService {
             stamper.setFormFlattening(true);
             stamper.close();
             reader.close();
+            LOGGER.info("Invoice {} has been collected successfully", invoice.getId());
         } catch (IOException e) {
-            System.out.println(e);
+            LOGGER.error("IOException while saving invoice {} ", invoice.getId());
         } finally {
             assert reader != null;
             reader.close();
+            LOGGER.debug("Reader has been closed ");
         }
     }
+
 
     @Override
     public Invoice setInvoice(Invoice invoice) {

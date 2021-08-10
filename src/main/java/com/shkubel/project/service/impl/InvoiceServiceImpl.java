@@ -1,11 +1,13 @@
 package com.shkubel.project.service.impl;
 
 import com.shkubel.project.exception.OrderNotFoundException;
+import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.*;
 import com.shkubel.project.models.repo.InvoiceRepository;
 import com.shkubel.project.service.InvoiceService;
 import com.shkubel.project.service.OrderService;
 import com.shkubel.project.util.DateTimeParser;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,9 @@ import java.util.List;
 
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
+
+    @InjectLogger
+    private static Logger LOGGER;
 
 
     private final InvoiceRepository invoiceRepository;
@@ -43,6 +48,9 @@ public class InvoiceServiceImpl implements InvoiceService {
             orderUser.setInvoice(invoice);
             orderUser.setActive(false);
             orderService.updateOrder(orderUser);
+
+            LOGGER.info("CREATED: Successful create invoice with id: {}", invoice.getId());
+
             return invoice;
         }
         return invInDb;

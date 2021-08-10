@@ -34,6 +34,7 @@ class OrderServiceImplTest {
         order.setKlassOfApartment(KlassAppartament.HIGH);
         order.setNumberOfSeats(2);
         order.setId(1L);
+        order.setActive(true);
     }
 
     @Test
@@ -41,5 +42,7 @@ class OrderServiceImplTest {
         orderService.deleteOrderById(1L);
         Assertions.assertFalse(orderService.findOrderById(1L).isActive());
     }
+
+
 
 }

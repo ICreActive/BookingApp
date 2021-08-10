@@ -1,19 +1,23 @@
 package com.shkubel.project.service.impl;
 
 import com.shkubel.project.exception.SellerNotFoundException;
+import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.Seller;
 import com.shkubel.project.models.repo.SellerRepository;
 import com.shkubel.project.service.SellerService;
 import com.shkubel.project.util.DateTimeParser;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Service
 public class SellerServiceImpl implements SellerService {
 
+
+    @InjectLogger
+    private static Logger LOGGER;
 
     final
     SellerRepository sellerRepository;
@@ -48,6 +52,7 @@ public class SellerServiceImpl implements SellerService {
         s.setActive(true);
         sellerRepository.findAll().forEach(sell -> sell.setActive(false));
         sellerRepository.save(s);
+        LOGGER.info("Seller with name {} has been saved ", seller.getName());
     }
 
 
@@ -61,6 +66,7 @@ public class SellerServiceImpl implements SellerService {
             sellerInDB.setAddress(seller.getAddress());
             sellerInDB.setUpdatingDate(DateTimeParser.nowToString());
             saveSeller(sellerInDB);
+            LOGGER.info("Seller with name {} has been updated ", seller.getName());
         }
     }
 
@@ -71,6 +77,7 @@ public class SellerServiceImpl implements SellerService {
         if (seller != null)
             return seller;
         else {
+            LOGGER.info("There are no active sellers in the database");
             throw new SellerNotFoundException("Seller not found");
         }
 
@@ -87,6 +94,7 @@ public class SellerServiceImpl implements SellerService {
         sellerRepository.findAll().stream()
                 .filter(s -> !s.getId().equals(id))
                 .forEach(s -> s.setActive(false));
+        LOGGER.info("The status of all sellers has been updated successfully");
     }
 
 }

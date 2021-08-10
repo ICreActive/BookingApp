@@ -3,10 +3,7 @@ package com.shkubel.project.service.impl;
 import com.shkubel.project.exception.OrderNotFoundException;
 import com.shkubel.project.models.entity.*;
 import com.shkubel.project.models.repo.InvoiceRepository;
-import com.shkubel.project.models.repo.UserRepository;
 import com.shkubel.project.service.InvoiceService;
-import com.shkubel.project.service.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -15,13 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

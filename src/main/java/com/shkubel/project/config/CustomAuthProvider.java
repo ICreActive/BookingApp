@@ -2,6 +2,8 @@ package com.shkubel.project.config;
 
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.service.security.UserDetailServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CustomAuthProvider implements AuthenticationProvider {
+
+    private static final Logger LOGGER = LogManager.getLogger(CustomAuthProvider.class.getName());
 
     @Autowired
     private UserDetailServiceImpl userService;
@@ -29,6 +33,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
             if (!user.isUserActive()) {
                 throw new AuthenticationServiceException("user is not active");
             }
+            LOGGER.info("User with id:{} has been authorized, role:{}", user.getId(), user.getAuthorities());
             return new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
         }
         throw new AuthenticationServiceException("Invalid credentials.");

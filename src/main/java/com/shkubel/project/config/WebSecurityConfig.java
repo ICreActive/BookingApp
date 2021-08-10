@@ -1,8 +1,7 @@
 package com.shkubel.project.config;
 
-import com.shkubel.project.service.security.UserDetailServiceImpl;
 import com.shkubel.project.service.security.CustomOidUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.shkubel.project.service.security.UserDetailServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,19 +17,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private CustomOidUserService oauthUserService;
+    private final CustomOidUserService oauthUserService;
 
-    @Autowired
-    private UserDetailServiceImpl userSecurityService;
+    private final UserDetailServiceImpl userSecurityService;
 
-    @Autowired
-    private OAth2LoginSuccessHandler oAth2LoginSuccessHandler;
+    private final OAth2LoginSuccessHandler oAth2LoginSuccessHandler;
 
     private final CustomAuthProvider customAuthProvider;
 
-    public WebSecurityConfig(CustomAuthProvider customAuthProvider) {
+    public WebSecurityConfig(CustomAuthProvider customAuthProvider, CustomOidUserService oauthUserService, UserDetailServiceImpl userSecurityService, OAth2LoginSuccessHandler oAth2LoginSuccessHandler) {
         this.customAuthProvider = customAuthProvider;
+        this.oauthUserService = oauthUserService;
+        this.userSecurityService = userSecurityService;
+        this.oAth2LoginSuccessHandler = oAth2LoginSuccessHandler;
     }
 
 

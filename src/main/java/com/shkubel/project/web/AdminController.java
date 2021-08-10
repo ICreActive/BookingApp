@@ -199,11 +199,10 @@ public class AdminController {
         }
         try {
             sellerService.saveSeller(seller);
-            model.addAttribute("error", "The seller was not saved");
-            return s;
+            return "redirect:/";
         } catch (SellerNotFoundException e) {
             model.addAttribute("message", e.getMessage());
-            return "redirect:/";
+            return s;
         }
     }
 }

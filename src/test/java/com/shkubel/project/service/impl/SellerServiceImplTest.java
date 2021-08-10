@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
@@ -80,7 +81,7 @@ class SellerServiceImplTest {
         Mockito.doReturn(null)
                 .when(sellerRepository)
                 .findSellerByName(seller.getName());
-        Mockito.doReturn(new ArrayList<Seller>())
+        Mockito.doReturn(new ArrayList<>())
                 .when(sellerRepository)
                 .findAll();
         sellerService.saveSeller(seller);
@@ -92,13 +93,14 @@ class SellerServiceImplTest {
     void update() {
     }
 
-//    @Test
-//    void findSellerByActiveStatus() {
-//        Mockito.doReturn(seller)
-//                .when(sellerRepository)
-//                .findSellerByActiveStatus();
-//        Mockito.verify(sellerRepository, Mockito.times(1)).findSellerByActiveStatus();
-//    }
+    @Test
+    void findSellerByActiveStatus() throws SellerNotFoundException {
+        Mockito.doReturn(seller)
+                .when(sellerRepository)
+                .findSellerByActiveStatus();
+        sellerService.findSellerByActiveStatus();
+        Mockito.verify(sellerRepository, Mockito.times(1)).findSellerByActiveStatus();
+    }
 
     @Test
     void setActiveSeller() {
