@@ -16,7 +16,6 @@ import java.util.List;
 public class FeedbackController {
 
     private final MailSender mailSender;
-
     private final UserService userService;
 
     public FeedbackController(MailSender mailSender, UserService userService) {

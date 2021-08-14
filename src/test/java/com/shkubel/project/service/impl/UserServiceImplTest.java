@@ -3,7 +3,7 @@ package com.shkubel.project.service.impl;
 import com.shkubel.project.exception.UnuniqueUserException;
 import com.shkubel.project.exception.UserNotFoundException;
 import com.shkubel.project.models.entity.User;
-import com.shkubel.project.models.repo.UserRepository;
+import com.shkubel.project.dao.UserRepository;
 import com.shkubel.project.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

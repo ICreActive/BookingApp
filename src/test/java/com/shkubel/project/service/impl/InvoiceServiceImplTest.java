@@ -1,9 +1,11 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.dao.OrderRepository;
 import com.shkubel.project.exception.OrderNotFoundException;
 import com.shkubel.project.models.entity.*;
-import com.shkubel.project.models.repo.InvoiceRepository;
+import com.shkubel.project.dao.InvoiceRepository;
 import com.shkubel.project.service.InvoiceService;
+import com.shkubel.project.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -13,15 +15,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class InvoiceServiceImplTest {
 
+    @Autowired
+    private InvoiceService invoiceService;
+
     @MockBean
     private InvoiceRepository invoiceRepository;
 
-    @Autowired
-    private InvoiceService invoiceService;
+    @MockBean
+    OrderRepository orderRepository;
 
     private Invoice invoice;
     private OrderUser order;
@@ -40,6 +47,18 @@ class InvoiceServiceImplTest {
 
     @Test
     void createInvoice() throws OrderNotFoundException {
+
+        Mockito.doReturn(null)
+                .when(invoiceRepository)
+                .findInvoiceByOrderUser(order);
+
+        Mockito.doReturn(Optional.of(order))
+                .when(orderRepository)
+                .findById(order.getId());
+
+        Mockito.doReturn(invoice)
+                .when(order)
+                .setInvoice(invoice);
 
         invoiceService.createInvoice(room, order, seller);
         Mockito.verify(invoiceRepository, Mockito.times(1)).save(invoice);

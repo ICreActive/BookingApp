@@ -3,7 +3,7 @@ package com.shkubel.project.service.impl;
 import com.shkubel.project.exception.SellerNotFoundException;
 import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.Seller;
-import com.shkubel.project.models.repo.SellerRepository;
+import com.shkubel.project.dao.SellerRepository;
 import com.shkubel.project.service.SellerService;
 import com.shkubel.project.util.DateTimeParser;
 import org.slf4j.Logger;

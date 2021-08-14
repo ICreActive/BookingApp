@@ -1,4 +1,4 @@
-package com.shkubel.project.models.repo;
+package com.shkubel.project.dao;
 
 import com.shkubel.project.models.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

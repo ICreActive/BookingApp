@@ -2,8 +2,7 @@ package com.shkubel.project.service.impl;
 
 import com.shkubel.project.exception.SellerNotFoundException;
 import com.shkubel.project.models.entity.Seller;
-import com.shkubel.project.models.entity.User;
-import com.shkubel.project.models.repo.SellerRepository;
+import com.shkubel.project.dao.SellerRepository;
 import com.shkubel.project.service.SellerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

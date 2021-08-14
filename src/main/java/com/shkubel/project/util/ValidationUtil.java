@@ -6,13 +6,14 @@ import com.shkubel.project.models.entity.Room;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.service.impl.RoomServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Locale;
 
 
-@Service
+@Component
 public class ValidationUtil {
 
     @Autowired
@@ -33,7 +34,7 @@ public class ValidationUtil {
     }
 
 
-    public boolean validationDate(LocalDate checkin, LocalDate checkout) throws DateValidationException {
+    public void validationDate(LocalDate checkin, LocalDate checkout) throws DateValidationException {
 
         if (checkin.isBefore(LocalDate.now())) {
             throw new DateValidationException("Check-in date cannot be earlier than the current date");
@@ -44,8 +45,6 @@ public class ValidationUtil {
         if (checkin.equals(checkout)) {
             throw new DateValidationException("Check-in date cannot be equal to check-out date");
         }
-
-        return !checkin.isAfter(checkout) && !checkin.equals(checkout);
     }
 
 }

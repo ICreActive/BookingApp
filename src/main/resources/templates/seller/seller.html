@@ -66,11 +66,11 @@
         </div>
     </li>
 
-    <li id="dash_dashboard"><a class="waves-effect" href="#!"><b>Dashboard</b></a></li>
+    <li id="dash_dashboard"><a class="waves-effect" href="/administrator"><b>Dashboard</b></a></li>
 
     <ul class="collapsible" data-collapsible="accordion">
         <li id="dash_users">
-            <div id="dash_users_header" class="collapsible-header waves-effect"><b>Users</b></div>
+            <div id="dash_users_header" class="collapsible-header waves-effect"><b th:text="#{users.text}">Users</b></div>
             <div id="dash_users_body" class="collapsible-body">
                 <ul>
                     <li id="users_seller">
@@ -87,11 +87,11 @@
         </li>
 
         <li id="dash_products">
-            <div id="dash_products_header" class="collapsible-header waves-effect"><b>Products</b></div>
+            <div id="dash_products_header" class="collapsible-header waves-effect" ><b th:text="#{cat_ord.text}">Products</b></div>
             <div id="dash_products_body" class="collapsible-body">
                 <ul>
                     <li id="products_product">
-                        <a class="waves-effect" style="text-decoration: none;" href="../rooms/catalog"
+                        <a class="waves-effect" style="text-decoration: none;" href="/catalog"
                            th:text="#{catalog.text}">Products</a>
                         <a class="waves-effect" style="text-decoration: none;" href="/administrator/orders"
                            th:text="#{orders.text}">Orders</a>
@@ -161,9 +161,8 @@
 
     <nav>
         <div class="nav-wrapper indigo darken-2">
-            <a style="margin-left: 20px;" class="breadcrumb" href="#!">Admin</a>
-            <a class="breadcrumb" href="#!">Index</a>
-
+            <a style="margin-left: 20px;" class="breadcrumb" href="/administrator">Admin</a>
+            <a style="margin-left: 20px;" class="breadcrumb" href="/administrator/sellers">Seller</a>
             <div style="margin-right: 20px;" id="timestamp" class="right"></div>
         </div>
     </nav>
@@ -176,7 +175,7 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b>User Management</b>
+                        <b th:text="#{user_menege.text}">User Management</b>
                     </div>
                 </div>
 
@@ -209,15 +208,15 @@
         <div class="col s6">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <div class="left card-title">
-                        <b>Product Management</b>
+                    <div class="left card-title" >
+                        <b th:text="#{cat_ord.text}">Product Management</b>
                     </div>
                 </div>
                 <div class="row">
-                    <a href="../rooms/catalog">
+                    <a href="/catalog">
                         <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
                             <i class="indigo-text text-lighten-1 large material-icons">store</i>
-                            <span class="indigo-text text-lighten-1"><h5>Product</h5></span>
+                            <span class="indigo-text text-lighten-1" ><h5  th:text="#{catalog.text}">Product</h5></span>
                         </div>
                     </a>
 

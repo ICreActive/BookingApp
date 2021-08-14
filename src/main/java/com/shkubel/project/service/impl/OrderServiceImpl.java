@@ -3,7 +3,7 @@ package com.shkubel.project.service.impl;
 import com.shkubel.project.exception.OrderNotFoundException;
 import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.OrderUser;
-import com.shkubel.project.models.repo.OrderRepository;
+import com.shkubel.project.dao.OrderRepository;
 import com.shkubel.project.service.OrderService;
 import com.shkubel.project.util.DateTimeParser;
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
             LOGGER.info("Order with id:{} has been disabled successfully", orderId);
             return true;
         }
-        LOGGER.warn("Order with id:{} not found in database", orderId);
+        LOGGER.error("Order with id:{} not found in database", orderId);
         return false;
     }
 
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdatingDate(DateTimeParser.nowToString());
         orderRepository.save(orderInDb);
         } else {
-            LOGGER.warn("Order with id:{} not found in database", order.getId());
+            LOGGER.error("Order with id:{} not found in database", order.getId());
             throw new OrderNotFoundException("Order not found in DB");
         }
     }

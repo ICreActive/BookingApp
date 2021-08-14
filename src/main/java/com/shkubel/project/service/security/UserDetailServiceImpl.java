@@ -1,7 +1,7 @@
 package com.shkubel.project.service.security;
 
 import com.shkubel.project.models.entity.User;
-import com.shkubel.project.models.repo.UserRepository;
+import com.shkubel.project.dao.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

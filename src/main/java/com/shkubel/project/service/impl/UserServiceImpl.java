@@ -7,7 +7,7 @@ import com.shkubel.project.models.entity.Provider;
 import com.shkubel.project.models.entity.Role;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.models.oidc.CustomOidUser;
-import com.shkubel.project.models.repo.UserRepository;
+import com.shkubel.project.dao.UserRepository;
 import com.shkubel.project.service.UserService;
 import com.shkubel.project.util.DateTimeParser;
 import org.slf4j.Logger;

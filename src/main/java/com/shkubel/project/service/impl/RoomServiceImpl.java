@@ -5,7 +5,7 @@ import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
 import com.shkubel.project.models.entity.Room;
-import com.shkubel.project.models.repo.RoomRepository;
+import com.shkubel.project.dao.RoomRepository;
 import com.shkubel.project.service.RoomService;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -53,9 +53,9 @@ public class RoomServiceImpl implements RoomService {
         return roomRepository.findRoomsByKlassApartment(klassAppartament);
     }
 
+
     @Override
     public List<Room> findOffers(OrderUser orderUser) {
-
         List<Room> hotelsWithNOS =
                 findHotelByNumberOfSeats(orderUser.getNumberOfSeats())
                         .stream()
@@ -103,7 +103,7 @@ public class RoomServiceImpl implements RoomService {
             room.setAvailable(false);
             LOGGER.info("Room with id:{} successfully disabled", id);
         } else {
-            LOGGER.info("Room with id:{} not found", id);
+            LOGGER.error("Room with id:{} not found", id);
             throw new RoomNotFoundException("Room with id = " + id + "not found");
         }
     }

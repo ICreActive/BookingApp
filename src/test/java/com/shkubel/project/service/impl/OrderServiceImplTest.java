@@ -1,8 +1,8 @@
 package com.shkubel.project.service.impl;
 
+import com.shkubel.project.dao.OrderRepository;
 import com.shkubel.project.models.entity.KlassAppartament;
 import com.shkubel.project.models.entity.OrderUser;
-import com.shkubel.project.models.repo.OrderRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,10 +18,11 @@ import java.time.LocalDate;
 @SpringBootTest
 class OrderServiceImplTest {
 
-    @MockBean
-    OrderRepository orderRepository;
     @Autowired
     private OrderServiceImpl orderService;
+
+    @MockBean
+    OrderRepository orderRepository;
 
     private OrderUser order;
 

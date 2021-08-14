@@ -3,7 +3,7 @@ package com.shkubel.project.service.impl;
 import com.shkubel.project.exception.OrderNotFoundException;
 import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.*;
-import com.shkubel.project.models.repo.InvoiceRepository;
+import com.shkubel.project.dao.InvoiceRepository;
 import com.shkubel.project.service.InvoiceService;
 import com.shkubel.project.service.OrderService;
 import com.shkubel.project.util.DateTimeParser;

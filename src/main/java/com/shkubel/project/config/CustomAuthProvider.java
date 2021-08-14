@@ -1,10 +1,9 @@
 package com.shkubel.project.config;
 
+import com.shkubel.project.log.InjectLogger;
 import com.shkubel.project.models.entity.User;
 import com.shkubel.project.service.security.UserDetailServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,12 +15,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomAuthProvider implements AuthenticationProvider {
 
-    private static final Logger LOGGER = LogManager.getLogger(CustomAuthProvider.class.getName());
+    @InjectLogger
+    private static Logger LOGGER;
 
-    @Autowired
-    private UserDetailServiceImpl userService;
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserDetailServiceImpl userService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public CustomAuthProvider(UserDetailServiceImpl userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userService = userService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
 
     @Override
