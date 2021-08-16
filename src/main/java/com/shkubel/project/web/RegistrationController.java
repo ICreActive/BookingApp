@@ -53,18 +53,19 @@ public class RegistrationController {
 
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable("code") String code) {
+        String m = "message";
 
         try {
             boolean isActivated = userService.activateUser(code);
             if (isActivated) {
-                model.addAttribute("message", "User successfully activated");
+                model.addAttribute(m, "User successfully activated");
             } else {
-                model.addAttribute("message", "Activation code is not found");
+                model.addAttribute(m, "Activation code is not found");
             }
             return "login";
 
         } catch (UserNotFoundException e) {
-            model.addAttribute("message", e.getMessage() + " Please, try again");
+            model.addAttribute(m, e.getMessage() + " Please, try again");
             return "login";
         }
     }

@@ -44,6 +44,4 @@ class OrderServiceImplTest {
         Assertions.assertFalse(orderService.findOrderById(1L).isActive());
     }
 
-
-
 }

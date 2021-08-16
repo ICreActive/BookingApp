@@ -30,8 +30,7 @@
                                  data-holder-rendered="true" style="height: 108px; width: 300px;"/>
                         </a>
                     </div>
-                    <div class="col company-details">
-                        </h2>
+                    <div class="col company-details" th:if="${invoice.getSeller()}">
                         <div th:text="${invoice.getSeller().getName()}"></div>
                         <div th:text="${invoice.getSeller().getAddress()}"></div>
                         <div th:text="${invoice.getSeller().getBankAccount()}"></div>
@@ -40,7 +39,7 @@
             </header>
             <main>
                 <div class="row contacts">
-                    <div class="col invoice-to">
+                    <div class="col invoice-to" th:if="${invoice.getUser()}">
                         <div class="text-gray-light">INVOICE TO:</div>
                         <h2 class="to" th:text="${invoice.getUser.getUserFirstname()} + ' ' + ${invoice.getUser().getUserLastname()}"></h2>
                         <div class="address" th:text="${invoice.getUser().getAddress()}"></div>
@@ -66,7 +65,7 @@
                         <th class="text-right">TOTAL</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody th:if="${invoice.getRoom()}">
                     <tr>
                         <td class="no" th:text="${invoice.getRoom().getId()}">01</td>
                         <td class="text-left"><h3>

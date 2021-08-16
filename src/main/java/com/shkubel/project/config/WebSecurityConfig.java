@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/oauth/**").permitAll()
-                .antMatchers("/hotels/**", "/index").permitAll()
+                .antMatchers("/hotels/**", "/index", "/contact", "/about").permitAll()
                 .antMatchers("/users/new", "/users/activate/*", "/forgot_password", "/reset_password", "/login/google").not().fullyAuthenticated()
                 .antMatchers("/administrator/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

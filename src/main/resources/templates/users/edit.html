@@ -30,7 +30,7 @@
     <header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr"></header>
 
     <h3 style="text-align: center" th:text="#{u_edit.title}"></h3>
-    <form th:method="POST" th:object="${user}" style="padding: 30px">
+    <form th:method="POST" th:if="${user}" th:object="${user}" style="padding: 30px">
 
         <label hidden for="name"> Enter name </label>
         <input type="text" th:field="*{username}" id="name" th:value="*{username}" hidden/>
