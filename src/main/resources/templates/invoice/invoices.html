@@ -8,28 +8,48 @@
     <link rel="stylesheet" href="/resources/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/resources/css/userPage.css" media="screen">
     <link rel="stylesheet" href="/resources/css/invoices.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script class="u-script" type="text/javascript" src="/resources/js/jquery-1.9.1.min.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="/resources/js/nicepage.js" defer=""></script>
 
 </head>
 <body>
 <div class="wrapper">
-<header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr" style="margin-bottom: 50px">
-</header>
+    <header class="u-clearfix u-gradient u-header u-header" id="sec-d723" th:insert="headr" style="margin-bottom: 50px">
+    </header>
 
+    <div><H3 style="text-align: center; margin-bottom: 30px;">Выставленные счета</H3></div>
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th th:text="#{i_number}"></th>
+            <th th:text="#{i_title}"></th>
+            <th th:text="#{i_date.text}"></th>
+            <th th:text="#{p_status.text}"></th>
+            <th th:text="#{o_number.text}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:method="Get" th:each="element:${invoices}">
+            <th th:text="${element.getId()}"></th>
+            <th>
+            <a th:href="@{/users/myprofile/invoices/{id}(id=${element.getId()})}">
+                <img src="/resources/icon/invoice.png"/>
+            </a>
+            </th>
+            <th th:text="${element.getCreatingDate()}"></th>
+            <th th:text="${element.getPaid()}"></th>
+            <th th:text="${element.getOrderUser().getId()}"></th>
+        </tr>
+        </tbody>
+    </table>
 
-<div id="menu" class=main>
-    <div th:method="Get" th:each="element:${invoices}">
-        <a th:href="@{/users/myprofile/invoices/{id}(id=${element.getId()})}">
-            <img src="/resources/icon/invoice.png"/>
-            <div th:text="${element.getId() + ' ' + element.getRoom().getTitle()}"></div>
-        </a>
-    </div>
-</div>
     <div th:insert="insert/warning">
     </div>
 
-<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer footer" id="sec-6847" th:insert="footer"></footer>
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer footer" id="sec-6847"
+            th:insert="footer"></footer>
 </div>
 </body>
 

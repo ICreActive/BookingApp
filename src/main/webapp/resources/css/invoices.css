@@ -17,6 +17,7 @@ body {
 .footer {
     flex: 0 0 auto;
     background-color: #333333;
+    margin-top: auto;
 }
 
 #menu {
@@ -25,7 +26,8 @@ body {
     flex-direction: row;
     justify-content: space-between;
     height: auto;
-    width: 700px;
+    left: auto;
+    width: 300px;
     margin: auto;
 }
 
@@ -33,4 +35,19 @@ body {
     width: 100px;
     height: 100px;
     margin-bottom: 30px;
+}
+
+
+div.button{
+    border-radius:50px;
+    width:100px;
+    height:100px;
+    color:#FFFFFF;
+    background:#FF7733;
+    cursor:pointer;
+    line-height:100px;
+    text-align:center;
+}
+div.button:hover{
+    background:#FF5500;
 }
