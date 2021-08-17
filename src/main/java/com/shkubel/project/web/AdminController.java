@@ -41,9 +41,15 @@ public class AdminController {
 
 
     @GetMapping("/users")
-    public String users(Model model) {
-        List<User> users = userService.allUsers();
-        model.addAttribute("users", users);
+    public String users(@RequestParam(name = "status", defaultValue = "", required = false) String status,
+                        Model model) {
+        if (status.equals("active")) {
+            model.addAttribute("users", userService.findUsersByStatusActive());
+            return "users/users";
+        } else {
+            List<User> users = userService.allUsers();
+            model.addAttribute("users", users);
+        }
         return "users/users";
     }
 
@@ -125,12 +131,6 @@ public class AdminController {
         model.addAttribute("order", order);
         model.addAttribute("offers", rooms);
         return "order/id";
-    }
-
-    @GetMapping("/users/active")
-    public String usersActive(Model model) {
-        model.addAttribute("users", userService.findUsersByStatusActive());
-        return "users/users";
     }
 
     @GetMapping("/orders/all")

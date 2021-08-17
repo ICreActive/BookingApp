@@ -15,7 +15,7 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/administrator" th:text="#{back.text}"><span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="/administrator/users" th:text="#{showAllusr.text}"></a>
-            <a class="nav-item nav-link" href="/administrator/users/active" th:text="#{showActive.text}"></a>
+            <a class="nav-item nav-link" href="/administrator/users?status=active" th:text="#{showActive.text}"></a>
             <a class="nav-item nav-link disabled" href="/" th:text="#{home.text}"></a>
         </div>
     </div>
