@@ -2,15 +2,24 @@ package com.shkubel.project.dto;
 
 import com.shkubel.project.models.entity.Role;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 public class ProfileUserDto {
 
     private Long id;
+    @NotEmpty(message = "Name should not be empty")
+    @Size(min = 3, message = "Name cannot be shorter than 3 characters")
     private String username;
+    @NotEmpty
+    @Size(min = 2, max = 15, message = "Name should be between 2 and 15 characters")
     private String userFirstname;
+    @NotEmpty
     private String userLastname;
     private String address;
+    @Email
     private String email;
     private boolean isUserActive;
 

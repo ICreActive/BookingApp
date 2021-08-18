@@ -113,7 +113,5 @@ public class UserController {
         response.setHeader(headerKey, headerValue);
         pdfService.setInvoice(invoice);
         pdfService.exportToPdf(response);
-
     }
-
 }

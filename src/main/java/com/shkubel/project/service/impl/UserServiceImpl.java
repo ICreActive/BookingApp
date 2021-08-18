@@ -199,6 +199,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAdmins();
     }
 
+    /**
+     * Auto registration
+     * The method creates a user in the database upon successful authorization through Google.
+     * If a user with this email is already present in the database, sets an ID for him to login
+     * @param oidUser - user from token
+     */
     @Override
     public void processOAuthPostLogin(CustomOidUser oidUser) {
 
@@ -221,9 +227,7 @@ public class UserServiceImpl implements UserService {
             newUser.setUserActive(true);
             newUser.setCreatingDate(DateTimeParser.nowToString());
             userRepository.save(newUser);
-            LOGGER.info("New user with email: {}, has been saved in DB with Provider {}",
-                    email,
-                    newUser.getProvider().name());
+            LOGGER.info("New user with email: {}, has been saved in DB with Provider {}", email, newUser.getProvider().name());
         } else if (existUser.getProvider() == null) {
             existUser.setProvId(sub);
             userRepository.save(existUser);

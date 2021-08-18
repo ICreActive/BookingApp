@@ -27,13 +27,14 @@ import java.util.List;
 @RequestMapping("/administrator")
 public class AdminController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
     private final OrderService orderService;
     private final SellerService sellerService;
     private final RoomService roomService;
 
-    public AdminController(RoomService roomService, SellerService sellerService, OrderService orderService) {
+    @Autowired
+    public AdminController(UserService userService, RoomService roomService, SellerService sellerService, OrderService orderService) {
+        this.userService = userService;
         this.roomService = roomService;
         this.sellerService = sellerService;
         this.orderService = orderService;

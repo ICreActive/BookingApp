@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class MailSender {
 
-    @Autowired
-    private JavaMailSender emailSender;
-
+    private final JavaMailSender emailSender;
 
     @Value("${spring.mail.username}")
     private String username;
+
+    @Autowired
+    public MailSender(JavaMailSender emailSender) {
+        this.emailSender = emailSender;
+    }
 
     public String getUsername() {
         return username;

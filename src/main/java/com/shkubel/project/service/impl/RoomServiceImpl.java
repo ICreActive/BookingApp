@@ -53,7 +53,11 @@ public class RoomServiceImpl implements RoomService {
         return roomRepository.findRoomsByKlassApartment(klassAppartament);
     }
 
-
+    /**
+     * Filter rooms by parameters: Klass of apartment, number of seats, available by date
+     * @param orderUser - incoming order with all parameters
+     * @return offers if there are rooms matching parameters (Klass of apartment, number of seats) and available by date
+     */
     @Override
     public List<Room> findOffers(OrderUser orderUser) {
         List<Room> hotelsWithNOS =
@@ -69,12 +73,10 @@ public class RoomServiceImpl implements RoomService {
                         hotelsWithNOS.remove(h);
                     }
                 });
-
             } catch (ConcurrentModificationException e) {
                 return null;
             }
         }
-
         return hotelsWithNOS;
     }
 
@@ -113,6 +115,5 @@ public class RoomServiceImpl implements RoomService {
         return roomRepository.findRoomsByIsAvailableTrue();
 
     }
-
 }
 

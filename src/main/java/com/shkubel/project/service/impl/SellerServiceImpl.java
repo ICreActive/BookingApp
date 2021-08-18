@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 public class SellerServiceImpl implements SellerService {
 
-
     @InjectLogger
     private static Logger LOGGER;
 
@@ -36,6 +35,12 @@ public class SellerServiceImpl implements SellerService {
         return sellerRepository.findAll();
     }
 
+    /**
+     * Creating new Seller.
+     * When a seller is created he is assigned the status "Active = true" and the rest - Active = false "
+     * @param seller - seller from view to save
+     * @throws SellerNotFoundException if seller is exist
+     */
     @Override
     @Transactional
     public void saveSeller(Seller seller) throws SellerNotFoundException {
@@ -83,10 +88,13 @@ public class SellerServiceImpl implements SellerService {
 
     }
 
+    /**
+     * One seller may be in "Active" status
+     * @param id by active Seller
+     */
     @Transactional
     @Override
     public void setActiveSeller(Long id) {
-
         Seller seller = findSellerById(id);
         seller.setActive(true);
         sellerRepository.save(seller);
