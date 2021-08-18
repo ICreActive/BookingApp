@@ -43,15 +43,34 @@ public class AdminController {
 
     @GetMapping("/users")
     public String users(@RequestParam(name = "status", defaultValue = "", required = false) String status,
+                        @RequestParam(name = "search", defaultValue = "", required = false) String search,
                         Model model) {
+        String view = "users/users";
         if (status.equals("active")) {
             model.addAttribute("users", userService.findUsersByStatusActive());
-            return "users/users";
+            return view;
         } else {
             List<User> users = userService.allUsers();
             model.addAttribute("users", users);
         }
-        return "users/users";
+        if (!search.equals("")) {
+            try {
+                User user = userService.findUserByUserName(search);
+                model.addAttribute("users", user);
+                return view;
+            } catch (UserNotFoundException e) {
+                try {
+                    Long id = Long.parseLong(search);
+                    User user = userService.findUserById(id);
+                    model.addAttribute("users", user);
+                    return view;
+                } catch (NumberFormatException | UserNotFoundException ex) {
+                    model.addAttribute("users", userService.allUsers());
+                    return view;
+                }
+            }
+        }
+        return view;
     }
 
     @GetMapping("users/profile/{id}")
@@ -69,14 +88,16 @@ public class AdminController {
     @PostMapping("/users")
     public String deleteUser(@RequestParam(defaultValue = "") Long userId,
                              @RequestParam(defaultValue = "") String action,
+                             @RequestParam(name = "search", defaultValue = "") String search,
                              Model model) {
+        String view = "users/users";
         if (action.equals("delete")) {
             try {
                 userService.deleteUser(userId);
             } catch (UserNotFoundException e) {
                 System.err.println(e.getMessage());
                 model.addAttribute("message", e.getMessage());
-                return "users/users";
+                return view;
             }
         } else if (action.equals("restore")) {
             try {
@@ -84,11 +105,10 @@ public class AdminController {
             } catch (UserNotFoundException e) {
                 System.err.println(e.getMessage());
                 model.addAttribute("message", e.getMessage());
-                return "users/users";
+                return view;
             }
-
         }
-        return "redirect:users";
+        return view;
     }
 
     @GetMapping("/orders")
